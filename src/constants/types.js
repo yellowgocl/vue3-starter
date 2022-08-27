@@ -1,7 +1,7 @@
 const ERROR_TYPES = {
     REPLACE: 'replace',
-    END: 'end',
-    START: 'start'
+    PARTS_START: 'parts-start',
+    PARTS_END: 'parts-end'
 }
 
 const DIRECTION = {
