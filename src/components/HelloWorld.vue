@@ -16,8 +16,6 @@ onMounted(() => {
 })
 
 watch(count, () => {
-  // 文本内容应该与当前的 `count.value` 一致
-  console.log('watch:', count.value)
   if (count.value > 4) {
     throw new Error('fuck , go to shit')
   }
