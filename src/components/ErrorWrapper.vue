@@ -59,16 +59,16 @@ defineExpose(exposeData)
     <div class="error-wrapper">
         <template v-if="type === ERROR_TYPES.REPLACE">
             <template v-if="hasError">
-                <slot name="error" v-if="hasErrorSlot" :hasError="hasError" :error="error" :reset="reset"></slot>
+                <slot name="error" v-if="hasErrorSlot" v-bind="exposeData"></slot>
                 <span v-else class="error-tips">{{error?.message || error}}</span>
             </template>
-            <slot v-else hasError="hasError" :error="error" :reset="reset"></slot>
+            <slot v-else v-bind="exposeData"></slot>
         </template>
         <template v-else-if="isTypeOfParts">
             <div :class="[directionClass, 'layout-parts']">
-                <div><slot :hasError="hasError" :error="error" :reset="reset"></slot></div>
+                <div><slot v-bind="exposeData"></slot></div>
                 <div v-if="hasError" :class="layoutClass">
-                    <slot name="error" v-if="hasErrorSlot" :hasError="hasError" :error="error" :reset="reset"></slot>
+                    <slot name="error" v-if="hasErrorSlot" v-bind="exposeData"></slot>
                     <span v-else class="error-tips">{{error?.message || error}}</span>
                 </div>
             </div>
