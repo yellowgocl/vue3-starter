@@ -1,5 +1,5 @@
 <script setup>
-import { ref, useSlots, onMounted, onErrorCaptured, watch, computed } from 'vue'
+import { ref, onMounted, onErrorCaptured, watch, computed } from 'vue'
 
 import { DIRECTION, ERROR_TYPES } from '@/constants/types'
 
@@ -20,16 +20,12 @@ const props = defineProps({
     }
 })
 const directionClass = ref(`direction-${props.direction}`)
-const slots = useSlots()
 const error = ref()
 const reset = () => {
     error.value = null
 }
 const hasError = computed(() => {
     return !!error.value
-})
-const hasErrorSlot = computed(() => {
-    return !!slots.error
 })
 const isTypeOfParts = computed(() => {
     return [ERROR_TYPES.PARTS_START, ERROR_TYPES.PARTS_END].some(v => v === props.type)
@@ -42,15 +38,16 @@ const layoutClass = computed(() => {
 })
 
 onErrorCaptured((innerError) => {
-    error.value = innerError
+    
     const flag = !!props.onError?.(innerError)
+    !flag && (error.value = innerError)
     return !!props.stopPropagation || flag
 })
 
 const exposeData = {
     reset,
     error,
-    hasError
+    hasError,
 }
 defineExpose(exposeData)
 </script>
@@ -59,8 +56,9 @@ defineExpose(exposeData)
     <div class="error-wrapper">
         <template v-if="type === ERROR_TYPES.REPLACE">
             <template v-if="hasError">
-                <slot name="error" v-if="hasErrorSlot" v-bind="exposeData"></slot>
-                <span v-else class="error-tips">{{error?.message || error}}</span>
+                <slot name="error" v-bind="exposeData">
+                    <span class="error-tips">{{error?.message || error}}</span>
+                </slot>
             </template>
             <slot v-else v-bind="exposeData"></slot>
         </template>
@@ -68,8 +66,9 @@ defineExpose(exposeData)
             <div :class="[directionClass, 'layout-parts']">
                 <div><slot v-bind="exposeData"></slot></div>
                 <div v-if="hasError" :class="layoutClass">
-                    <slot name="error" v-if="hasErrorSlot" v-bind="exposeData"></slot>
-                    <span v-else class="error-tips">{{error?.message || error}}</span>
+                    <slot name="error" v-bind="exposeData">
+                        <span class="error-tips">{{error?.message || error}}</span>
+                    </slot>
                 </div>
             </div>
         </template>

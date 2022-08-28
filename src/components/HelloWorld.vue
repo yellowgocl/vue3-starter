@@ -4,7 +4,7 @@ import { ref, onMounted, onUpdated, watch } from 'vue'
 
 import { Button } from 'ant-design-vue';
 
-defineProps({
+const props = defineProps({
   msg: String
 })
 
@@ -15,11 +15,12 @@ onMounted(() => {
   console.log(`the component is now mounted.`)
 })
 
-watch(count, () => {
+watch(count, (count, oldCount) => {
   if (count.value > 4) {
-    throw new Error('fuck , go to shit')
+    throw new Error('fuck , go to shit from ' + props.msg)
   }
 })
+
 
 const onClick = (e) => {
   count.value += 1
