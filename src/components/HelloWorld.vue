@@ -16,7 +16,7 @@ onMounted(() => {
 })
 
 watch(count, (count, oldCount) => {
-  if (count.value > 4) {
+  if (count > 4) {
     throw new Error('fuck , go to shit from ' + props.msg)
   }
 })

@@ -5,6 +5,9 @@ import { DIRECTION, ERROR_TYPES } from '@/constants/types'
 
 const props = defineProps({
     onError: Function,
+    error: {
+        validator: (value) => value instanceof Error
+    },
     stopPropagation: Boolean,
     type: {
         validator(value) {
@@ -19,8 +22,10 @@ const props = defineProps({
         default: DIRECTION.COLUMN
     }
 })
+console.info('error wrapper: ', props.error)
+const emit = defineEmits(['update:error'])
 const directionClass = ref(`direction-${props.direction}`)
-const error = ref()
+const error = ref(props.error)
 const reset = () => {
     error.value = null
 }
@@ -28,7 +33,11 @@ const hasError = computed(() => {
     return !!error.value
 })
 const isTypeOfParts = computed(() => {
-    return [ERROR_TYPES.PARTS_START, ERROR_TYPES.PARTS_END].some(v => v === props.type)
+    return [ERROR_TYPES.PARTS_START, ERROR_TYPES.PARTS_END, ERROR_TYPES.NONE]
+        .some(v => v === props.type)
+})
+watch(() => props?.error, (newError, oldError) => {
+    error.value = newError
 })
 
 const layoutClass = computed(() => {
@@ -38,7 +47,7 @@ const layoutClass = computed(() => {
 })
 
 onErrorCaptured((innerError) => {
-    
+    emit('update:error', innerError)
     const flag = !!props.onError?.(innerError)
     !flag && (error.value = innerError)
     return !!props.stopPropagation || flag
@@ -55,7 +64,7 @@ defineExpose(exposeData)
 <template>
     <div class="error-wrapper">
         <template v-if="type === ERROR_TYPES.REPLACE">
-            <template v-if="hasError">
+            <template v-if="hasError && type !== ERROR_TYPES.NONE">
                 <slot name="error" v-bind="exposeData">
                     <span class="error-tips">{{error?.message || error}}</span>
                 </slot>
@@ -72,6 +81,7 @@ defineExpose(exposeData)
                 </div>
             </div>
         </template>
+        
     </div>
 </template>
 
