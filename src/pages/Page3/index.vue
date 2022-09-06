@@ -1,10 +1,17 @@
 <script setup>
     import { onMounted } from 'vue';
-    onMounted(() => {
-        throw new Error('page3 error')
-    })
+    import { MultValueError } from '@/beans/error';
+    import ToDoList from './ToDoList.vue'
+    import ErrorWrapper from '@/components/ErrorWrapper.vue'
+    import { ERROR_TYPES, DIRECTION } from '@/constants/types'
+
+    const onStopPropagation = (innerError) => {
+        return !(innerError instanceof MultValueError)
+    }
 </script>
 
 <template>
-    <h1 v-for="i in 100" :key="i">Page3</h1>
+    <ErrorWrapper :stopPropagation="onStopPropagation" :type="ERROR_TYPES.PARTS_START" :direction="DIRECTION.COLUMN">
+        <ToDoList />
+    </ErrorWrapper>
 </template>

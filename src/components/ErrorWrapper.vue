@@ -8,7 +8,7 @@ const props = defineProps({
     error: {
         validator: (value) => value instanceof Error
     },
-    stopPropagation: Boolean,
+    stopPropagation: [Boolean, Function],
     type: {
         validator(value) {
             return Object.values(ERROR_TYPES).includes(value)
@@ -22,7 +22,6 @@ const props = defineProps({
         default: DIRECTION.COLUMN
     }
 })
-console.info('error wrapper: ', props.error)
 const emit = defineEmits(['update:error'])
 const directionClass = ref(`direction-${props.direction}`)
 const error = ref(props.error)
@@ -36,6 +35,7 @@ const isTypeOfParts = computed(() => {
     return [ERROR_TYPES.PARTS_START, ERROR_TYPES.PARTS_END, ERROR_TYPES.NONE]
         .some(v => v === props.type)
 })
+
 watch(() => props?.error, (newError, oldError) => {
     error.value = newError
 })
@@ -47,10 +47,14 @@ const layoutClass = computed(() => {
 })
 
 onErrorCaptured((innerError) => {
-    emit('update:error', innerError)
-    const flag = !!props.onError?.(innerError)
-    !flag && (error.value = innerError)
-    return !!props.stopPropagation || flag
+    const stopPropagation = (typeof props.stopPropagation === 'function') ? props.stopPropagation?.(innerError) : !!props.stopPropagation 
+    const flag = !!props.onError?.(innerError) || !!stopPropagation
+    console.info({stopPropagation, flag})
+    if(!flag) {
+        (error.value = innerError)
+        emit('update:error', innerError)
+    }
+    return flag
 })
 
 const exposeData = {

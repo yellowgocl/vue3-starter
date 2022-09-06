@@ -5,7 +5,7 @@
 
     // import ErrorWrapperExample from './ErrorWrapperExample.vue'
     const Page1 = defineAsyncComponent (() => import(/* webpackChunkName: "tabs-page1" */ './Page1/index.vue'))
-    const Page2 = defineAsyncComponent (() => import(/* webpackChunkName: "tabs-page2" */ '../ErrorWrapperExample.vue'))
+    const Page2 = defineAsyncComponent (() => import(/* webpackChunkName: "tabs-page2" */ './Page2/index.vue'))
     const Page3 = defineAsyncComponent (() => import(/* webpackChunkName: "tabs-page3" */ './Page3/index.vue'))
 
     const errorWrapper = ref()

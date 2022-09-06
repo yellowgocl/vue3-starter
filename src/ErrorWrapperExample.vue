@@ -28,7 +28,7 @@
     
     <template>
     <ErrorWrapper v-model:error="rootError" :type="ERROR_TYPES.PARTS_START" :direction="DIRECTION.COLUMN">
-        <ErrorWrapper :onError="onError" ref="errorWrapper" :type="ERROR_TYPES.PARTS_START" :direction="DIRECTION.COLUMN">
+        <ErrorWrapper :stopPropagation="onError" ref="errorWrapper" :type="ERROR_TYPES.PARTS_START" :direction="DIRECTION.COLUMN">
           <template v-slot:error="{ error, reset }" >
             <span class="error-tips">{{error}}</span>
             <button @click="reset">clear error by error slot</button>
