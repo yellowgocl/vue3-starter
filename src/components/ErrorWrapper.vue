@@ -49,7 +49,7 @@ const layoutClass = computed(() => {
 onErrorCaptured((innerError) => {
     const stopPropagation = (typeof props.stopPropagation === 'function') ? props.stopPropagation?.(innerError) : !!props.stopPropagation 
     const flag = !!props.onError?.(innerError) || !!stopPropagation
-    console.info({stopPropagation, flag})
+    console.error(innerError)
     if(!flag) {
         (error.value = innerError)
         emit('update:error', innerError)
@@ -78,7 +78,7 @@ defineExpose(exposeData)
         <template v-else-if="isTypeOfParts">
             <div :class="[directionClass, 'layout-parts']">
                 <div><slot v-bind="exposeData"></slot></div>
-                <div v-if="hasError" :class="layoutClass">
+                <div v-if="hasError && type !== ERROR_TYPES.NONE" :class="layoutClass">
                     <slot name="error" v-bind="exposeData">
                         <span class="error-tips">{{error?.message || error}}</span>
                     </slot>

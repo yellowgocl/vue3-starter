@@ -22,7 +22,7 @@
 </script>
 
 <template>
-<div>
+<div class="page">
     <ErrorWrapper v-model:error="error" ref="errorWrapper" :type="ERROR_TYPES.NONE" >
         <a-tabs v-model:activeKey="activeKey" centered  :tabBarGutter="100">
             <a-tab-pane key="1" tab="Tab 1" style="height: 200px"><Page1/></a-tab-pane>
@@ -38,7 +38,7 @@
 
 <style scoped>
 .page {
-    height: 100vh;
+    padding: 12px 24px;
 }
 .ant-tabs {
     height: 100%;
