@@ -16,8 +16,9 @@
         if (!has) {
             list.push(value.value)
         } else {
+            const v = value.value
             value.value = null
-            throw new MultValueError('mult value error')
+            throw new MultValueError(`列表内已經存在了[${v}]`)
         }
     }
 </script>
