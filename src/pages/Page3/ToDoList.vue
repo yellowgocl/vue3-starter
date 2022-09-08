@@ -6,10 +6,9 @@
 
     const list = reactive([{ value: '2', lock: false }, { value: '3', lock: true }])
     const value = ref()
-    const emit = defineEmits(['change', 'add', 'remove'])
+    const emit = defineEmits(['change', 'add', 'remove', 'lock'])
 
     const onChange = (v) => {
-        // console.info(v)
         emit('change', v)
     }
     const onRemove = (e) => {
@@ -26,6 +25,7 @@
         if (index < 0) return
 
         list[index].lock = !list[index]?.lock
+        emit('remove', list[index])
     }
     const onAdd = () => {
         const has = list?.some((v) => v.value === value.value)
@@ -57,7 +57,9 @@
             <a-list-item :class="{lock: item.lock}">
                 <div class="item">
                     <span>{{ item.value }}</span>
-                    <a-button :data-item-value="item.value" :disabled="item.lock" @click="onRemove"><template #icon><delete-outlined /></template></a-button>
+                    <a-button :data-item-value="item.value" :disabled="item.lock" @click="onRemove">
+                        <template #icon><delete-outlined /></template>
+                    </a-button>
                     <a-button :data-item-value="item.value" @click="onLock">
                         <template #icon><unlock-outlined v-if="item.lock" /><lock-outlined v-else /></template>
                     </a-button>
