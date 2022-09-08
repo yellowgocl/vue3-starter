@@ -52,16 +52,16 @@
       </template>
     </a-input-search>
     <slot name="error"></slot>
-    <a-list bordered :data-source="list">
+    <a-list class="list" bordered :data-source="list">
         <template #renderItem="{item}">
-            <a-list-item :class="{lock: item.lock}">
-                <div class="item">
+            <a-list-item class="item" :class="{lock: item.lock}">
+                <div class="content">
                     <span>{{ item.value }}</span>
                     <a-button :data-item-value="item.value" :disabled="item.lock" @click="onRemove">
                         <template #icon><delete-outlined /></template>
                     </a-button>
                     <a-button :data-item-value="item.value" @click="onLock">
-                        <template #icon><unlock-outlined v-if="item.lock" /><lock-outlined v-else /></template>
+                        <template #icon><unlock-outlined v-if="!item.lock" /><lock-outlined v-else /></template>
                     </a-button>
                 </div>
             </a-list-item>
@@ -70,18 +70,24 @@
 </template>
 
 <style scoped>
-.item {
+.list {
+    margin-top: 24px;
+}
+.item{
+
+}
+.content {
     display: flex;
     width: 100%;
     align-items: center;
 }
-.lock {
-    background-color: rgba(255,0,0,.1);
+.item.lock {
+    background-color: rgba(255,0,0,.04);
 }
-.item>*:first-child{
+.content>*:first-child{
     flex: 1;
 }
-.item>*:nth-child(n):not(:first-child){
+.content>*:nth-child(n):not(:first-child){
     margin-left: 12px;
 }
 </style>
