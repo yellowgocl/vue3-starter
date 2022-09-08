@@ -17,7 +17,7 @@
 <template>
     <ErrorWrapper ref="errorWrapper" :stopPropagation="onStopPropagation" :type="ERROR_TYPES.NONE">
         <ToDoList @change="onChange">
-            <template v-if="!!errorWrapper.error" #error><div style="color:red; padding: 6px 2px;">{{errorWrapper.error?.message}}</div></template>
+            <template v-if="!!errorWrapper?.error" #error><div style="color:red; padding: 6px 2px;">{{errorWrapper?.error?.message}}</div></template>
         </ToDoList>
     </ErrorWrapper>
 </template>
