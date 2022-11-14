@@ -1,47 +1,43 @@
-
 <script setup>
-import { ref, onMounted, onUpdated, watch } from 'vue'
-
-import { Button } from 'ant-design-vue';
-
-const props = defineProps({
-  msg: String
-})
-
-const count = ref(0)
-const bool = ref(false)
-
-onMounted(() => {
-  console.log(`the component is now mounted.`)
-})
-
-watch(count, (count, oldCount) => {
-  if (count > 4) {
-    throw new Error('fuck , go to shit from ' + props.msg)
+defineProps({
+  msg: {
+    type: String,
+    required: true
   }
 })
-
-
-const onClick = (e) => {
-  count.value += 1
-}
-
 </script>
 
 <template>
-  <h1>{{ msg }}</h1>
-  <div class="card">
-    <a-button @click="onClick">count is {{ count }}</a-button>
-    <p>
-      Edit
-      <code>components/HelloWorld.vue</code> to test HMR
-    </p>
+  <div class="greetings">
+    <h1 class="green">{{ msg }}</h1>
+    <h3>
+      You’ve successfully created a project with
+      <a href="https://vitejs.dev/" target="_blank" rel="noopener">Vite</a> +
+      <a href="https://vuejs.org/" target="_blank" rel="noopener">Vue 3</a>.
+    </h3>
   </div>
-
 </template>
 
 <style scoped>
-.read-the-docs {
-  color: #888;
+h1 {
+  font-weight: 500;
+  font-size: 2.6rem;
+  top: -10px;
+}
+
+h3 {
+  font-size: 1.2rem;
+}
+
+.greetings h1,
+.greetings h3 {
+  text-align: center;
+}
+
+@media (min-width: 1024px) {
+  .greetings h1,
+  .greetings h3 {
+    text-align: left;
+  }
 }
 </style>

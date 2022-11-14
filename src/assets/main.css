@@ -1,0 +1,52 @@
+@import './base.css';
+
+#app {
+  /* max-width: 1280px; */
+  margin: 0 auto;
+  /* padding: 1.18rem; */
+  font-weight: normal;
+}
+
+.main_space{
+  margin:0 1.18rem;
+}
+
+.spaceUp_0{
+  margin-top:.8rem;
+}
+.spaceUp_1{
+  margin-top:1rem;
+}
+.spaceUp_2{
+  margin-top:2rem;
+}
+.spaceUp_3{
+  margin-top:3rem;
+}
+/* .border_bottom{ border-bottom: #;} */
+
+a,
+.green {
+  text-decoration: none;
+  color: hsla(160, 100%, 37%, 1);
+  transition: 0.4s;
+}
+
+@media (hover: hover) {
+  a:hover {
+    background-color: hsla(160, 100%, 37%, 0.2);
+  }
+}
+
+/* @media (min-width: 1024px) {
+  body {
+    display: flex;
+    place-items: center;
+  }
+
+  #app {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 0 2rem;
+  }
+} */
