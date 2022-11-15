@@ -1,24 +1,26 @@
 <script setup>
-import {useRoute} from 'vue-router'
+import {useRoute, useRouter} from 'vue-router'
 import { NavBar } from 'vant';
 import { ref, defineAsyncComponent, computed } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
 
 const currentPath = ref(window.location.hash)
 const currentRoute = useRoute()
-console.info(currentRoute)
+const router = useRouter()
 const currentView = computed(() => {
   return RouterView[currentPath.value.slice(1) || '/'] || NotFound
 })
+const isHome = computed(() => currentRoute.name === 'index')
+
 const onClickLeft=(e)=>{
   console.log(currentPath)
-  currentPath.value = window.location.hash
+  router.back()
 }
 </script>
 
 <template>
   <div class="navBar">
-    <NavBar :safe-area-inset-top="true" :title="currentRoute?.meta?.title"  left-text="返回" left-arrow  @click-left="onClickLeft"/>
+    <NavBar :safe-area-inset-top="true" :title="currentRoute?.meta?.title"  :left-text="!isHome && '返回'" :left-arrow="!isHome"  @click-left="onClickLeft"/>
   </div>
 </template>
 
