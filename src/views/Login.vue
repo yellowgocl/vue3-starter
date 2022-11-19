@@ -2,13 +2,18 @@
 <script setup>
 import { ref, defineAsyncComponent, computed } from 'vue'
 import { Icon,  Button, Field, CellGroup ,Row,Space ,Form,Divider} from 'vant';
-
+import {useRouter} from 'vue-router'
+import { useService } from '@/hooks'
 //const value = ref('');
 //console.log("value",value)
 const username = ref('');
-const onSubmit = (values) => {
+const router=useRouter();
+const services = useService()
+const onSubmit = async (values) => {
   console.log('submit', values, username.value);
-
+  const data = await services.login({ id: username.value })
+  sessionStorage.setItem('staff', JSON.stringify(data))
+  router.replace({ path: '/' })
 };
 </script>
 <template>

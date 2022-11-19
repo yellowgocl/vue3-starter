@@ -167,4 +167,5 @@ import moment from 'moment';
 <style>
 .iconStyle{margin: 0 auto;}
 .listH{ height: calc( 100vh - 27.4rem) ; overflow-y: auto;}
+.van-field--disabled .van-field__label{color:var(--van-field-label-color);}
 </style>

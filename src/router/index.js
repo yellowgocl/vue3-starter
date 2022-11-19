@@ -24,6 +24,7 @@ const router = createRouter({
       name: 'scanning',
       meta: {
         title: '扫描合同号归档',
+
       },
       component: () => import('../views/Scanning.vue')
     },
@@ -42,16 +43,15 @@ const router = createRouter({
         title: '已扫描归档合同查询',
       },
       component: () => import('../views/Archived.vue')
-    },
-    {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue')
     }
   ]
+})
+
+router.beforeEach((to, from, next) => {
+  const isAuthenticated = !!sessionStorage.getItem('staff')
+  if (to.name !== 'login' && to.meta.requiresAuth !== false && !isAuthenticated) next({ name: 'login' })
+  else if (to.name === 'login' && isAuthenticated) next({ name: 'index' })
+  else next()
 })
 
 export default router
