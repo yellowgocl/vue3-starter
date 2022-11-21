@@ -5,7 +5,7 @@ import { Icon,  Button, Field, CellGroup ,Row,Space ,Form} from 'vant';
 import ErrorBoundary from '@/components/ErrorBoundary.vue'
 import { ERROR_TYPES, DIRECTION } from '@/constants/types'
 import {useRouter} from 'vue-router'
-import { useService } from '@/hooks'
+import { useService, usePromise } from '@/hooks'
 
 const error = ref()
 const currentStaff = ref()
@@ -17,8 +17,9 @@ const onCLick=(item)=>{
   router.push(item.link);
 }
 
+const [state, asyncUserGet] = usePromise()
 const onQueryUser = (async () => {
-  currentStaff.value  = await services['user/get']()
+  currentStaff.value  = await asyncUserGet(services['user/get']())
 })
 
 </script>
@@ -28,7 +29,7 @@ const onQueryUser = (async () => {
     <Space direction="vertical"  :align="center"  fill size="1.2rem" >
       <Button v-for="(item, index) in buttonName" type="primary" :key="index" block @click="onCLick(item)">{{item.name}}</Button>
     </Space>
-    <Button type="secondary" :key="index" block @click="onQueryUser">query user data</Button>
+    <Button type="secondary" :key="index" block @click="onQueryUser">{{state?.isPending ? "loading..." : "query user data"}}</Button>
   </div>
 <!-- </ErrorBoundary> -->
 </template>

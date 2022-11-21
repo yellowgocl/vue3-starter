@@ -18,6 +18,7 @@ const handlers = reduce(config, (r, v, k) => {
         url,
         async (req, res, ctx) => {
             const mock = v?.['mock']
+            const delay = v?.delay || 1000
             const mockPath = isBoolean(mock) && !!mock ? url : mock
             const mockModule = isFunction(mockPath) 
                 ? { default: mockPath }
@@ -34,6 +35,7 @@ const handlers = reduce(config, (r, v, k) => {
             }
             
             return res(
+                ctx.delay(delay),
                 ctx.status(statusCode),
                 ctx.json(response)
             )
