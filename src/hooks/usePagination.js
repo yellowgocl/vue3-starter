@@ -21,7 +21,7 @@ const ussPagination = (options = {}) => {
 
     const next = async (onFetch, page) => {
         try {
-            if (state.isPending || isFinished.value) return;
+            if (promiseState.isPending || isFinished.value) return;
             
             const nextPage = page >= 0 ? page : currentPage.value + 1
             if (nextPage === 1) currentData.value = []

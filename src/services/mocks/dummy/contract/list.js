@@ -13,8 +13,12 @@ const gen = (type, page, size = 10) => {
 }
 
 export default (req) => {
-    const { type, page, size } = req.body || {}
-    console.info({...req})
+    // const { type, page, size, account } = req.body || {}
+    const searchParams = req.url.searchParams
+    const page = Number.parseInt(searchParams.get('page'))
+    const size = Number.parseInt(searchParams.get('size'))
+    const account = searchParams.get('account')
+    const type = searchParams.get('type')
     const list = gen(type, page, size)
     return {
         page,

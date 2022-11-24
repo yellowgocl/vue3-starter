@@ -2,6 +2,7 @@
 <script setup>
 import { ref, defineAsyncComponent, computed, onMounted } from 'vue'
 import { List, Cell } from 'vant';
+import { debounce } from 'lodash'
 import Search from '@/components/Search.vue'
 import {useRouter} from 'vue-router'
 
@@ -11,15 +12,18 @@ const searchDate = ref('')
 const [paginationState, onNextPage] = usePagination()
 const services = useService()
 
-const onLoadNextPage = async (page) => {
+const onLoadNextPage = debounce(async (page) => {
   console.info(searchDate)
-  await onNextPage((page, size ,total) => {
+  await onNextPage((page, size, total) => {
     console.info({page, size})
     return services['contract/list']({
       page, size
     })
   }, page)
-}
+}, 100, {
+  leading: true,
+  trailing: false
+})
 
 </script>
 <template>

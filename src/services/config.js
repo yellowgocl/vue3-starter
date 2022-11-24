@@ -1,3 +1,16 @@
+const getAccountData = () => {
+    try {
+        const accountData = JSON.parse(sessionStorage.getItem('staff') || '{}')
+        return accountData
+    } catch (e) {
+        return null
+    }
+}
+const parseRequestData = () => {
+    return {
+        account: getAccountData()?.account
+    }
+}
 const config = {
     'login': {
         url: '/api/login',
@@ -6,8 +19,9 @@ const config = {
     },
     'contract/list': {
         url: '/api/contract/list',
-        method: 'post',
-        mock: './dummy/contract/list'
+        method: 'get',
+        mock: './dummy/contract/list',
+        params: parseRequestData
     },
     'user/get': {
         url: '/api/user',
