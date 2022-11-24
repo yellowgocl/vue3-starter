@@ -4,6 +4,7 @@ import { ref, defineAsyncComponent, computed } from 'vue'
 import { Icon,  Button, Field, CellGroup ,Row,Space ,Form,Cell,Toast,Divider,List,Grid, GridItem} from 'vant';
 import {useRouter} from 'vue-router'
 import moment from 'moment'; 
+import Title from '../components/Title.vue'
 
     const no = ref('');
     const name = ref('');
@@ -90,7 +91,8 @@ import moment from 'moment';
 </script>
 <template>
   <div>
-    <Cell value="合同归档信息" />
+    <!-- <Cell value="合同归档信息" /> -->
+    <Title :value="'合同归档信息'"></Title>
     <Form @failed="onFailed" @submit="onSubmit">
       <CellGroup inset>
         <!-- 通过 validator 进行异步函数校验 -->

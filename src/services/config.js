@@ -6,7 +6,7 @@ const config = {
     },
     'contract/list': {
         url: '/api/contract/list',
-        method: 'get',
+        method: 'post',
         mock: './dummy/contract/list'
     },
     'user/get': {

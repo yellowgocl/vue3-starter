@@ -18,7 +18,7 @@ const handlers = reduce(config, (r, v, k) => {
         url,
         async (req, res, ctx) => {
             const mock = v?.['mock']
-            const delay = v?.delay || 1000
+            const delay = v?.['delay'] || 1000
             const mockPath = isBoolean(mock) && !!mock ? url : mock
             const mockModule = isFunction(mockPath) 
                 ? { default: mockPath }
@@ -27,7 +27,11 @@ const handlers = reduce(config, (r, v, k) => {
             let response
             try {
                 response = isFunction(mockModule?.default) ? await mockModule?.default(req) : mockModule?.default
-                if (!response) statusCode = 404
+                // if (!response) statusCode = 404
+
+                const resultCode = !!response ? 1 : 0
+                const message = resultCode ? 'SUCCESS' : 'Unknow error.'
+                response = { resultCode, message, ...response }
             } catch (e) {
                 console.warn('mock error:', e)
                 statusCode = e?.statusCode || e?.status || 500

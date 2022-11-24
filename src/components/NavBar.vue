@@ -7,11 +7,13 @@ import { RouterLink, RouterView } from 'vue-router'
 const currentPath = ref(window.location.hash)
 const currentRoute = useRoute()
 const router = useRouter()
+//当前页面路由路径
 const currentView = computed(() => {
   return RouterView[currentPath.value.slice(1) || '/'] || NotFound
 })
-const isHome = computed(() => currentRoute.name === 'index')
-
+//是否有返回按钮
+const isHome = computed(() => currentRoute.name === 'index'||currentRoute.name === 'login')
+//返回按钮方法
 const onClickLeft=(e)=>{
   console.log(currentPath)
   router.back()

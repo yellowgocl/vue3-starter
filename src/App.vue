@@ -1,24 +1,29 @@
 <script setup>
-import { ref } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
-import ErrorBoundary from './components/ErrorBoundary.vue'
-import { ERROR_TYPES, DIRECTION } from './constants/types'
 import NavBar from './components/NavBar.vue';
 // import HelloWorld from './components/HelloWorld.vue'
 // import { Landing, Login } from './views'
-
-const error = ref()
 </script>
 
 <template>
-  <ErrorBoundary v-model:error="error" :type="ERROR_TYPES.PARTS_END" :direction="DIRECTION.COLUMN" >
-    <div>
   <header>
     <NavBar></NavBar>
   </header>
+  <!-- <header>
+    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+
+    <div class="wrapper">
+      <HelloWorld msg="You did it!" />
+
+      <nav>
+        <RouterLink to="/">Home</RouterLink>
+        <RouterLink to="/about">About</RouterLink>
+      </nav>
+    </div>
+  </header> -->
+
   <RouterView />
-</div>
-</ErrorBoundary>
+
 </template>
 
 <style scoped>

@@ -1,12 +1,24 @@
 import { inject } from 'vue'
-// import { reduce } from 'lodash'
-// import useError from './useError'
+import { reduce } from 'lodash'
 
 const useService = () => {
     const services = inject('services')
-    // const setError = useError()
-    
-    return services
+    return reduce(services, (r, v, k) => {
+        const api = async (data, options = {}) => {
+            const { statusKey = 'resultCode', status = 1, ...rest } = options
+            try {
+                const response = await v(data, rest)
+                if (!response || response[statusKey] !== status) throw response
+
+                return response
+            } catch (e) {
+                console.error(e)
+                throw e
+            }
+        }
+        r[k] = api
+        return r
+    }, {})
 }
 
 export default useService;
