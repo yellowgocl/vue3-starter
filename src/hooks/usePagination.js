@@ -4,7 +4,7 @@ import usePromise from './usePromise'
 
 const ussPagination = (options = {}) => {
     const { initial = 0, size = 10, total, accumulate = true, onLoaded, keys = {} } = options
-    const { currentPage: currentPageKey = 'page', totalPage: totalPageKey = 'total', data: dataKey = 'list' } = keys
+    const { currentPage: currentPageKey = 'page', totalPage: totalPageKey = 'totalPage', data: dataKey = 'list' } = keys
     const [promiseState, wrapper] = usePromise()
     const currentPage = ref(initial)
     const currentData = ref([])
@@ -21,7 +21,7 @@ const ussPagination = (options = {}) => {
 
     const next = async (onFetch, page) => {
         try {
-            if (promiseState.isPending || isFinished.value) return;
+            if (promiseState.isPending || (isFinished.value && page > 1)) return;
             
             const nextPage = page >= 0 ? page : currentPage.value + 1
             if (nextPage === 1) currentData.value = []

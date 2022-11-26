@@ -7,7 +7,7 @@ const props = defineProps({
       type: Array, default: () => []
     },
     num:{
-      type:Number,default:()=>'3'
+      type:Number,default:()=>3
     }
 })    
 

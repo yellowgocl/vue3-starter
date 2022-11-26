@@ -3,34 +3,43 @@ import { ref, defineAsyncComponent, defineEmits, computed, defineProps } from 'v
 import { Calendar,Icon,Col,  Button, Field, CellGroup ,Row,Space ,Form,Cell,Toast,Divider,List,Grid, GridItem,PullRefresh} from 'vant';
 import {useRouter} from 'vue-router'
 import Title from '@/components/Title.vue'
+import moment from 'moment'
 const props = defineProps({
     title:{
       type: String, default: () => ""
     },
     modelValue: {
-      type: String, default: () => ''
+      type: Array, default: () => []
+    },
+    disabled: {
+      type: Boolean, default: () => false
     }
 }) 
 //const submit = ref(props.onSubmit);
-const date = ref('');
 const show = ref(false);
 
+const dateStart = computed(() => props.modelValue?.[0])
+const dateEnd = computed(() => props.modelValue?.[1])
+const date = computed(() => props.modelValue?.join(' - '))
+
 const emit = defineEmits(['submit', 'update:modelValue'])
-// const result = ref('');
-// const sms = ref(false);
 
 const formatDate = (date) => `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
 const onConfirm = (values) => {
   const [start, end] = values;
   //console.log("date",start,end,moment().format())
   show.value = false;
-  date.value = `${formatDate(start)} - ${formatDate(end)}`;
+  emit('update:modelValue', [
+    moment(start).format('YYYY-MM-DD'),
+    moment(end).format('YYYY-MM-DD'),
+  ])
 };
 const onSubmit=(values)=>{
-  console.log('submit', values,);
+  console.log('submit', props.mockValue);
+
   // submit.value=values
-  emit('submit', values?.datetimePicker)
-  emit('update:modelValue', values?.datetimePicker)
+  emit('submit', props.mockValue)
+  
 }
 const onFailed=(errorInfo)=>{
   console.log('failed', errorInfo);
@@ -45,18 +54,19 @@ const onFailed=(errorInfo)=>{
         <Row justify="center">
           <Col span="18" class="rowRight">
             <Field
-            v-model="date"
-            is-link
-            readonly
-            name="datetimePicker"
-            label="呈批时间"
-            placeholder="点击选择时间"
-            @click="show = true"
-            :rules="[{ validator: asyncValidator, message: '请点击选择时间' }]"
-          />
+              :disabled="disabled"
+              v-model="date"
+              is-link
+              readonly
+              name="datetimePicker"
+              label="呈批时间"
+              placeholder="点击选择时间"
+              @click="show = true"
+              :rules="[{required: true, message: '请点击选择时间' }]"
+            />
           </Col>
           <Col span="5">
-            <Button block type="primary" native-type="submit" class="buttonStyle">
+            <Button :disabled="disabled" block type="primary" native-type="submit" class="buttonStyle">
               提交
             </Button>    
           </Col>

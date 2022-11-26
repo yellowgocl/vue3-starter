@@ -1,7 +1,7 @@
 
 <script setup>
 import { ref, defineAsyncComponent, computed, watch } from 'vue'
-import { Icon, Button, Field, CellGroup ,Row, Space, Form, Divider, Notify } from 'vant';
+import { Icon, Button, Field, CellGroup ,Row, Space, Form, Divider, Notify,Toast } from 'vant';
 import {useRouter} from 'vue-router'
 import { useService, usePromise } from '@/hooks'
 //const value = ref('');
@@ -17,7 +17,8 @@ const onSubmit = async (values) => {
     sessionStorage.setItem('staff', JSON.stringify({...data, account: username.value }))
     router.replace({ path: '/' })
   } catch (e) {
-    Notify({ type: 'danger', message: e?.message, position: 'bottom' });
+    // Notify({ type: 'danger', message: e?.message, position: 'bottom' });
+    Toast(e?.message);
   }
 };
 

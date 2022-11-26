@@ -66,12 +66,6 @@ const props = defineProps({
           finished-text="没有更多了"
           @load="onLoad"
         >
-          <!-- <van-cell v-for="item in list" :key="item" :title="item" /> -->
-          <!-- <Grid v-for="item in list" :key="item" :column-num="3">
-            <GridItem  :text="item.no" />
-            <GridItem  :text="item.name" />
-            <GridItem  :text="item.time" />
-          </Grid> -->
           <Card v-for="item in list" :key="item" :data="item" :num="3"></Card>
         </List>
       </PullRefresh>

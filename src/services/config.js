@@ -17,16 +17,34 @@ const config = {
         method: 'post',
         mock: './dummy/login'
     },
-    'contract/list': {
-        url: '/api/contract/list',
+    'scanned': {
+        url: '/api/contract/scanned',
         method: 'get',
-        mock: './dummy/contract/list',
+        mock: './dummy/contract/scanned',
+        params: parseRequestData
+    },
+    'beScanned': {
+        url: '/api/contract/beScanned',
+        method: 'get',
+        mock: './dummy/contract/beScanned',
         params: parseRequestData
     },
     'user/get': {
         url: '/api/user',
         method: 'get',
         mock: './dummy/user/get'
+    },
+    'numberQuery':{
+        url: '/api/numberQuery',
+        method: 'get',
+        mock: './dummy/numberQuery',
+        params: parseRequestData
+    },
+    'contractFiling':{
+        url: '/api/contractFiling',
+        method: 'post',
+        mock: './dummy/contractFiling',
+        data: parseRequestData
     },
 }
 
