@@ -1,4 +1,4 @@
-import { ref } from 'vue'
+import { ref, reactive } from 'vue'
 
 const useCounter = (initial = 1) => {
     const count = ref(initial)

@@ -1,24 +1,25 @@
-import { ref, reactive, onMounted } from 'vue'
+import { ref, reactive, onMounted, computed } from 'vue'
+import { isFunction } from 'lodash'
 
-const usePromise = (outerPromise) => {
-    // const promise = ref(outerPromise)
+const usePromise2 = (promiseWrapper, options = {}) => {
     const isPending = ref(false)
     const isFulfilled = ref(false)
     const isRejected = ref(false)
-    const state = reactive({ isPending, isFulfilled, isRejected })
-
-    const wrapper = (promise) => {
-        state.isPending = true
-        state.isFulfilled = state.isRejected = !state.isPending;
+    const state = computed(() => ({ isPending: isPending.value, isFulfilled: isFulfilled.value, isRejected: isRejected.value }))
+    const wrapper = (...params) => {
+        // if (isPending.value) return
+        const promise = isFunction(promiseWrapper) ? promiseWrapper?.apply(null, params) : promiseWrapper
+        isPending.value = true
+        isFulfilled.value = isRejected.value = !isPending.value;
         return new Promise((resolve, reject) => {
             const onResolve = (v) => {
-                state.isFulfilled = !!v
-                state.isPending = state.isRejected = !state.isFulfilled;
+                isFulfilled.value = true
+                isPending.value = isRejected.value = !isFulfilled.value;
                 resolve(v)
             }
             const onReject = (e) => {
-                state.isRejected = true;
-                state.isPending = state.isFulfilled = !state.isRejected;
+                isRejected.value = true;
+                isPending.value = isFulfilled.value = !isRejected.value;
                 reject(e)
             }
             if (!promise?.then) {
@@ -27,9 +28,8 @@ const usePromise = (outerPromise) => {
             }
             promise.then(onResolve, onReject)
         })
-        
     }
-    return [state, wrapper]
+    return [wrapper, state]
 }
 
-export default usePromise
+export default usePromise2

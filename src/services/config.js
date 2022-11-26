@@ -21,7 +21,8 @@ const config = {
         url: '/api/contract/scanned',
         method: 'get',
         mock: './dummy/contract/scanned',
-        params: parseRequestData
+        params: parseRequestData,
+        delay: () => Math.ceil(Math.random() * 3000),
     },
     'beScanned': {
         url: '/api/contract/beScanned',
@@ -32,7 +33,7 @@ const config = {
     'user/get': {
         url: '/api/user',
         method: 'get',
-        mock: './dummy/user/get'
+        mock: './dummy/user/get',
     },
     'numberQuery':{
         url: '/api/numberQuery',

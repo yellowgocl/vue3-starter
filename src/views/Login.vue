@@ -2,18 +2,17 @@
 <script setup>
 import { ref, defineAsyncComponent, computed, watch } from 'vue'
 import { Icon, Button, Field, CellGroup ,Row, Space, Form, Divider, Notify,Toast } from 'vant';
-import {useRouter} from 'vue-router'
-import { useService, usePromise } from '@/hooks'
+import { useRouter } from 'vue-router'
+import { useService, usePromise, useApi } from '@/hooks'
 //const value = ref('');
 //console.log("value",value)
 const username = ref('');
-const router=useRouter();
+const router = useRouter();
 const services = useService()
-const [loginState, promiseWrapper] = usePromise()
+const [promiseWrapper, loginState] = useApi(services.login)
 const onSubmit = async (values) => {
-  console.log('submit', values, username.value);
   try {
-    const data = await promiseWrapper(services.login({ account: username.value }))
+    const data = await promiseWrapper({ account: username.value })
     sessionStorage.setItem('staff', JSON.stringify({...data, account: username.value }))
     router.replace({ path: '/' })
   } catch (e) {

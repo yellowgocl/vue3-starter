@@ -28,7 +28,7 @@ const services = reduce(config, (resource, configItem, key) => {
             const { data, ...rest } = await service?.request(parsedConfig) || {}
             return data
         } catch(e) {
-            throw e?.response
+            throw e?.response || e
         }
     }
     return resource
