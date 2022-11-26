@@ -17,12 +17,14 @@ const usePromise = (outerPromise) => {
                 resolve(v)
             }
             const onReject = (e) => {
-                console.error('inject:', e)
                 state.isRejected = true;
                 state.isPending = state.isFulfilled = !state.isRejected;
                 reject(e)
             }
-
+            if (!promise?.then) {
+                onReject({ message: 'promise could not be null' })
+                return 
+            }
             promise.then(onResolve, onReject)
         })
         

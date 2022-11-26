@@ -1,20 +1,27 @@
 
 <script setup>
-import { ref, defineAsyncComponent, computed } from 'vue'
-import { Icon,  Button, Field, CellGroup ,Row,Space ,Form,Divider} from 'vant';
+import { ref, defineAsyncComponent, computed, watch } from 'vue'
+import { Icon, Button, Field, CellGroup ,Row, Space, Form, Divider, Notify,Toast } from 'vant';
 import {useRouter} from 'vue-router'
-import { useService } from '@/hooks'
+import { useService, usePromise } from '@/hooks'
 //const value = ref('');
 //console.log("value",value)
 const username = ref('');
 const router=useRouter();
 const services = useService()
+const [loginState, promiseWrapper] = usePromise()
 const onSubmit = async (values) => {
   console.log('submit', values, username.value);
-  const data = await services.login({ id: username.value })
-  sessionStorage.setItem('staff', JSON.stringify(data))
-  router.replace({ path: '/' })
+  try {
+    const data = await promiseWrapper(services.login({ account: username.value }))
+    sessionStorage.setItem('staff', JSON.stringify({...data, account: username.value }))
+    router.replace({ path: '/' })
+  } catch (e) {
+    // Notify({ type: 'danger', message: e?.message, position: 'bottom' });
+    Toast(e?.message);
+  }
 };
+
 </script>
 <template>
   <div class="index main_space" >
@@ -39,13 +46,11 @@ const onSubmit = async (values) => {
           </CellGroup>
           <Divider />
           <div style="margin:20px 16px;">
-            <Button  block type="primary" native-type="submit">
-              提交
+            <Button :loading="loginState.isPending"  :disabled="loginState.isPending" block type="primary" native-type="submit">
+              {{loginState.isRejected ? "请重试" : "提交"}}
             </Button>
           </div>
         </Form>
-    
-    
   </div>
 </template>
 

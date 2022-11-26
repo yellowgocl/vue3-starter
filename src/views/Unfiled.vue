@@ -1,9 +1,10 @@
 
 <script setup>
 import { ref, defineAsyncComponent, computed } from 'vue'
-import { Calendar,Icon,  Button, Field, CellGroup ,Row,Space ,Form,Cell,Toast,Divider,List,Grid, GridItem,PullRefresh} from 'vant';
+import { Calendar,Icon,Col,  Button, Field, CellGroup ,Row,Space ,Form,Cell,Toast,Divider,List,Grid, GridItem,PullRefresh} from 'vant';
 import {useRouter} from 'vue-router'
-import moment from 'moment'; 
+import moment from 'moment';  
+
 
     const date = ref('');
     const show = ref(false);
@@ -11,9 +12,11 @@ import moment from 'moment';
     // const result = ref('');
     const sms = ref(false);
 
-    const formatDate = (date) => `${date.getMonth() + 1}/${date.getDate()}`;
+   const formatDate = (date) => `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+    //const formatDate = (date) => `${ date.format('YYYY-MM-DD')}`
     const onConfirm = (values) => {
       const [start, end] = values;
+      console.log("date",start,end,moment().format())
       show.value = false;
       date.value = `${formatDate(start)} - ${formatDate(end)}`;
     };
@@ -61,9 +64,11 @@ import moment from 'moment';
 <template>
   <div>
     <Cell value="搜索条件" />
-    <Form @failed="onFailed" @submit="onSubmit">
-      <CellGroup inset>
-        <Field
+    <Form @failed="onFailed" @submit="onSubmit" style="margin-top: 10px;">
+      <!-- <CellGroup inset> -->
+        <Row justify="center">
+          <Col span="18" class="rowRight">
+            <Field
             v-model="date"
             is-link
             readonly
@@ -73,12 +78,18 @@ import moment from 'moment';
             @click="show = true"
             :rules="[{ validator: asyncValidator, message: '请点击选择时间' }]"
           />
-      </CellGroup>
-      <div style="margin: 16px;">
-        <Button block type="primary" native-type="submit">
+          </Col>
+          <Col span="4">
+            <Button block type="primary" native-type="submit" class="buttonStyle">
               提交
-        </Button>                                   
-      </div>
+            </Button>    
+          </Col>
+        </Row>
+        
+      <!-- </CellGroup> -->
+      <!-- <div style="margin: 16px;">
+                                      
+      </div> -->
       <!-- <Popup v-model:show="show" position="bottom"> -->
       <Calendar v-model:show="show" color="#1989fa" type="range" @confirm="onConfirm" :round="false" />
      <!-- </Popup> -->
@@ -114,4 +125,7 @@ import moment from 'moment';
 <style>
 .iconStyle{margin: 0 auto;}
 .listH{ height: calc( 100vh - 19rem) ; overflow-y: auto;}
+.rowRight{ margin:0 .4rem;}
+.rowRight .van-field__label{width: auto;}
+/* .buttonStyle{margin-right: 0.2rem;} */
 </style>
