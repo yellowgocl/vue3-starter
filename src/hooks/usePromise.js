@@ -1,7 +1,7 @@
 import { ref, reactive, onMounted, computed } from 'vue'
 import { isFunction } from 'lodash'
 
-const usePromise2 = (promiseWrapper, options = {}) => {
+const usePromise = (promiseWrapper, options = {}) => {
     const isPending = ref(false)
     const isFulfilled = ref(false)
     const isRejected = ref(false)
@@ -32,4 +32,4 @@ const usePromise2 = (promiseWrapper, options = {}) => {
     return [wrapper, state]
 }
 
-export default usePromise2
+export default usePromise

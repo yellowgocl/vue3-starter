@@ -6,7 +6,7 @@ import Search from '@/components/Search.vue'
 import CardName from '@/components/CardName.vue';
 import Card from '@/components/Card.vue';
 import Title from '@/components/Title.vue'
-import { useService, usePagination } from '@/hooks'
+import { useService, usePagination, usePromise } from '@/hooks'
 
 const listName=['合同编号','合同名称','归档时间']
 
@@ -39,7 +39,10 @@ const refreshing = ref(false);
 watch(() => paginationState.value?.isPending, (n, o) => {
   refreshing.value = n
 })
-
+const parsedState = computed(() => {
+  const { data, ...rest } = paginationState.value
+  return rest
+})
 </script>
 
 <template>
@@ -56,8 +59,7 @@ watch(() => paginationState.value?.isPending, (n, o) => {
           :finished="paginationState.finished"
           finished-text="没有更多了"
           error-text="请求失败"
-          @load="onLoadNextPage"
-    >
+          @load="onLoadNextPage" >
           <Card v-for="item in paginationState.data" :key="item" :data="[item.contractNo, item.contractName, item.fileDate]" :num="3"></Card>
         </List>
       </PullRefresh>

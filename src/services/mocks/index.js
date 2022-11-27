@@ -13,7 +13,7 @@ const mockModules = import.meta.globEager('./dummy/**/*.?(js|json)')
 
 const handlers = reduce(config, (r, v, k) => {
     const method = v?.['method']
-    const url = v?.['url']
+    const url = `${import.meta.env.VITE_API_BASE_URL}${v?.['url']}`
     const result = rest[method](
         url,
         async (req, res, ctx) => {

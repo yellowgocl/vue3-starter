@@ -7,7 +7,7 @@ faker.setLocale('zh_CN');
 }
  */
 
-const contractnoReg = /^[1-9]/
+const contractnoReg = /^[A-Za-z1-9]/
 
 export default (req) => {
     const searchParams = req.url.searchParams

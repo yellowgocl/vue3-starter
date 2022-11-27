@@ -6,8 +6,9 @@ import { useRouter } from 'vue-router'
 import { debounce, find } from 'lodash'
 import moment from 'moment'; 
 import Title from '../components/Title.vue'
-import { useService, usePromise, usePagination } from '@/hooks'
+import { useService, useApi, usePagination } from '@/hooks'
 const contractInfo = ref()
+const contractnoRef = ref()
 const fileTime = ref('');
 const quantity=ref(0);
 const list = ref([]);
@@ -15,7 +16,8 @@ const loading = ref(false);
 const finished = ref(true);
 const submitDate=ref({});
 const services = useService()
-const [fetchState, promiseWrapper] = usePromise()
+const [promiseWrapper, fetchState] = useApi(services.numberQuery)
+const [contractFilingWrapper, contractFilingState] = useApi(services.contractFiling)
 const columnNames = [
   "合同编号",
   "合同名称",
@@ -26,10 +28,10 @@ const contractName = ref('')
 const appUserName = ref('')
 const totalScanned = computed(() => list.value?.length || 0)
 const isDisabledSubmitButton = computed(() => (
-  fetchState.isPending || (!contractno.value || !contractName.value || !appUserName.value )
+  contractFilingState.value.isPending || fetchState.value.isPending || (!contractno.value || !contractName.value || !appUserName.value )
 ))
 
-watch(() => fetchState.isPending, (n, o) => {
+watch(() => fetchState.value.isPending, (n, o) => {
   n ?  Toast.loading('验证中...') : Toast.clear()
 })
 
@@ -48,7 +50,7 @@ const asyncValidator = async (val) => {
   if (contractInfo.value?.contractno === val) return true
   
   try {
-    const { object } = await promiseWrapper(services.numberQuery({ contractno: val }))
+    const { object } = await promiseWrapper(({ contractno: val }))
     contractInfo.value = { ...object, contractno: val }
     fileTime.value=moment().format('YYYY-MM-DD');
     contractName.value = object.contractName
@@ -77,7 +79,7 @@ const beforeClose = async(action) =>{
           reSetFromData();
           throw new Error('列表中已存在!')
         }
-        await promiseWrapper(services.contractFiling( data )) 
+        await contractFilingWrapper(( data )) 
         addList(data)
       } catch (e) {
         Toast.fail(e?.message);
@@ -103,15 +105,26 @@ const onSubmit = (values) => {
   });
 };
 
+window.contract_app_hello = (outerValue) => {
+  console.info(outerValue)
+  contractno.value = outerValue
+}
+
+const onclick = (outerValue) => {
+  window.contract_app_hello('ccc111222')
+  contractnoRef.value?.focus?.()
+}
 </script>
 <template>
   <div>
+    <!-- <div @click="onclick">button call</div> -->
     <!-- <Cell value="合同归档信息" /> -->
     <Title :value="'合同归档信息'"></Title>
     <Form @failed="onFailed" @submit="onSubmit">
       <CellGroup inset>
         <!-- 通过 validator 进行异步函数校验 -->
         <Field
+          ref="contractnoRef"
           v-model="contractno"
           name="contractno"
           label="合同编号:"

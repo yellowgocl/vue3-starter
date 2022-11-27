@@ -3,13 +3,11 @@
 import { ref, defineAsyncComponent, computed, watch } from 'vue'
 import { Icon, Button, Field, CellGroup ,Row, Space, Form, Divider, Notify,Toast } from 'vant';
 import { useRouter } from 'vue-router'
-import { useService, usePromise, useApi } from '@/hooks'
-//const value = ref('');
-//console.log("value",value)
+import { useService, usePromise, useRetry, useApi } from '@/hooks'
 const username = ref('');
 const router = useRouter();
 const services = useService()
-const [promiseWrapper, loginState] = useApi(services.login)
+const [promiseWrapper, loginState, loginActions] = useApi(services.login)
 const onSubmit = async (values) => {
   try {
     const data = await promiseWrapper({ account: username.value })
@@ -17,13 +15,17 @@ const onSubmit = async (values) => {
     router.replace({ path: '/' })
   } catch (e) {
     // Notify({ type: 'danger', message: e?.message, position: 'bottom' });
-    Toast(e?.message);
+    Toast(e?.error?.message);
+    throw e
   }
 };
+
+// const [retryWrapper, retryState] = useRetry(onSubmit)
 
 </script>
 <template>
   <div class="index main_space" >
+    {{retryState}}
     <!-- <Icon name="chat-o" color="#1989fa" size="40"></Icon> -->
     <!-- <van-icon name="friends" /> -->
     <!-- <van-icon name="user-circle-o" /> -->
