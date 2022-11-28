@@ -13,16 +13,18 @@ const services = reduce(config, (resource, configItem, key) => {
         console.warn(`method field in the request config is empty, the request will still be sent using the get method. but is this the behavior you expect? current config: ${fetchConfig}`)
     }
     const method = lowerCase(fetchConfig?.method ?? 'get')
-    const outerData = isFunction(fetchConfig?.data) ? fetchConfig?.data() : fetchConfig?.data
-    const outerParams = isFunction(fetchConfig?.params) ? fetchConfig?.params() : fetchConfig?.params
+    
 
     resource[key] = async (data, outerConfig) => {
-        let parsedDataParams = { data: { ...outerData, ...data } }
+        const outerData = isFunction(fetchConfig?.data) ? fetchConfig?.data() : fetchConfig?.data
+        const outerParams = { ...(isFunction(fetchConfig?.params) ? fetchConfig?.params() : fetchConfig?.params), ...outerConfig.params }
+        let parsedDataParams = { data: { ...outerData, ...data }, params: outerParams }
         switch (method) {
             case 'get':
                 parsedDataParams = { params: { ...outerParams, ...data } }
                 break;
         }
+        console.info({outerParams, data})
         const parsedConfig = { ...fetchConfig, ...outerConfig, method, ...parsedDataParams }
         try {
             const { data, ...rest } = await service?.request(parsedConfig) || {}

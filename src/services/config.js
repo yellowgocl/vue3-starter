@@ -7,42 +7,44 @@ const getAccountData = () => {
     }
 }
 const parseRequestData = () => {
+    console.info('parseRequestData')
     return {
         account: getAccountData()?.account
     }
 }
 const config = {
     'login': {
-        url: '/api/login',
+        url: '/tms/newContract/newContract.do',
         method: 'post',
-        mock: './dummy/login'
+        mock: './dummy/login',
+        params: { method: 'pdaLogin' }
     },
     'scanned': {
-        url: '/api/contract/scanned',
+        url: '/contract/scanned',
         method: 'get',
         mock: './dummy/contract/scanned',
         params: parseRequestData,
         delay: () => Math.ceil(Math.random() * 3000),
     },
     'beScanned': {
-        url: '/api/contract/beScanned',
+        url: '/contract/beScanned',
         method: 'get',
         mock: './dummy/contract/beScanned',
         params: parseRequestData
     },
     'user/get': {
-        url: '/api/user',
+        url: '/user',
         method: 'get',
         mock: './dummy/user/get',
     },
     'numberQuery':{
-        url: '/api/numberQuery',
+        url: '/numberQuery',
         method: 'get',
         mock: './dummy/numberQuery',
         params: parseRequestData
     },
     'contractFiling':{
-        url: '/api/contractFiling',
+        url: '/contractFiling',
         method: 'post',
         mock: './dummy/contractFiling',
         data: parseRequestData

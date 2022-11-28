@@ -11,6 +11,7 @@ const [promiseWrapper, loginState, loginActions] = useApi(services.login)
 const onSubmit = async (values) => {
   try {
     const data = await promiseWrapper({ account: username.value })
+    // const data = await promiseWrapper(null, { params: { account: username.value } })
     sessionStorage.setItem('staff', JSON.stringify({...data, account: username.value }))
     router.replace({ path: '/' })
   } catch (e) {

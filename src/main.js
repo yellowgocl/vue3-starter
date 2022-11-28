@@ -4,7 +4,7 @@ import router from './router'
 import services, { service }  from './services'
 
 // Start the mocking conditionally.
-if (process.env.NODE_ENV === 'development') {
+if (import.meta.env.MODE === 'mock') {
     import('./services/mocks').then(({ worker }) => {
       worker.start({
         onUnhandledRequest: 'bypass',

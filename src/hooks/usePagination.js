@@ -36,17 +36,19 @@ const usePagination = (asyncFunc, options = {}) => {
     }
 
     const base = async (nextPage, prevPage) => {
-        
+        // console.info({nextPage, prevPage, total: totalPage.value})
         try {
             if (asyncState.value.isPending || Number.isNaN(nextPage) || nextPage > totalPage.value || nextPage < 0 ) return;
             // const list = nextPage === 1 ? [] : currentData.value
             if (nextPage === 1) resetData()
 
             const response = await asyncWrapper(nextPage, size, totalPage.value)
-            totalPage.value = get(response, totalPageKey) || total || Number.MAX_SAFE_INTEGER
+            const parsedTotal = get(response, totalPageKey)
+            totalPage.value = (!!parsedTotal || parsedTotal === 0) ? parsedTotal : (total || Number.MAX_SAFE_INTEGER)
+            // console.info(nextPage, totalPage.value)
             const parsedResponse = onReponse?.(response) || get(response, dataKey) || response
             if (!isArray(parsedResponse)) throw { message: 'response must be type of Array' }
-
+            pageActions.set(nextPage)
             currentData.value = accumulate ? [].concat(currentData.value, parsedResponse).filter(Boolean) : parsedResponse
             return parsedResponse
         } catch (e) {
@@ -58,12 +60,12 @@ const usePagination = (asyncFunc, options = {}) => {
 
     const next = async (delta = 1) => {
         const prevPage = currentPage.value
-        const nextPage = pageActions.inc(delta)
+        const nextPage = prevPage + delta
         return await base(nextPage, prevPage)
     }
     const prev = async (delta = 1) => {
         const prevPage = currentPage.value
-        const nextPage = pageActions.dec(delta)
+        const nextPage = prevPage - delta
         return await base(nextPage, prevPage)
     }
     const to = async (page = 1) => {
