@@ -5,10 +5,11 @@ const useService = () => {
     const services = inject('services')
     return reduce(services, (r, v, k) => {
         const api = async (data, options = {}) => {
-            const { statusKey = 'resultCode', status = 1, ...rest } = options
+            const { statusKey = 'resultCode', status = ['1'], ...rest } = options
             try {
                 const response = await v(data, rest)
-                if (!response || response[statusKey] !== status) throw response
+                const isValid = [].concat(status).filter(Boolean).some((v) => response[statusKey] === v)
+                if (!response || !isValid) throw response
 
                 return response
             } catch (e) {
