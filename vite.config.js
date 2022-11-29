@@ -6,7 +6,6 @@ import vue from '@vitejs/plugin-vue'
 
 const PROD_MAP = ['production']
 
-// https://vitejs.dev/config/
 export default ({ mode }) => {
   const isProd = PROD_MAP.some(v => v === mode) 
   process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
@@ -24,7 +23,7 @@ export default ({ mode }) => {
       vue(),
       viteVConsole({
         entry: path.resolve('src/main.js'),
-        localEnabled: true,
+        localEnabled: false,
         enabled: !isProd,
         config: {
           maxLogNumber: 1000,
