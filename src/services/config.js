@@ -14,39 +14,34 @@ const parseRequestData = () => {
 }
 const config = {
     'login': {
-        url: '/tms/newContract/newContract.do',
+        url: '/tms/newContract/newContract.do/method=pdaLogin',
         method: 'post',
         mock: './dummy/login',
-        params: { method: 'pdaLogin' }
     },
     'scanned': {
-        url: '/tms/newContract/newContract.do',
+        url: '/tms/newContract/newContract.do/method=getfiledContract',
         method: 'post',
         mock: './dummy/contract/scanned',
-        params: { method: 'getfiledContract'},
         data: parseRequestData,
         delay: () => Math.ceil(Math.random() * 3000),
     },
     'beScanned': {
-        url: '/tms/newContract/newContract.do',
+        url: '/tms/newContract/newContract.do/method=getUnfiledContract',
         method: 'post',
         mock: './dummy/contract/beScanned',
-        params: { method: 'getUnfiledContract'},
         data: parseRequestData,
         delay: () => Math.ceil(Math.random() * 3000),
     },
     'numberQuery':{
-        url: '/tms/newContract/newContract.do',
+        url: '/tms/newContract/newContract.do/method=viewContractInfo',
         method: 'post',
         mock: './dummy/numberQuery',
-        params: { method: 'viewContractInfo'},
         data: parseRequestData
     },
     'contractFiling':{
-        url: '/tms/newContract/newContract.do',
+        url: '/tms/newContract/newContract.do/method=fileContract',
         method: 'post',
         mock: './dummy/contractFiling',
-        params: { method: 'fileContract'},
         data: parseRequestData
     },
 }
