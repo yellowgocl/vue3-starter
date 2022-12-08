@@ -3,10 +3,10 @@ import usePromise from './usePromise'
 import useCounter from './useCounter'
 
 const useRetry = (asyncFunc, options = {}) => {
-    const { times = 3, consumedFilter } = options
+    const { times = 3, consumedFilter, ...rest } = options
 
     const [retryTimes, retryActions] = useCounter(times)
-    const [asyncWrapper, asyncState]= usePromise(asyncFunc)
+    const [asyncWrapper, asyncState]= usePromise(asyncFunc, rest)
 
     const isEnd = computed(() => {
         return retryTimes.value === 0

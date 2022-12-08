@@ -4,10 +4,10 @@ import useRetry from './useRetry'
 import useCounter from './useCounter'
 
 const usePagination = (asyncFunc, options = {}) => {
-    const { initial = 0, onReponse, size = 10, total, accumulate = true, onLoaded, keys = {}, retryTimes = Number.MAX_SAFE_INTEGER, consumedFilter } = options
+    const { initial = 0, onReponse, size = 10, total, accumulate = true, onLoaded, keys = {}, retryTimes = Number.MAX_SAFE_INTEGER, consumedFilter, ...rest } = options
     const { currentPage: currentPageKey = 'page', totalPage: totalPageKey = 'totalPage', data: dataKey = 'list' } = keys
     const [currentPage, pageActions] = useCounter(initial)
-    const [asyncWrapper, asyncState] = useRetry(asyncFunc, { times: retryTimes, consumedFilter })
+    const [asyncWrapper, asyncState] = useRetry(asyncFunc, { times: retryTimes, consumedFilter, ...rest })
     const currentData = ref([])
     const totalPage = ref(total || Number.MAX_SAFE_INTEGER)
 
@@ -36,7 +36,7 @@ const usePagination = (asyncFunc, options = {}) => {
     }
 
     const base = async (nextPage, prevPage) => {
-        // console.info({nextPage, prevPage, total: totalPage.value})
+        console.info({isLoading:asyncState.value.isPending, nextPage, prevPage, total: totalPage.value})
         try {
             if (asyncState.value.isPending || Number.isNaN(nextPage) || nextPage > totalPage.value || nextPage < 0 ) return;
             // const list = nextPage === 1 ? [] : currentData.value

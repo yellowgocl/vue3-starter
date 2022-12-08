@@ -20,33 +20,33 @@ const config = {
         params: { method: 'pdaLogin' }
     },
     'scanned': {
-        url: '/contract/scanned',
-        method: 'get',
+        url: '/tms/newContract/newContract.do',
+        method: 'post',
         mock: './dummy/contract/scanned',
-        params: parseRequestData,
+        params: { method: 'getfiledContract'},
+        data: parseRequestData,
         delay: () => Math.ceil(Math.random() * 3000),
     },
     'beScanned': {
-        url: '/contract/beScanned',
-        method: 'get',
+        url: '/tms/newContract/newContract.do',
+        method: 'post',
         mock: './dummy/contract/beScanned',
-        params: parseRequestData
-    },
-    'user/get': {
-        url: '/user',
-        method: 'get',
-        mock: './dummy/user/get',
+        params: { method: 'getUnfiledContract'},
+        data: parseRequestData,
+        delay: () => Math.ceil(Math.random() * 3000),
     },
     'numberQuery':{
-        url: '/numberQuery',
-        method: 'get',
+        url: '/tms/newContract/newContract.do',
+        method: 'post',
         mock: './dummy/numberQuery',
-        params: parseRequestData
+        params: { method: 'viewContractInfo'},
+        data: parseRequestData
     },
     'contractFiling':{
-        url: '/contractFiling',
+        url: '/tms/newContract/newContract.do',
         method: 'post',
         mock: './dummy/contractFiling',
+        params: { method: 'fileContract'},
         data: parseRequestData
     },
 }

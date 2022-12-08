@@ -2,6 +2,7 @@ import { ref, reactive, onMounted, computed } from 'vue'
 import { isFunction } from 'lodash'
 
 const usePromise = (promiseWrapper, options = {}) => {
+    const { immediately = true } = options
     const isPending = ref(false)
     const isFulfilled = ref(false)
     const isRejected = ref(false)
@@ -13,14 +14,20 @@ const usePromise = (promiseWrapper, options = {}) => {
         isFulfilled.value = isRejected.value = !isPending.value;
         return new Promise((resolve, reject) => {
             const onResolve = (v) => {
-                isFulfilled.value = true
-                isPending.value = isRejected.value = !isFulfilled.value;
                 resolve(v)
+                const update = () => {
+                    isFulfilled.value = true
+                    isPending.value = isRejected.value = !isFulfilled.value;
+                }
+                immediately ? update() : setTimeout(update)
             }
             const onReject = (e) => {
-                isRejected.value = true;
-                isPending.value = isFulfilled.value = !isRejected.value;
                 reject(e)
+                const update = () => {
+                    isRejected.value = true;
+                    isPending.value = isFulfilled.value = !isRejected.value;
+                }
+                immediately ? update() : setTimeout(update)
             }
             if (!promise?.then) {
                 onReject({ message: 'promise could not be null' })

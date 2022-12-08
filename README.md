@@ -27,3 +27,18 @@ npm run dev
 ```sh
 npm run build
 ```
+## Install Git SCM (Option)
+
+### Download Git SCM
+
+[git SCM here](https://git-scm.com/download/win)
+
+select the 64bit version and wit few mins for completed. double click to install.
+```
+standalone Installer
+64-bit Git for Windows Setup.
+```
+
+### modify default terminal profile
+
+Open VSCOde, hit ```ctrl + shift + p``` to trigger all commands input, types ```Terminal``` will see  ```Terminal: Select Default Profile```, select git bash when you enter.

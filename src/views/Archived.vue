@@ -34,7 +34,7 @@ const retrivePageData =
 //   'leading': true,
 //   'trailing': false
 // })
-const [{ next: onNextPage, to: onRefreshPage }, paginationState] = usePagination(retrivePageData, { keys: { data: 'contractList', total: "totalPage" } })
+const [{ next: onNextPage, to: onRefreshPage }, paginationState] = usePagination(retrivePageData, { immediately: false, keys: { data: 'contractList', total: "totalPage" } })
 const onLoadNextPage = async (e) => {
   setTimeout(async () => await onNextPage() )
 }
@@ -48,6 +48,10 @@ const refreshing = ref(false);
 watch(() => paginationState.value?.isPending, (n, o) => {
   refreshing.value = n
 })
+const loading = ref(paginationState.value.isPending);
+watch(() => paginationState.value?.isPending, (n, o) => {
+  loading.value = n
+})
 const parsedState = computed(() => {
   const { data, ...rest } = paginationState.value
   return rest
@@ -56,15 +60,15 @@ const parsedState = computed(() => {
 
 <template>
   <div>
-    <Search :disabled="paginationState.isPending" @submit="onRefresh" v-model="dateTime" title="搜索条件"></Search>
+    <Search :disabled="paginationState.isPending" @submit="onRefresh" v-model="dateTime" title="搜索条件" :optionTitle="'归档时间：'"></Search>
     <Title value="合同归档信息"></Title>
     <div :v-if="parsedState.current!='0'">
       <CardName :data="listName" :num="listName.length"></CardName>
       <div class="listH">
         <PullRefresh v-model="refreshing" @refresh="onRefresh">
           <List
-            :immediate-check="true"
-            v-model:loading="paginationState.isPending"
+            :immediate-check="false"
+            v-model:loading="loading"
             v-model:error="errorIndicator"
             :finished="paginationState.finished"
             :finished-text="paginationState.data?.length === 0?'暂无数据':'没有更多了'"
@@ -75,8 +79,6 @@ const parsedState = computed(() => {
         </PullRefresh>
       </div>
     </div>
-    
-    <!-- <List :title="'合同列表'" :listName="listName"></List> -->
   </div>
 </template>
 
