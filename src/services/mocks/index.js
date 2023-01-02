@@ -9,7 +9,7 @@ import minimatch from "minimatch"
 
 import config from '../config'
 
-const mockModules = import.meta.globEager('./dummy/**/*.?(js|json)')
+export const mockModules = import.meta.globEager('./dummy/**/*.?(js|json)')
 
 const handlers = reduce(config, (r, v, k) => {
     const baseURL = import.meta.env.VITE_API_PROXY_URL || import.meta.env.VITE_API_BASE_URL
