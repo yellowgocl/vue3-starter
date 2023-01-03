@@ -36,7 +36,9 @@ const retrivePageData =
 // })
 const [{ next: onNextPage, to: onRefreshPage }, paginationState] = usePagination(retrivePageData, { keys: { data: 'contractList', total: "totalPage" } })
 const onLoadNextPage = async (e) => {
-  setTimeout(async () => await onNextPage() )
+  // setTimeout(async () => 
+    await onNextPage()
+  //)
 }
 const onRefresh = () => onRefreshPage();
 

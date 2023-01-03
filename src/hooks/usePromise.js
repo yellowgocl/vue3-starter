@@ -5,9 +5,10 @@ const usePromise = (promiseWrapper, options = {}) => {
     const isPending = ref(false)
     const isFulfilled = ref(false)
     const isRejected = ref(false)
-    const state = computed(() => ({ isPending: isPending.value, isFulfilled: isFulfilled.value, isRejected: isRejected.value }))
+    const result = ref(null)
+    const state = computed(() => ({ result: result.value, isPending: isPending.value, isFulfilled: isFulfilled.value, isRejected: isRejected.value }))
     const wrapper = (...params) => {
-        // if (isPending.value) return
+        if (isPending.value) return
         const promise = isFunction(promiseWrapper) ? promiseWrapper?.apply(null, params) : promiseWrapper
         isPending.value = true
         isFulfilled.value = isRejected.value = !isPending.value;
@@ -15,6 +16,7 @@ const usePromise = (promiseWrapper, options = {}) => {
             const onResolve = (v) => {
                 isFulfilled.value = true
                 isPending.value = isRejected.value = !isFulfilled.value;
+                result.value = v
                 resolve(v)
             }
             const onReject = (e) => {

@@ -20,7 +20,7 @@ const retrivePageData = (page, size, total) => {
   })
 }
 
-const [promsie2Wrapper, promise2State] = useRetry(services.scanned)
+const [promsie2Wrapper, promise2State] = useRetry(services['user/get'])
 const [paginationActions, paginationState] = usePagination(retrivePageData, { keys: { data: "contractList" } })
 const { next, to } = paginationActions
 
@@ -38,13 +38,14 @@ const parsedState = computed(() => {
 
 const refreshing = ref(false)
 const onclick = async () => {
-  await to(1)
+  // await to(1)
+  await promsie2Wrapper()
 }
 
 </script>
 <template>
   <button @click="onclick">reset</button>
-  {{parsedState}}
+  {{promise2State}}
   <div class="listH">
       <PullRefresh v-model="refreshing" @refresh="to(1)">
         <List

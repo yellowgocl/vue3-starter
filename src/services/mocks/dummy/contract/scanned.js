@@ -3,15 +3,13 @@ import { times } from 'lodash'
 import moment from 'moment'
 faker.setLocale('zh_CN');
 
-let totalContent = 42
+let totalContent = 2
 const defaultPageSize = 10
 const total = Math.ceil(totalContent / defaultPageSize)
 
 const gen = (start, end, page, size = defaultPageSize) => {
     if (page > total) return []
     const len = page === total ? totalContent - ((page - 1) * size) : size
-    // console.info({page, total, totalContent, value: totalContent - ((page - 1) * size), size })
-    // console.info({start, end})
     return times(len).map((v, k) => ({
         contractNo: `CFFT201603${page * size + k}`,
         contractName: '合同名称-' + `CFFT201603${page * size + k}`,
@@ -28,7 +26,7 @@ export default (req) => {
     const fileDateGe = searchParams.get('fileDateGe')
     const fileDateLe = searchParams.get('fileDateLe')
     const contractList = gen(fileDateGe, fileDateLe, page, pagesize)
-    if (page == 2) return null; // dummy error for frond end test
+    // if (page == 2) return null; // dummy error for frond end test
     return {
         index: page - 1,
         pagesize,
