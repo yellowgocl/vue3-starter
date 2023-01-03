@@ -4,14 +4,13 @@ import { ref, defineAsyncComponent, computed, watch } from 'vue'
 import { Icon, Button, Field, CellGroup ,Row, Space, Form, Divider, Notify,Toast } from 'vant';
 import { useRouter } from 'vue-router'
 import { useService, usePromise, useRetry, useApi } from '@/hooks'
-const username = ref('');
+const username = ref(import.meta.env.MODE === 'development' ? '0631201' : '');
 const router = useRouter();
 const services = useService()
 const [promiseWrapper, loginState, loginActions] = useApi(services.login)
 const onSubmit = async (values) => {
   try {
     const data = await promiseWrapper({ account: username.value })
-    // const data = await promiseWrapper(null, { params: { account: username.value } })
     sessionStorage.setItem('staff', JSON.stringify({...data, account: username.value }))
     router.replace({ path: '/' })
   } catch (e) {
@@ -32,10 +31,15 @@ const onSubmit = async (values) => {
     <!-- <van-icon name="user-circle-o" /> -->
     
         <Row justify="center" class="spaceUp_3">
-          <Icon name="user-circle-o" color="#f28a67" size="200"/>
+          <!-- <Icon name="user-circle-o" color="#f28a67" size="200"/> -->
+          <div class="circular">
+            <Icon name="manager-o" color="#fff" size="160"/>
+          </div>
+          
         </Row>
         
         <Form @submit="onSubmit" class="spaceUp_2">
+          <!-- 测试工号：0031633 ，0631201-->
           <CellGroup inset>
             <Field
               v-model="username"
@@ -46,8 +50,8 @@ const onSubmit = async (values) => {
               :rules="[{ required: true, message: '请输入工号' }]"
             />
           </CellGroup>
-          <Divider />
-          <div style="margin:20px 16px;">
+          <!-- <Divider/> -->
+          <div style="margin:40px 16px;">
             <Button :loading="loginState.isPending"  :disabled="loginState.isPending" block type="primary" native-type="submit">
               {{loginState.isRejected ? "请重试" : "提交"}}
             </Button>
@@ -58,4 +62,6 @@ const onSubmit = async (values) => {
 
 <style>
 .iconStyle{margin: 0 auto;}
+.index .van-field__body{ border-bottom: #323233 1px solid; padding-left: 20px;}
+.circular{width: 200px; height: 200px; background-color: #f28a67; border-radius: 100%; display: flex; justify-content: center; align-items: center;}
 </style>

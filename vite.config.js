@@ -1,3 +1,5 @@
+/// <reference types="vitest" />
+
 import { fileURLToPath, URL } from 'node:url'
 import * as path from 'path'
 import { viteVConsole } from 'vite-plugin-vconsole';
@@ -9,16 +11,17 @@ const PROD_MAP = ['production']
 export default ({ mode }) => {
   const isProd = PROD_MAP.some(v => v === mode) 
   process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
-  return defineConfig({
-    server: {
-      proxy: {
-        "/api": {
-          target: process.env.VITE_API_BASE_URL,
-          changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/api/, ""),
-        },
-      },
+  const hasProxyURL = !!(process.env.VITE_API_PROXY_URL)
+
+  const proxy = hasProxyURL ? {
+    "/api": {
+      target: process.env.VITE_API_BASE_URL,
+      changeOrigin: true,
+      rewrite: (path) => path.replace(/^\/api/, ""),
     },
+  } : {}
+  return defineConfig({
+    server: { proxy },
     plugins: [
       vue(),
       viteVConsole({
@@ -44,6 +47,7 @@ export default ({ mode }) => {
               drop_debugger: true,
           },
       },
+      sourcemap: !isProd
     },
   })
 }

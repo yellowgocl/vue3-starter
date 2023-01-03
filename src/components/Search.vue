@@ -1,10 +1,11 @@
 <script setup>
-import { ref, defineAsyncComponent, defineEmits, computed, defineProps } from 'vue'
+import { ref, defineAsyncComponent, computed, defineProps } from 'vue'
 import { Calendar,Icon,Col,  Button, Field, CellGroup ,Row,Space ,Form,Cell,Toast,Divider,List,Grid, GridItem,PullRefresh} from 'vant';
 import {useRouter} from 'vue-router'
 import Title from '@/components/Title.vue'
 import moment from 'moment'
 const props = defineProps({
+   
     title:{
       type: String, default: () => ""
     },
@@ -13,6 +14,9 @@ const props = defineProps({
     },
     disabled: {
       type: Boolean, default: () => false
+    },
+    optionTitle:{
+      type: String, default: () => ""
     }
 }) 
 //const submit = ref(props.onSubmit);
@@ -21,6 +25,9 @@ const show = ref(false);
 const dateStart = computed(() => props.modelValue?.[0])
 const dateEnd = computed(() => props.modelValue?.[1])
 const date = computed(() => props.modelValue?.join(' - '))
+const minDate=new Date(2010 ,0 ,1)
+
+const maxDate=new Date(moment().format())
 
 const emit = defineEmits(['submit', 'update:modelValue'])
 
@@ -35,7 +42,7 @@ const onConfirm = (values) => {
   ])
 };
 const onSubmit=(values)=>{
-  console.log('submit', props.mockValue);
+  //console.log('submit', props.mockValue,new Date(2010 ,0 ,1),new Date(moment().format()));
 
   // submit.value=values
   emit('submit', props.mockValue)
@@ -44,6 +51,10 @@ const onSubmit=(values)=>{
 const onFailed=(errorInfo)=>{
   console.log('failed', errorInfo);
 }
+
+  //new Date(date.getFullYear(),date.getMonth() + 1,date.getDate())
+
+// const maxDate= (date) =>new Date(${date.getFullYear()},date.getMonth() + 1,date.getDate())
 </script>
 <template>
   <div>
@@ -59,7 +70,7 @@ const onFailed=(errorInfo)=>{
               is-link
               readonly
               name="datetimePicker"
-              label="呈批时间"
+              :label="props.optionTitle"
               placeholder="点击选择时间"
               @click="show = true"
               :rules="[{required: true, message: '请点击选择时间' }]"
@@ -72,7 +83,7 @@ const onFailed=(errorInfo)=>{
           </Col>
        </Row>
       </CellGroup>
-      <Calendar v-model:show="show" color="#1989fa" type="range" @confirm="onConfirm" :round="false" />
+      <Calendar v-model:show="show" color="#1989fa" type="range" @confirm="onConfirm" :round="false" :min-date="minDate" :max-date="maxDate" />
     </Form>
   </div>
 </template>

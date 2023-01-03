@@ -7,46 +7,40 @@ const getAccountData = () => {
     }
 }
 const parseRequestData = () => {
-    console.info('parseRequestData')
     return {
         account: getAccountData()?.account
     }
 }
 const config = {
     'login': {
-        url: '/tms/newContract/newContract.do',
+        url: '/tms/newContract/newContract.do?method=pdaLogin',
         method: 'post',
-        mock: './dummy/login',
-        params: { method: 'pdaLogin' }
+        mock: './dummy/newContract',
     },
     'scanned': {
-        url: '/contract/scanned',
-        method: 'get',
-        mock: './dummy/contract/scanned',
-        params: parseRequestData,
+        url: '/tms/newContract/newContract.do?method=getfiledContract',
+        method: 'post',
+        mock: './dummy/newContract',
+        data: parseRequestData,
         delay: () => Math.ceil(Math.random() * 3000),
     },
     'beScanned': {
-        url: '/contract/beScanned',
-        method: 'get',
-        mock: './dummy/contract/beScanned',
-        params: parseRequestData
-    },
-    'user/get': {
-        url: '/user',
-        method: 'get',
-        mock: './dummy/user/get',
+        url: '/tms/newContract/newContract.do?method=getUnfiledContract',
+        method: 'post',
+        mock: './dummy/newContract',
+        data: parseRequestData,
+        delay: () => Math.ceil(Math.random() * 3000),
     },
     'numberQuery':{
-        url: '/numberQuery',
-        method: 'get',
-        mock: './dummy/numberQuery',
-        params: parseRequestData
+        url: '/tms/newContract/newContract.do?method=viewContractInfo',
+        method: 'post',
+        mock: './dummy/newContract',
+        data: parseRequestData
     },
     'contractFiling':{
-        url: '/contractFiling',
+        url: '/tms/newContract/newContract.do?method=fileContract',
         method: 'post',
-        mock: './dummy/contractFiling',
+        mock: './dummy/newContract',
         data: parseRequestData
     },
 }

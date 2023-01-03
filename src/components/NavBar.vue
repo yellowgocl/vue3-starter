@@ -1,6 +1,6 @@
 <script setup>
 import {useRoute, useRouter} from 'vue-router'
-import { NavBar } from 'vant';
+import { NavBar, Sticky } from 'vant';
 import { ref, defineAsyncComponent, computed } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
 
@@ -22,7 +22,9 @@ const onClickLeft=(e)=>{
 
 <template>
   <div class="navBar">
-    <NavBar :safe-area-inset-top="true" :title="currentRoute?.meta?.title"  :left-text="!isHome && '返回'" :left-arrow="!isHome"  @click-left="onClickLeft"/>
+    <Sticky>
+      <NavBar :safe-area-inset-top="true" :title="currentRoute?.meta?.title"  :left-text="!isHome && '返回'" :left-arrow="!isHome"  @click-left="onClickLeft"/>
+    </Sticky>
   </div>
 </template>
 
