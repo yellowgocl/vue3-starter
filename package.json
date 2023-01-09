@@ -9,7 +9,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "ant-design-vue": "^3.2.11",
+    "@vueuse/gesture": "^2.0.0-beta.1",
+    "@vueuse/motion": "^2.0.0-beta.12",
+    "ant-design-vue": "^3.2.15",
     "lodash": "^4.17.21",
     "moment": "^2.29.4",
     "vue": "^3.2.37",
