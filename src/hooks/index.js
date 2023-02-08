@@ -4,3 +4,4 @@ export { default as useCounter } from './useCounter';
 export { default as usePagination } from './usePagination';
 export { default as useRetry } from './useRetry';
 export { default as useApi } from './useApi';
+export { default as useImage } from './useImage';

@@ -10,7 +10,7 @@
 
     const errorWrapper = ref()
     const error = ref()
-    const activeKey = ref('1')
+    const activeKey = ref('2')
 
     const handleOk = () => {
         error.value = null

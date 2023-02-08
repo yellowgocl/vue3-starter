@@ -2,9 +2,9 @@ import { ref, computed } from 'vue'
 import useRetry from './useRetry'
 
 // const validReg = /\.(png|jpe?g|gif|svg|webp|tif|bmp)(\?.*)?$)/
-const useImage = (src, options = {}) => {
+const useImage = (options = {}) => {
     const { onLoad, onError } = options
-    const currentLoader = ref(src)
+    const currentLoader = ref()
 
     const asyncLoadImage = async (src) => {
         if (currentLoader?.current) {
@@ -15,19 +15,22 @@ const useImage = (src, options = {}) => {
             const onLoadCallback = (e) => {
                 onLoad?.(e)
                 resolve(e)
+                console.info(e)
             }
             const onErrorCallback = (e) => {
                 onError?.(e)
                 reject(e)
+                console.error(e)
             }
             const current = new Image()
-            currentLoader.current = current
-            current.onload = onLoad
-            current.onerror = onError
+            current.onload = onLoadCallback
+            current.onerror = onErrorCallback
             current.src = src
+            currentLoader.current = current
         })
     }
     const [load, state] = useRetry(asyncLoadImage)
+    return [load, state]
 }
 
 export default useImage
