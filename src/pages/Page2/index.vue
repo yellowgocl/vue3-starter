@@ -1,9 +1,10 @@
 <script setup>
 import { ref, watch, reactive, computed } from 'vue'
 import backgroupImage from '@/assets/demo1.jpg'
-import { chain, keys } from 'lodash'
+import { chain } from 'lodash'
 
 import { useWindowSize } from '@vueuse/core'
+import { relativePointTo } from './utils'
 
 const stage = ref()
 const layer = ref()
@@ -12,23 +13,6 @@ const isMouseDown = ref(false)
 const keyStatus = reactive({
     space: false
 })
-
-const onKeydown = (event) => {
-    const keyCode = event.keyCode
-    switch(keyCode) {
-        case 32:
-            keyStatus.space = true
-            break;
-    }
-}
-const onKeyup = (event) => {
-    const keyCode = event.keyCode
-    switch(keyCode) {
-        case 32:
-            keyStatus.space = false
-            break;
-    }
-}
 const viewportSize = useWindowSize()
 
 const configLayer = reactive({
@@ -37,9 +21,37 @@ const configLayer = reactive({
 const configBackground = reactive({
 })
 
+const onKeydown = (event) => {
+    event.preventDefault()
+    const keyCode = event.keyCode
+    switch(keyCode) {
+        case 32:
+            keyStatus.space = configLayer.draggable = true
+            break;
+    }
+}
+const onKeyup = (event) => {
+    event.preventDefault()
+    const keyCode = event.keyCode
+    
+    switch(keyCode) {
+        case 32:
+            keyStatus.space = configLayer.draggable = false
+            break;
+    }
+}
+
 watch(() => stage?.value, (n, o) => {
-    console.info(n.getStage().container())
+    const container = n.getStage().container()
+    if (!container) return 
+
+    container.tabIndex = 1;
+    container.removeEventListener('keyup', onKeyup)
+    container.addEventListener('keyup', onKeyup)
+    container.removeEventListener('keydown', onKeydown);
+    container.addEventListener('keydown', onKeydown);
 })
+
 const configKonva = ref({
     width: viewportSize.width,
     height: viewportSize.height,
@@ -50,13 +62,16 @@ const selectionPos = reactive({
     x1: 0, y1: 0, x2: 0, y2: 0
 })
 const selectionRectConfig = reactive({
-    x: 0, y: 0, width: 0, height: 0, fill: 'blue', opacity: '.5', visible: false,
+    x: 0, y: 0, width: 0, height: 0, fill: 'blue', opacity: .5, visible: false,
 })
 
 const handleMouseMove = (event) => {
-    const pos = stage.value.getNode().getPointerPosition()
-    selectionPos.x2 = pos.x
-    selectionPos.y2 = pos.y
+    if (!!configLayer.draggable) return
+
+    const newPos = relativePointTo(layer.value, stage.value)
+
+    selectionPos.x2 = newPos.x
+    selectionPos.y2 = newPos.y
 
     const { x1, y1, x2, y2 } = selectionPos
     selectionRectConfig.x = Math.min(x1, x2)
@@ -65,14 +80,19 @@ const handleMouseMove = (event) => {
     selectionRectConfig.height = Math.abs(y2 - y1)
 }
 const handleMouseDown = (event) => {
-    const pos = stage.value.getNode().getPointerPosition()
+    if (!!configLayer.draggable) return
+
+    const newPos = relativePointTo(layer.value, stage.value)
+
     selectionRectConfig.width =  0
     selectionRectConfig.height = 0
-    selectionPos.x1 = selectionPos.x2 = selectionRectConfig.x = pos.x
-    selectionPos.y1 = selectionPos.y2 = selectionRectConfig.y = pos.y
+    selectionPos.x1 = selectionPos.x2 = selectionRectConfig.x = newPos.x
+    selectionPos.y1 = selectionPos.y2 = selectionRectConfig.y = newPos.y
     selectionRectConfig.visible = true
 }
 const handleMouseUp = (event) => {
+    if (!!configLayer.draggable) return
+    
     setTimeout(() => selectionRectConfig.visible = false, 100)
 }
 
@@ -91,7 +111,6 @@ const handleDragMove = (e) => {
         if (bounds.x < offsetWidth * -1) target.x(offsetWidth * -1)
         if (bounds.y < offsetHeight * -1) target.y(offsetHeight * -1)
     }
-    e.evt.preventDefault()
 }
 
 const gridConfig = reactive({
@@ -135,24 +154,26 @@ image.onload = () => {
 </script>
 
 <template>
+    <div>
     <h1>Page2 {{viewportSize.width}} - {{ configKonva.width }}</h1>
     <button @click="configLayer.draggable = !configLayer.draggable">enable draggable, current: {{configLayer.draggable}}</button>
-    <v-stage :config="configKonva" ref="stage" @keydown="onKeydown" @keyup="onKeyup">
+    <v-stage :config="configKonva" ref="stage">
         <v-layer ref="layer" 
-            :config='configLayer' 
+            :config='configLayer'
             @dragmove='handleDragMove'
             @mousedown="handleMouseDown" 
             @mouseup='handleMouseUp' 
             @mousemove='handleMouseMove'>
             <v-image :config="configBackground"></v-image>
-                <v-group>
-                    <v-line v-for="row in rows" :config="row" :key="row.__id"></v-line>
-                    <v-line v-for="cell in cells" :config="cell" :key="cell.__id"></v-line>
-                </v-group>
+            <v-group>
+                <v-line v-for="row in rows" :config="row" :key="row.__id"></v-line>
+                <v-line v-for="cell in cells" :config="cell" :key="cell.__id"></v-line>
+            </v-group>
             <!-- <v-group>
                 <v-rect v-for="(item, index) in configRects" :key="`rect-${index}`" :config="item"></v-rect>
-            </v-group>
-            <v-rect :config="selectionRectConfig"></v-rect> -->
+            </v-group> -->
+            <v-rect :config="selectionRectConfig"></v-rect>
         </v-layer>
     </v-stage>
+</div>
 </template>
