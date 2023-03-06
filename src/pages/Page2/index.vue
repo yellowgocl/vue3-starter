@@ -1,15 +1,16 @@
 <script setup>
-import { ref, watch, reactive, computed, defineExpose } from 'vue'
+import { ref, watch, reactive, computed, nextTick } from 'vue'
 import backgroupImage from '@/assets/demo1.jpg'
 import { chain } from 'lodash'
 
 import { useWindowSize } from '@vueuse/core'
 import { relativePointTo } from './utils'
 
-import { Stage } from './konva'
+import { Stage, GridCover } from './konva'
 
 const stage = ref()
 const layer = ref()
+const gridCover = ref()
 const isMouseDown = ref(false)
 
 // const { keyStatus } = stage.value
@@ -57,8 +58,9 @@ const handleMouseDown = (event) => {
 }
 const handleMouseUp = (event) => {
     if (!!configLayer.draggable) return
-    
-    setTimeout(() => selectionRectConfig.visible = false, 100)
+    console.info({...selectionRectConfig})
+    gridCover.value.getIntersections({...selectionRectConfig})
+    nextTick(() => selectionRectConfig.visible = false)
 }
 
 const handleDragMove = (e) => {
@@ -132,10 +134,11 @@ image.onload = () => {
             @mouseup='handleMouseUp' 
             @mousemove='handleMouseMove'>
             <v-image :config="configBackground"></v-image>
-            <v-group>
+            <GridCover ref="gridCover" :width="gridConfig.width" :height="gridConfig.height"></GridCover>
+            <!-- <v-group>
                 <v-line v-for="row in rows" :config="row" :key="row.__id"></v-line>
                 <v-line v-for="cell in cells" :config="cell" :key="cell.__id"></v-line>
-            </v-group>
+            </v-group> -->
             <!-- <v-group>
                 <v-rect v-for="(item, index) in configRects" :key="`rect-${index}`" :config="item"></v-rect>
             </v-group> -->
