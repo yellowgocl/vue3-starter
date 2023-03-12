@@ -3,6 +3,7 @@ import { watch, ref, reactive, defineExpose } from 'vue'
 import { useWindowSize } from '@vueuse/core'
 const viewportSize = useWindowSize()
 const stage = ref()
+const emit = defineEmits(['rightClick'])
 const keyStatus = reactive({
     space: false
 })
@@ -46,11 +47,28 @@ const config = ref({
     width: viewportSize.width,
     height: viewportSize.height,
 })
+const handleContextMenu = (event) => {
+    if (event.evt.button !== 2) return
+
+    event.evt.preventDefault(); // Prevent default context menu behavior
+    const currentStage = stage.value.getStage(); // Get the Konva stage instance
+    const mousePos = currentStage.getPointerPosition(); // Get the mouse position relative to the currentStage
+    const intersection = currentStage.getIntersection(mousePos); // Get the intersection object
+
+    if (intersection) {
+    // Do something with the selected object
+    // console.log("Selected object:", intersection);
+    emit('rightClick', intersection)
+    } else {
+    // Do something if nothing is selected
+    console.log("No object selected.");
+    }
+}
 defineExpose(exposeData)
 </script>
 
 <template>
-    <v-stage :config="config" ref="stage">
+    <v-stage :config="config" ref="stage" @contextMenu="handleContextMenu">
         <slot></slot>
     </v-stage>
 </template>

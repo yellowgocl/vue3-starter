@@ -1,9 +1,8 @@
 <script setup>
 import { ref, watch, reactive, computed, nextTick } from 'vue'
-import backgroupImage from '@/assets/demo1.jpg'
+import backgroupImage from '@/assets/demo2.jpg'
 import { chain } from 'lodash'
 
-import { useWindowSize } from '@vueuse/core'
 import { relativePointTo } from './utils'
 
 import { Stage, GridCover } from './konva'
@@ -12,6 +11,18 @@ const stage = ref()
 const layer = ref()
 const gridCover = ref()
 const isMouseDown = ref(false)
+
+const gridsConfig = reactive({
+    tagItems: ["rect-1-0", "rect-1-1", "rect-1-2", "rect-1-3"],
+    activeItems: ["rect-0-0", "rect-0-1"]
+})
+
+const activeItems = computed(() => {
+    return [...(gridsConfig.activeItems ?? []),]
+})
+const tagItems = computed(() => {
+    return [...gridsConfig.tagItems]
+})
 
 // const { keyStatus } = stage.value
 const configLayer = reactive({
@@ -31,6 +42,12 @@ const selectionRectConfig = reactive({
 })
 
 const currentStage = computed(() => stage?.value?.stage)
+const layerPosition = reactive({ x: 0, y: 0 })
+const layerViewport = computed(() => {
+    const absPos = layerPosition;
+    const { width = 0, height = 0 } = stage.value?.viewport || {}
+    return { ...absPos, height: height.value, width: width.value }
+})
 
 const handleMouseMove = (event) => {
     if (!!configLayer.draggable) return
@@ -46,7 +63,8 @@ const handleMouseMove = (event) => {
     selectionRectConfig.height = Math.abs(y2 - y1)
 }
 const handleMouseDown = (event) => {
-    if (!!configLayer.draggable) return
+    const button = event.evt.button
+    if (!!configLayer.draggable || button !== 0) return
 
     const newPos = relativePointTo(layer.value, currentStage.value)
 
@@ -57,9 +75,15 @@ const handleMouseDown = (event) => {
     selectionRectConfig.visible = true
 }
 const handleMouseUp = (event) => {
-    if (!!configLayer.draggable) return
-    console.info({...selectionRectConfig})
-    gridCover.value.getIntersections({...selectionRectConfig})
+    const button = event.evt.button
+    if (!!configLayer.draggable || button !== 0) return
+    
+    // const selectedRect = { ...selectionRectConfig, x: layerPosition.x + selectionRectConfig.x, y: layerPosition.y + selectionRectConfig.y }
+    const selectedRect = { ...selectionRectConfig }
+    const intersections = gridCover.value.getIntersections?.(selectedRect)
+    const intersectionsId = chain(intersections?.map((attrs) => attrs?.id)).filter(Boolean).xor(gridsConfig.activeItems).uniq().value()
+    // console.info(selectedRect, layerPosition, {...selectionRectConfig})
+    gridsConfig.activeItems = intersectionsId// intersections?.map((attrs) => attrs?.id)
     nextTick(() => selectionRectConfig.visible = false)
 }
 
@@ -69,7 +93,6 @@ const handleDragMove = (e) => {
     const { width: vw, height: vh } = viewportSize
     const bounds = layer.value.getNode().getClientRect({ relativeTo: currentStage.value })
     const absPos = layer.value.getNode().getAbsolutePosition();
-    // console.info({bounds, absPos})
     const offsetWidth = bounds.width - vw.value
     const offsetHeight = bounds.height - vh.value
     const isBiggerThanViewport = true
@@ -79,35 +102,12 @@ const handleDragMove = (e) => {
         if (bounds.x < offsetWidth * -1) target.x(offsetWidth * -1)
         if (bounds.y < offsetHeight * -1) target.y(offsetHeight * -1)
     }
+    layerPosition.x = target.x()
+    layerPosition.y = target.y()
 }
 
 const gridConfig = reactive({
-    width: 1280, height: 700, cellHeight: 50, cellWidth: 50, thickness: 1, color: '#000',
-})
-
-const rows = computed(() => {
-    const { width, height, cellWidth, cellHeight, thickness, color } = gridConfig
-    const n = Math.ceil(height / cellHeight)
-    console.info('rows: ', n, height, cellHeight)
-    const result = chain(n).times().map(i => ({
-        points: [0, Math.round(i * cellHeight), width, Math.round(i * cellHeight)],
-        stroke: color,
-        strokeWidth: thickness,
-        __id: `row-${i}`
-    })).value()
-    return result
-})
-const cells = computed(() => {
-    const { width, height, cellWidth, cellHeight, thickness, color } = gridConfig
-    const n = Math.ceil(width / cellWidth)
-    console.info('cells: ', n)
-    const result = chain(n).times().map(i => ({
-        points: [Math.round(i * cellWidth), 0, Math.round(i * cellWidth), height],
-        stroke: color,
-        strokeWidth: thickness,
-        __id: `cell-${i}`
-    })).value()
-    return result
+    width: 960, height: 560, cellHeight: 80, cellWidth: 80, thickness: 1, color: '#000',
 })
 
 const image = new Image()
@@ -116,7 +116,11 @@ image.onload = () => {
     configBackground.image = image
     gridConfig.width = image.naturalWidth
     gridConfig.height = image.naturalHeight
-    console.info(image.naturalWidth, image.naturalHeight)
+    gridConfig.inited = true
+}
+
+const handleContextMenu = (e) => {
+    console.info(e)
 }
 
 </script>
@@ -124,17 +128,24 @@ image.onload = () => {
 <template>
     <div>
     <h1>Page2</h1>
-    {{ stage }}
     <button @click="configLayer.draggable = !configLayer.draggable">enable draggable, current: {{configLayer.draggable}}</button>
-    <Stage ref="stage">
+    <Stage ref="stage" @right-click="handleContextMenu">
         <v-layer ref="layer" 
             :config='configLayer'
             @dragmove='handleDragMove'
+            @dragend="handleDragMove"
             @mousedown="handleMouseDown" 
             @mouseup='handleMouseUp' 
             @mousemove='handleMouseMove'>
             <v-image :config="configBackground"></v-image>
-            <GridCover ref="gridCover" :width="gridConfig.width" :height="gridConfig.height"></GridCover>
+            <GridCover 
+                v-if="!!gridConfig.inited" 
+                ref="gridCover" 
+                :active-items="activeItems"
+                :tag-items="tagItems"
+                :viewport="layerViewport"
+                :width="gridConfig.width" 
+                :height="gridConfig.height"></GridCover>
             <!-- <v-group>
                 <v-line v-for="row in rows" :config="row" :key="row.__id"></v-line>
                 <v-line v-for="cell in cells" :config="cell" :key="cell.__id"></v-line>
