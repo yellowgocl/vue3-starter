@@ -1,25 +1,17 @@
 <script setup>
+import { ref } from 'vue'
 import HelloWorld from './components/HelloWorld.vue'
-import { NButton } from 'naive-ui'
+import { NConfigProvider, darkTheme } from 'naive-ui'
+const currentTheme = ref(darkTheme)
+const themeOverrides = {}
 </script>
 
 <template>
-  <div>
+  <n-config-provider :theme="currentTheme" :theme-overrides="themeOverrides">
     <router-view></router-view>
-  </div>
+  </n-config-provider>
 </template>
 
 <style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
+
 </style>

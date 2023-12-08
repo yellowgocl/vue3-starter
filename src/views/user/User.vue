@@ -1,9 +1,9 @@
 <script setup>
-
+import { BaseLayout } from '@/components';
 </script>
 <template>
-    <div>
-        user container page
+    <base-layout>
+        <template #header>user header</template >
         <router-view></router-view>
-    </div>
+    </base-layout>
 </template>

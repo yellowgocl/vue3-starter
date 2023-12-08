@@ -1,9 +1,8 @@
 <script setup>
-
+import { BaseLayout } from '@/components';
 </script>
 <template>
-    <div>
-        <div>event container</div>
+    <base-layout>
         <router-view></router-view>
-    </div>
+    </base-layout>
 </template>

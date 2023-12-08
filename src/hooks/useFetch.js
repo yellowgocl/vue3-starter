@@ -1,7 +1,7 @@
-import { ref, onBeforeUnmount } from 'vue'
+import { ref, onBeforeUnmount, nextTick } from 'vue'
 import useRetry from './useRetry'
 
-const useApi = (asyncFunc, options = {}) => {
+const useFetch = (asyncFunc, options = {}) => {
     const { abortOnUnmount = true, abortOnPending = false, retryTimes = Number.MAX_SAFE_INTEGER, consumedFilter: outerConsumedFilter, ...rest } = options
     const controller = ref(new AbortController());
     const consumedFilter = (error) => {
@@ -15,30 +15,33 @@ const useApi = (asyncFunc, options = {}) => {
     }
     
     onBeforeUnmount(() => {
-        console.info('useApi onBeforeUnmount')
+        console.info('useFetch onBeforeUnmount')
         abortOnUnmount && cancel()
     })
 
     const wrapper = async (data, wrapperOptions) => {
         if (retryState.isPending && !abortOnPending) return
         
-        abortOnPending && cancel()
+        if (abortOnPending) {
+            cancel()
+            await nextTick()
+        }
 
         const fetch = async() => {
             const abortController = new AbortController()
             controller.value = abortController
             return await retryWrapper(data, { ...wrapperOptions, signal: abortController.signal })
         }
-        
-        return !abortOnPending ? await fetch() : new Promise((resolve, reject) => {
-            setTimeout(async () => {
-                try {
-                    resolve(await fetch())
-                } catch (e) {
-                    reject (e)
-                }
-            })
-        })
+        return await fetch()
+        // return !abortOnPending ? await fetch() : new Promise((resolve, reject) => {
+        //     setTimeout(async () => {
+        //         try {
+        //             resolve(await fetch())
+        //         } catch (e) {
+        //             reject (e)
+        //         }
+        //     })
+        // })
     }
 
     const actions = {
@@ -49,4 +52,4 @@ const useApi = (asyncFunc, options = {}) => {
     return [wrapper, retryState, actions]
 }
 
-export default useApi
+export default useFetch
