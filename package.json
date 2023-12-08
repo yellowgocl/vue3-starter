@@ -1,5 +1,5 @@
 {
-  "name": "my-vue-app",
+  "name": "blackbeetle--wx-site",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -9,22 +9,18 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@vueuse/components": "^9.12.0",
-    "@vueuse/core": "^9.12.0",
-    "@vueuse/gesture": "^2.0.0-beta.1",
-    "@vueuse/motion": "^2.0.0-beta.12",
-    "ant-design-vue": "^3.2.15",
-    "konva": "^8.4.0",
+    "@vicons/material": "^0.12.0",
+    "axios": "^1.6.2",
     "lodash": "^4.17.21",
-    "moment": "^2.29.4",
-    "vue": "^3.2.37",
-    "vue-konva": "^3.0.2",
-    "vue-router": "^4.1.5",
-    "vuex": "^4.0.2"
+    "naive-ui": "^2.35.0",
+    "pinia": "^2.1.7",
+    "vue": "^3.3.8",
+    "vue-router": "^4.2.5"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^3.0.3",
-    "naive-ui": "^2.32.2",
-    "vite": "^3.0.7"
+    "@vitejs/plugin-vue": "^4.5.0",
+    "msw": "^2.0.10",
+    "vfonts": "^0.0.3",
+    "vite": "^5.0.0"
   }
 }
