@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue'
-import HelloWorld from './components/HelloWorld.vue'
+import { NSpace, NLayout, NLayoutContent, NLayoutHeader, NLayoutFooter } from 'naive-ui'
+
 import { NConfigProvider, darkTheme } from 'naive-ui'
 const currentTheme = ref(darkTheme)
 const themeOverrides = {}
@@ -8,10 +9,19 @@ const themeOverrides = {}
 
 <template>
   <n-config-provider :theme="currentTheme" :theme-overrides="themeOverrides">
-    <router-view></router-view>
+    <n-space vertical size="large">
+        <n-layout>
+            <n-layout-content>
+                <router-view></router-view>
+            </n-layout-content>
+        </n-layout>
+    </n-space>
+    
   </n-config-provider>
 </template>
 
 <style scoped>
-
+.n-layout-content {
+  height: 100vh;
+}
 </style>
