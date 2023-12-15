@@ -1,7 +1,8 @@
+import Layout from '@/components/layout/index.vue'
 export default [
     {
         path: '/event',
-        component: () => import('@/views/event/Event.vue'),
+        component: Layout,
         children: [
           {
             path: ':id',
