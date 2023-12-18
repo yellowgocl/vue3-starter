@@ -21,6 +21,17 @@ const config = {
     'user/add': {
         url: '/api/user',
         method: 'put'
+    },
+
+    "auth/login": {
+        url: '/api/auth/login',
+        method: 'post',
+        mock: './dummy/auth/login'
+    },
+    "auth/refresh": {
+        url: '/api/auth/refresh',
+        method: 'post',
+        mock: './dummy/auth/refresh'
     }
 }
 

@@ -1,8 +1,5 @@
 <script setup>
-import { useFetch } from '@/hooks'
-import { NGradientText, NSpace, NLayout, NLayoutContent, NLayoutHeader, NLayoutFooter } from 'naive-ui'
 
-const [getUser, getUserState, getUserActions] = useFetch()
 </script>
 <template>
     <n-space vertical size="large">

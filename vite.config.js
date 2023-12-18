@@ -11,9 +11,6 @@ export default defineConfig(({ command, mode }) => {
   const env = convertEnv(loadEnv(mode, PROJECT_ROOT))
   const { VITE_BASE_API, VITE_PORT, VITE_USE_PROXY } = env
   const isBuild = command === 'build'
-  console.info({
-    PROJECT_ROOT, PROJECT_SRC
-  })
   return {
     plugins: createVitePlugins(env, isBuild),
     resolve: {

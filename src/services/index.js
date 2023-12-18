@@ -4,5 +4,5 @@ import config from './config'
 
 const fetcher = axios
 
-export { config, fetcher as fetch }
+export { config, fetcher as axios }
 export default fetcher;

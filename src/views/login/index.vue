@@ -6,7 +6,7 @@
       dark:bg-dark
     >
       <div hidden w-380 px-20 py-35 md:block>
-        <img src="@/assets/images/login_banner.webp" w-full alt="login_banner" />
+        <img src="@/assets/images/login_banner2.svg" w-full alt="login_banner" />
       </div>
 
       <div w-320 flex-col px-20 py-35>
@@ -72,8 +72,9 @@
 <script setup>
 import { storage, auth } from '@/utils'
 import { useStorage } from '@vueuse/core'
+import { useFetch } from '@/hooks'
 import bgImg from '@/assets/images/login_bg.jpg'
-import api from './api'
+// import api from './api'
 import { addDynamicRoutes } from '@/router'
 
 const { lStorage } = storage
@@ -83,6 +84,8 @@ const title = '活动平台'//import.meta.env.VITE_TITLE
 
 const router = useRouter()
 const { query } = useRoute()
+const api = inject('api')
+const [login, loginState, loginActions] = useFetch(api['auth/login'])
 
 const loginInfo = ref({
   name: '',
@@ -109,8 +112,7 @@ async function handleLogin() {
   try {
     loading.value = true
     $message.loading('正在验证...')
-    const res = await api.login({ name, password: password.toString() })
-
+    const res = await login({ name, password: password.toString() })
     $message.success('登录成功')
     setToken(res.data.token)
     if (isRemember.value) {
