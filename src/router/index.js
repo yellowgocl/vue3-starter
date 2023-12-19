@@ -47,28 +47,18 @@ export const addDynamicRoutes = async () =>  {
       const permissionStore = usePermissionStore()
       !userStore.userId && (await userStore.getUserInfo())
       const accessRoutes = permissionStore.generateRoutes(userStore.role)
+      console.info({
+        userStore, accessRoutes, userInfo: userStore.getUserInfo()
+      })
       accessRoutes.forEach((route) => {
         !router.hasRoute(route.name) && router.addRoute(route)
       })
       router.hasRoute(EMPTY_ROUTE.name) && router.removeRoute(EMPTY_ROUTE.name)
       router.addRoute(NOT_FOUND_ROUTE)
-      window.$notification?.success({
-        title: 'Login success',
-        content: () =>
-          h(
-            'span',
-            {},
-            'RC racing managemet system',
-            // h(
-            //   'a',
-            //   { href: 'https://admin.isme.top', target: '__blank' },
-            //   '👉体验 https://admin.isme.top'
-            // )
-          ),
-      })
+      console.log('Login success', router.getRoutes())
     } catch (error) {
       console.error(error)
-      $message.error('fail to initial' + error)
+      // $message.error('fail to initial' + error)
       userStore.logout()
     }
   }

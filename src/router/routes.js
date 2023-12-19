@@ -1,8 +1,25 @@
+import Layout from '@/components/layout/index.vue'
 export default [
     {
         path: '/',
-        component: () => import('@/views/Main.vue'),
+        component: Layout,
+        redirect: '/landing',
+        children: [
+          {
+            path: 'landing',
+            component: () => import('@/views/main/Landing.vue'),
+          },
+        ]
     },
+    {
+        name: '404',
+        path: '/404',
+        component: () => import('@/views/error/404.vue'),
+        isHidden: true,
+        meta: {
+            title: 'Not found'
+        }
+      },
     {
         name: 'Login',
         path: '/login',

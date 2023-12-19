@@ -1,16 +1,17 @@
 <template>
-    <n-layout has-sider wh-full>
-      <!-- <n-layout-sider
-        bordered
-        collapse-mode="width"
-        :collapsed-width="64"
-        :width="220"
-        :native-scrollbar="false"
-        :collapsed="appStore.collapsed"
-      >
-        <SideBar />
-      </n-layout-sider>
-   -->
+    <n-layout wh-full>
+      <n-page-header subtitle="A podcast to improve designs" @back="handleBack">
+        <template #extra>
+          <n-space>
+            <n-button>Refresh</n-button>
+            <!-- <n-dropdown :options="options" placement="bottom-start">
+              <n-button :bordered="false" style="padding: 0 4px">
+                ···
+              </n-button>
+            </n-dropdown> -->
+          </n-space>
+        </template>
+      </n-page-header>
       <article flex-col flex-1>
         <!-- <header
           border-b="1 solid #eee"
@@ -30,14 +31,19 @@
     </n-layout>
   </template>
   
-  <script setup>
-//   import AppHeader from './components/header/index.vue'
-//   import SideBar from './components/sidebar/index.vue'
-  import MainContent from './/MainContent.vue'
-//   import AppTags from './components/tags/index.vue'
-   import { useAppStore } from '@/store'
-//   import { header, tags } from '~/settings'
-  
-  const appStore = useAppStore()
-  </script>
+<script setup>
+import MainContent from './/MainContent.vue'
+import { useAppStore } from '@/store'
+
+const router = useRouter()
+const route = useRoute()
+
+const appStore = useAppStore()
+const hasHistory = window.history.length > 2
+const handleBack = hasHistory ? () => {
+  console.info({hasHistory, route})
+  $message.success('on back')
+  router.back()
+} : null
+</script>
   
