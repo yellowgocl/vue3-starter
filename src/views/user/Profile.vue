@@ -1,8 +1,12 @@
 <script setup>
-
+import { useUserStore, usePermissionStore } from '@/store'
+const userStore = useUserStore()
+const avatar = userStore.avatar
 </script>
 <template>
     <div>
-        user profile page
+        <n-avatar
+            :size="64"
+            :src='avatar'></n-avatar>
     </div>
 </template>

@@ -1,5 +1,5 @@
-import services from '@/services/config'
+import services from '@/services/api'
 
 export default (app) => {
-    app.provide('services', services)
+    app.provide('api', services)
 }

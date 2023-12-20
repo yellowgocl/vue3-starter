@@ -8,9 +8,6 @@ function hasPermission(route, role) {
   const routeRole = route.meta?.role ? route.meta.role : []
 
   // * 登录用户没有角色或者路由没有设置角色判定为没有权限
-  console.info({
-    role, routeRole
-  })
   if (!role.length || !routeRole.length) return false
 
   // * 路由指定的角色包含任一登录用户角色则判定有权限

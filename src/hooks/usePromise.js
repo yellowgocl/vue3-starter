@@ -2,6 +2,9 @@ import { ref, reactive, onMounted, computed } from 'vue'
 import { isFunction } from 'lodash'
 
 const usePromise = (promiseWrapper, options = {}) => {
+    if (!promiseWrapper) {
+        console.error('The async method could not be null')
+    }
     const { immediately = true } = options
     const isPending = ref(false)
     const isFulfilled = ref(false)
@@ -10,7 +13,7 @@ const usePromise = (promiseWrapper, options = {}) => {
     const state = computed(() => ({ result: result.value, isPending: isPending.value, isFulfilled: isFulfilled.value, isRejected: isRejected.value }))
     const wrapper = (...params) => {
         if (isPending.value) return
-        const promise = isFunction(promiseWrapper) ? promiseWrapper?.apply(null, params) : promiseWrapper
+        const promise = isFunction(promiseWrapper) ? promiseWrapper?.(...params) : promiseWrapper
         isPending.value = true
         isFulfilled.value = isRejected.value = !isPending.value;
         return new Promise((resolve, reject) => {

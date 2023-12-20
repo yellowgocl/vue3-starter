@@ -16,6 +16,7 @@ class Storage {
       time: Date.now(),
       expire: !isNil(expire) ? Date.now() + expire * 1000 : null,
     })
+    
     this.storage.setItem(this.getKey(key), stringData)
   }
 

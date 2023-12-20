@@ -41,7 +41,6 @@ const route = useRoute()
 const appStore = useAppStore()
 const hasHistory = window.history.length > 2
 const handleBack = hasHistory ? () => {
-  console.info({hasHistory, route})
   $message.success('on back')
   router.back()
 } : null

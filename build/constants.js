@@ -9,7 +9,7 @@ export const OUTPUT_DIR = 'dist'
 
 export const PROXY_CONFIG = {
   '/api': {
-    target: 'http://localhost:3000',
+    target: 'http://localhost:3100',
     changeOrigin: true,
     rewrite: (path) => path.replace(new RegExp('^/api'), ''),
   },

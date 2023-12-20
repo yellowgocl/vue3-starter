@@ -4,10 +4,7 @@ import { useCssVar } from '@vueuse/core'
 import { kebabCase } from 'lodash-es'
 import { naiveThemeOverrides } from '~/settings'
 import { useAppStore } from '@/store'
-import { useService } from '@/hooks'
 
-
-provide('api', useService())
 const appStore = useAppStore()
 
 function setupCssVar() {

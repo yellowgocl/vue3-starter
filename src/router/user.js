@@ -15,9 +15,5 @@ export default [
                 meta: { requiresAuth: true }
             },
         ]
-    },
-    {
-        path: '/login',
-        component: () => import('@/views/user/Login.vue'),
     }
 ]

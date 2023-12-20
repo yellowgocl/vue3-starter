@@ -15,7 +15,6 @@ const useFetch = (asyncFunc, options = {}) => {
     }
     
     onBeforeUnmount(() => {
-        console.info('useFetch onBeforeUnmount')
         abortOnUnmount && cancel()
     })
 
@@ -27,7 +26,7 @@ const useFetch = (asyncFunc, options = {}) => {
             await nextTick()
         }
 
-        const fetch = async() => {
+        const fetch = async () => {
             const abortController = new AbortController()
             controller.value = abortController
             return await retryWrapper(data, { ...wrapperOptions, signal: abortController.signal })

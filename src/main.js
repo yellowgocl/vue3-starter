@@ -16,8 +16,8 @@ async function setupApp() {
   setupStore(app)
   setupNaiveDiscreteApi()
   setupGlobalProvider(app)
-  await setupRouter(app)
   await setupWorkder()
+  await setupRouter(app)
   app.mount('#app')
 }
 

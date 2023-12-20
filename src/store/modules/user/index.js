@@ -2,8 +2,8 @@ import { defineStore } from 'pinia'
 import { resetRouter } from '@/router'
 import { usePermissionStore } from '@/store'
 import { auth } from '@/utils'
-const { toLogin, removeToken } = auth
-// import api from '@/api'
+const { toLogin, removeToken, getToken } = auth
+import { api } from '@/services'
 
 export const useUserStore = defineStore('user', {
   state() {
@@ -28,17 +28,12 @@ export const useUserStore = defineStore('user', {
   actions: {
     async getUserInfo() {
       try {
-        const res = { data: {
-          id: 1,
-          name: '大脸怪(admin)',
-          avatar: 'https://static.isme.top/images/avatar.jpg',
-          email: 'Ronnie@123.com',
-          role: ['admin'],
-        }}
-        const { id, name, avatar, role } = res.data
+        const res = await api['user/get']()
+        const { id, name, avatar, role } = res?.data || {}
         this.userInfo = { id, name, avatar, role }
         return Promise.resolve(res.data)
       } catch (error) {
+        console.error('get user error:', error)
         return Promise.reject(error)
       }
     },

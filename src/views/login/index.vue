@@ -92,8 +92,7 @@ const loginInfo = ref({
   password: '',
 })
 
-initLoginInfo()
-function initLoginInfo() {
+const initLoginInfo = () => {
   const localLoginInfo = lStorage.get('loginInfo')
   if (localLoginInfo) {
     loginInfo.value.name = localLoginInfo.name || ''
@@ -101,9 +100,11 @@ function initLoginInfo() {
   }
 }
 
+initLoginInfo()
+
 const isRemember = useStorage('isRemember', false)
 const loading = ref(false)
-async function handleLogin() {
+const handleLogin = async () => {
   const { name, password } = loginInfo.value
   if (!name || !password) {
     $message.warning('请输入用户名和密码')
