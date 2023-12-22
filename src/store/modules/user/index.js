@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { resetRouter } from '@/router'
 import { usePermissionStore } from '@/store'
 import { auth } from '@/utils'
-const { toLogin, removeToken, getToken } = auth
+const { toLogin, removeToken } = auth
 import { api } from '@/services'
 
 export const useUserStore = defineStore('user', {
@@ -12,7 +12,7 @@ export const useUserStore = defineStore('user', {
     }
   },
   getters: {
-    userId() {
+    id() {
       return this.userInfo?.id
     },
     name() {
@@ -20,6 +20,12 @@ export const useUserStore = defineStore('user', {
     },
     avatar() {
       return this.userInfo?.avatar
+    },
+    email() {
+      return this.userInfo?.email
+    },
+    phone() {
+      return this.userInfo?.phone
     },
     role() {
       return this.userInfo?.role || []
@@ -29,8 +35,7 @@ export const useUserStore = defineStore('user', {
     async getUserInfo() {
       try {
         const res = await api['user/get']()
-        const { id, name, avatar, role } = res?.data || {}
-        this.userInfo = { id, name, avatar, role }
+        this.userInfo = { ...res?.data }
         return Promise.resolve(res.data)
       } catch (error) {
         console.error('get user error:', error)

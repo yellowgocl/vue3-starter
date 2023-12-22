@@ -1,4 +1,4 @@
-import { defineConfig, presetAttributify, presetUno } from 'unocss'
+import { defineConfig, presetAttributify, presetUno, presetTypography } from 'unocss'
 import presetRemToPx from '@unocss/preset-rem-to-px'
 
 export default defineConfig({
@@ -7,7 +7,12 @@ export default defineConfig({
       include: [/\.(vue|svelte|[jt]sx|mdx?|html)($|\?)/],
     },
   },
-  presets: [presetUno(), presetAttributify(), presetRemToPx({ baseFontSize: 4 })],
+  presets: [
+    presetUno(), 
+    presetAttributify(), 
+    presetRemToPx({ baseFontSize: 16 }),
+    presetTypography()
+  ],
   shortcuts: [
     ['wh-full', 'w-full h-full'],
     ['f-c-c', 'flex justify-center items-center'],
@@ -28,7 +33,27 @@ export default defineConfig({
     ],
   ],
   theme: {
+    breakpoints: {
+      'xs': '320px',
+      'sm': '480px',
+      'md': '640px',
+      'lg': '960px',
+    },
+    fontSize: {
+      xs: '0.5rem',
+      sm: '0.75rem',
+      base: '1rem',
+      xl: '1.25rem',
+      '2xl': '1.563rem',
+      '3xl': '1.953rem',
+      '4xl': '2.441rem',
+      '5xl': '3.052rem',
+      'sm-title': '1rem',
+      'base-title': '1.25rem',
+      'xl-title': '1.563rem',
+    },
     colors: {
+      divider_Light: "0x232323",
       primary: 'var(--primary-color)',
       primary_hover: 'var(--primary-color-hover)',
       primary_pressed: 'var(--primary-color-pressed)',

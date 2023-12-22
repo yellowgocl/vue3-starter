@@ -2,7 +2,7 @@
 import { zhCN, dateZhCN, darkTheme } from 'naive-ui'
 import { useCssVar } from '@vueuse/core'
 import { kebabCase } from 'lodash-es'
-import { naiveThemeOverrides } from '~/settings'
+import { naiveThemeOverrides, naiveThemeOverridesLight } from '~/settings'
 import { useAppStore } from '@/store'
 
 const appStore = useAppStore()
@@ -22,7 +22,7 @@ setupCssVar()
       :locale="zhCN"
       :date-locale="dateZhCN"
       :theme="appStore.isDark ? darkTheme : undefined"
-      :theme-overrides="naiveThemeOverrides"
+      :theme-overrides="appStore.isDark ? naiveThemeOverrides : naiveThemeOverridesLight"
     >
       <slot></slot>
     </n-config-provider>

@@ -2,35 +2,35 @@
   <AppPage :show-footer="true" bg-cover :style="{ backgroundImage: `url(${bgImg})` }">
     <div
       style="transform: translateY(25px)"
-      class="m-auto max-w-700 min-w-345 f-c-c rounded-10 bg-white bg-opacity-60 p-15 card-shadow"
+      class="m-auto max-w-150 min-w-90 f-c-c rounded-3 bg-white bg-opacity-60 p-4 card-shadow"
       dark:bg-dark
     >
-      <div hidden w-380 px-20 py-35 md:block>
+      <div hidden w-95 px-5 py-8 md:block>
         <img src="@/assets/images/login_banner2.svg" w-full alt="login_banner" />
       </div>
 
-      <div w-320 flex-col px-20 py-35>
-        <h5 f-s-c text-20 font-normal color="#6a6a6a">
-          <img src="@/assets/images/logo.png" height="40" class="mr-10" />
+      <div w-80 flex-col px-5 py-8>
+        <h5 f-s-c text-5 font-normal color="#6a6a6a">
+          <img src="@/assets/images/logo.png" height="40" class="mr-2" />
           {{ title }}
         </h5>
-        <div mt-32>
+        <div mt-8>
           <n-input
             v-model:value="loginInfo.name"
             autofocus
-            class="h-48 items-center text-16"
+            class="h-12 items-center text-4"
             placeholder="name"
             :maxlength="20"
           >
             <template #prefix>
-              <icon-material-symbols:account-circle-outline class="mr-8 text-20 opacity-40" />
+              <icon-material-symbols:account-circle-outline class="mr-2 text-5 opacity-40" />
             </template>
           </n-input>
         </div>
-        <div mt-32>
+        <div mt-8>
           <n-input
             v-model:value="loginInfo.password"
-            class="h-48 items-center text-16"
+            class="h-12 items-center text-base"
             type="password"
             show-password-on="mousedown"
             placeholder="password"
@@ -38,12 +38,12 @@
             @keydown.enter="handleLogin"
           >
             <template #prefix>
-              <icon-ri:lock-password-line class="mr-8 text-20 opacity-40" />
+              <icon-ri:lock-password-line class="mr-2 text-5 opacity-8" />
             </template>
           </n-input>
         </div>
 
-        <div mt-20>
+        <div mt-5>
           <n-checkbox
             :checked="isRemember"
             label="记住我"
@@ -51,12 +51,12 @@
           />
         </div>
 
-        <div mt-20>
+        <div mt-4>
           <n-button
-            h-50
+            h-12
             w-full
-            rounded-5
-            text-16
+            rounded-2
+            text-base
             type="primary"
             :loading="loading"
             @click="handleLogin"

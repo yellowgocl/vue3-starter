@@ -1,18 +1,13 @@
 <template>
-    <n-layout wh-full>
-      <n-page-header subtitle="A podcast to improve designs" @back="handleBack">
-        <template #extra>
+    <n-layout wh-full class="bg-[#f5f6fb] dark:bg-hex-121212">
+      <n-page-header class="p-4 pb-0 z-10 backdrop-blur-lg sticky top-0 " :subtitle="title" @back="handleBack">
+        <!-- <template #extra>
           <n-space>
             <n-button>Refresh</n-button>
-            <!-- <n-dropdown :options="options" placement="bottom-start">
-              <n-button :bordered="false" style="padding: 0 4px">
-                ···
-              </n-button>
-            </n-dropdown> -->
           </n-space>
-        </template>
+        </template> -->
       </n-page-header>
-      <article flex-col flex-1>
+      <article p-4 pt-0 flex-col flex-1>
         <!-- <header
           border-b="1 solid #eee"
           class="flex items-center bg-white px-15"
@@ -37,7 +32,7 @@ import { useAppStore } from '@/store'
 
 const router = useRouter()
 const route = useRoute()
-
+const title = route.meta.title || import.meta.env.VITE_TITLE
 const appStore = useAppStore()
 const hasHistory = window.history.length > 2
 const handleBack = hasHistory ? () => {

@@ -45,7 +45,7 @@ export const addDynamicRoutes = async () =>  {
     const userStore = useUserStore()
     try {
       const permissionStore = usePermissionStore()
-      !userStore.userId && (await userStore.getUserInfo())
+      !userStore.id && (await userStore.getUserInfo())
       const accessRoutes = permissionStore.generateRoutes(userStore.role)
       accessRoutes.forEach((route) => {
         !router.hasRoute(route.name) && router.addRoute(route)
