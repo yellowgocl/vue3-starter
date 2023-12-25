@@ -1,0 +1,14 @@
+{
+  perferences: {
+    sections: {
+      display: {
+        title: "Display setting",
+        toggleLightMode: "Switch to light mode",
+        toggleDarkMode: "Switch to dark mode",
+      },
+      language: {
+        title: "Language setting"
+      }
+    }
+  }
+}

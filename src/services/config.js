@@ -22,7 +22,6 @@ const config = {
         url: '/api/user',
         method: 'put'
     },
-
     "auth/login": {
         url: '/api/auth/login',
         method: 'post',
@@ -32,6 +31,11 @@ const config = {
         url: '/api/auth/refresh',
         method: 'post',
         mock: './dummy/auth/refresh'
+    },
+    "event/list": {
+        url: "/api/event/list",
+        method: 'get',
+        mock: './dummy/event/list'
     }
 }
 

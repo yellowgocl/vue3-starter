@@ -1,0 +1,14 @@
+{
+  perferences: {
+    sections: {
+      display: {
+        title: "显示设置",
+        toggleLightMode: "切换到明亮模式",
+        toggleDarkMode: "切换到黑暗模式",
+      },
+      language: {
+        title: "语言设置",
+      }
+    }
+  }
+}

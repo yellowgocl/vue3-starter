@@ -1,18 +1,23 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, reactive,  onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-const isLoading = ref(true)
-const data = ref([
-    { id: 1, title: 'event 1', address: '廣州市 海珠區 琶洲會展 B區', content: '商演活動，獎品豐富，高手如云，大量真實36d車模湧現，抓閃最好機會' },
-    { id: 2, title: 'event 2', address: '廣州市 黃埔區 政府總部大樓大堂', content: '商演活動，獎品豐富，高手如云，大量真實36d車模湧現，抓閃最好機會' },
-    
-])
+import { useService } from '@/hooks'
+
+const [getEventList, { isPending: isLoading }, getEventListActions] = useService('event/list')
+
+// const isLoading = ref(true)
+const data = ref([])
 const router = useRouter()
 const goto = (id) => {
     router.push({ path: `/event/${id}` })
 }
-onMounted(() => {
-    setTimeout(() => isLoading.value = false, 1000)
+onMounted(async () => {
+    // setTimeout(() => isLoading.value = false, 1000)
+    const { data: eventList } = await getEventList()
+    console.info({
+      eventList
+    })
+    data.value = [...eventList]
 })
 </script>
 <template>
@@ -28,7 +33,7 @@ onMounted(() => {
       <template v-else>
         <n-list hoverable clickable>
             <n-list-item v-for='(item) in data' :key="item.id" @click="goto(item.id)">
-                <n-thing :title="item.title" content-style="margin-top: 10px;">
+                <n-thing :title="item.name" content-style="margin-top: 10px;">
                     <template #description>
                         <n-space size="small" style="margin-top: 4px">
                             <n-tag :bordered="false" type="info" size="small">
@@ -36,7 +41,7 @@ onMounted(() => {
                             </n-tag>
                         </n-space>
                     </template>
-                    {{ item.content }}
+                    {{ item.descript }}
                 </n-thing>
             </n-list-item>
         </n-list>

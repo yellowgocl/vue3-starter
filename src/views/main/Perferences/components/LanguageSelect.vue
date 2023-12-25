@@ -1,9 +1,6 @@
 <script setup>
 import { useI18n } from 'vue-i18n'
-const { t, availableLocales, locale, ...rest } = useI18n()
-console.info({
-    ...rest
-})
+const { t, availableLocales, locale, } = useI18n()
 const options = availableLocales.map((value) => ({
     label: t(`locale.${value}`),
     value
