@@ -1,0 +1,17 @@
+{
+    "hello": "您好",
+    "role": {
+        "admin": "管理员",
+        "referee": "评判员",
+        "player": "参赛者",
+        "description": {
+            "admin": "管理员权限的简要描述。",
+            "referee": "评判员权限的简要描述。",
+            "player": "参赛者权限的简要描述。"
+        }
+    },
+    "locale": {
+        "en": "英文",
+        "zh-CN": "简体中文"
+    }
+}

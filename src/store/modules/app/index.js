@@ -1,7 +1,8 @@
 import { defineStore } from 'pinia'
-import { useDark } from '@vueuse/core'
+import { useDark, useToggle } from '@vueuse/core'
 
 const isDark = useDark(true)
+const toggleDark = useToggle(isDark)
 export const useAppStore = defineStore('app', {
   state() {
     return {
@@ -22,7 +23,7 @@ export const useAppStore = defineStore('app', {
     },
     /** 切换/关闭 暗黑模式 */
     toggleDark() {
-      this.isDark = !this.isDark
+      toggleDark()
     },
   },
 })

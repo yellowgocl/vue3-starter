@@ -4,6 +4,7 @@ import Components from 'unplugin-vue-components/vite'
 import { NaiveUiResolver } from 'unplugin-vue-components/resolvers'
 import { FileSystemIconLoader } from 'unplugin-icons/loaders'
 import IconsResolver from 'unplugin-icons/resolver'
+import VueI18nPlugin from '@intlify/unplugin-vue-i18n/vite'
 
 /**
  * * unplugin-icons插件，自动引入iconify图标
@@ -16,6 +17,7 @@ import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 import { PROJECT_SRC } from '../constants'
 
 const customIconPath = resolve(PROJECT_SRC, 'assets/svg')
+const customI18nPath = resolve(PROJECT_SRC, './locales/**')
 
 export default [
   AutoImport({
@@ -42,5 +44,9 @@ export default [
     symbolId: 'icon-custom-[dir]-[name]',
     inject: 'body-last',
     customDomId: '__CUSTOM_SVG_ICON__',
+  }),
+  VueI18nPlugin({
+    include: [customI18nPath],
+    jitCompilation: true
   }),
 ]

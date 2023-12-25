@@ -6,9 +6,18 @@ export default [
         redirect: '/landing',
         children: [
           {
+            name: 'Landing',
             path: 'landing',
             component: () => import('@/views/main/Landing.vue'),
           },
+          {
+            name: 'Perferences',
+            path: '/perferences',
+            component: () => import('@/views/main/Perferences'),
+            meta: {
+                title: '系统设置'
+            }
+         },
         ]
     },
     {

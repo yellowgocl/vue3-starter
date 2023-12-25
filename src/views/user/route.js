@@ -10,6 +10,7 @@ export default {
     },
     children: [
         {
+            name:'UserProfile',
             path: 'profile',
             component: () => import('./Profile.vue'),
             meta: {
@@ -19,8 +20,9 @@ export default {
             }
         },
         {
+            name:'UserEdit',
             path: 'edit',
-            component: () => import('./Edit.vue'),
+            component: () => import('./Edit'),
             meta: {
                 title: '编辑个人资料',
                 requireAuth: true,

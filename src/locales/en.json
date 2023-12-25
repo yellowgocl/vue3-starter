@@ -1,0 +1,17 @@
+{
+    "hello": "Hello",
+    "role": {
+        "admin": "Admin",
+        "referee": "Referee",
+        "player": "Player",
+        "description": {
+            "admin": "About the rule of admin.",
+            "referee": "About the rule of referee.",
+            "player": "About the rule of player."
+        }
+    },
+    "locale": {
+        "en": "English",
+        "zh-CN": "Simplified Chinese"
+    }
+}

@@ -71,7 +71,7 @@ const menuOptions = [
                 label: renderLabel('我的老友', '/user/friends'),
                 key: 'utils--friends',
                 icon: renderIcon(PersonPinSharp)
-            }
+            },
         ]
     }
 ]
@@ -80,8 +80,8 @@ const menuOptions = [
 <template>
     <common-page :show-header="false">
         <n-card 
-            class="bg-neutral-900 dark:bg-neutral-300"
-            content-class="!pa-3 !sm:pa-4 !md:pa-6"
+            class="bg-neutral-800 dark:bg-neutral-700"
+            content-class="!pa-4 !sm:pa-4 !md:pa-6"
             footer-style="padding: 0"
             rounded-3>
             <!-- <template #header-extra>
@@ -93,21 +93,13 @@ const menuOptions = [
                 </n-button>
             </template> -->
             <template #footer>
-                <n-divider class="!mt-[16px] !mb-[16px] !sm:mt-[22px] !sm:mb-[22px]"></n-divider>
+                <n-divider class="!mt-0 !mb-[16px] !sm:mt-[22px] !sm:mb-[22px]"></n-divider>
                 <div class='text-sm md:text-base !pa-3 !sm:pa-4 !md:pa-6 !pt-0 !sm:pt-0 !md:pt-0'>
                         <n-tooltip v-for="item in role" :key="`role-${item}`" placement="bottom" trigger="hover">
                             <template #trigger>
-                                <n-button class="mr-1 md:mr-3" :type="roleColorMap[item]" ghost size="tiny" round >{{ item }}</n-button>
-                                <!-- <n-button class='h-6 sm:h-8 text-xs md:text-sm mb-1 text-cyan-200 dark:text-cyan-800 mr-1 md:mr-3' 
-                                    round
-                                    ghost
-                                    size="tiny"
-                                    type="info" 
-                                    :bordered="false"> 
-                                    {{ item }} 
-                                </n-button> -->
+                                <n-button class="mr-1 md:mr-3" :type="roleColorMap[item]" ghost size="tiny" round>{{ $t(`role.${item}`) }}</n-button>
                             </template>
-                            <span> {{ item }} </span>
+                            <span> {{ $t(`role.description.${item}`) }} </span>
                         </n-tooltip>
                     </div>
             </template>

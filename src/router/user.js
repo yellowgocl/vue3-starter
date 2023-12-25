@@ -11,7 +11,7 @@ export default [
             },
             {
                 path: 'edit',
-                component: () => import('@/views/user/Edit.vue'),
+                component: () => import('@/views/user/Edit'),
                 meta: { requiresAuth: true }
             },
         ]
