@@ -1,12 +1,12 @@
 
 import { fakerZH_CN as faker } from '@faker-js/faker';
 
-const createEvent = () => {
+const createEvent = (_, index) => {
     return {
         id: faker.string.uuid(),
         fee: faker.commerce.price({ min: 100, max: 200 }),
         date: faker.date.future(),
-        name: faker.commerce.productName(),
+        name: `赛事-${index}`, //faker.commerce.productName(),
         image: faker.image.urlLoremFlickr({ category: 'nature' }),
         descript: faker.commerce.productDescription(),
         address: faker.location.streetAddress(true),
@@ -16,8 +16,10 @@ const createEvent = () => {
 export default async (req) => {  
     // const { request } = req
     // const { name } = await request.json()
-    return {
-        code: 1,
-        data: faker.helpers.multiple(createEvent, { count: 5 })
-    }
+    return new Promise((resolve) => {
+        setTimeout(() => resolve({
+            code: 1,
+            data: faker.helpers.multiple(createEvent, { count: 5 })
+        }), 2000)
+    })
 }

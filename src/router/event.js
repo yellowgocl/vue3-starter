@@ -14,7 +14,7 @@ export default [
           },
           {
             path: '',
-            component: () => import('@/views/event/List.vue')
+            component: () => import('@/views/event/List')
           }
         ]
       }

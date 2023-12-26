@@ -18,7 +18,7 @@ export default {
     {
       name: 'EventList',
       path: 'list',
-      component: () => import('@/views/event/List.vue')
+      component: () => import('@/views/event/List')
     }
   ]
 }
