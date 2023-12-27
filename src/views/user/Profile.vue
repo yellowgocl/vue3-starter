@@ -84,14 +84,6 @@ const menuOptions = [
             content-class="!pa-4 !sm:pa-4 !md:pa-6"
             footer-style="padding: 0"
             rounded-3>
-            <!-- <template #header-extra>
-                <n-layout ></n-layout>
-                <n-button strong secondary circle type="info">
-                    <template #icon>
-                        <n-icon :component="CreateFilled"></n-icon>
-                    </template>
-                </n-button>
-            </template> -->
             <template #footer>
                 <n-divider class="!mt-0 !mb-[16px] !sm:mt-[22px] !sm:mb-[22px]"></n-divider>
                 <div class='text-sm md:text-base !pa-3 !sm:pa-4 !md:pa-6 !pt-0 !sm:pt-0 !md:pt-0'>

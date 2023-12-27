@@ -24,6 +24,9 @@ export default {
             path: 'edit',
             component: () => import('./Edit'),
             meta: {
+                pageHeader: {
+                    actions: { hidden: true }
+                },
                 title: '编辑个人资料',
                 requireAuth: true,
                 role: ['admin'],
