@@ -1,5 +1,6 @@
 <script setup>
-defineProps({
+import moment from 'moment'
+const props = defineProps({
   image: {
     type: String,
     required: true
@@ -23,7 +24,14 @@ defineProps({
   location: {
     type: Array,
   },
+  date: {
+    type: String,
+  },
+  maximum: {
+    type: Number,
+  }
 })
+const parseDate = computed(() => moment(props.date).format('DD/MM/YYYY'))
 </script>
 <template>
     <n-card embedded :bordered="false">
@@ -36,14 +44,34 @@ defineProps({
     </template>
     <template #header>{{name}}</template>
     <template #header-extra>
-        <n-button circle size="small">
-            <template #icon><icon-mdi-google-maps /></template>
-        </n-button>
+        <n-tag round :bordered="false">
+        {{ fee }}
+        <template #avatar>
+            <n-avatar color="darkGreen">
+                <n-icon><icon-mdi-currency-jpy /></n-icon>
+            </n-avatar>
+        </template>
+    </n-tag>
+    </template>
+    <template #description>
+        <n-space justify="space-between">
+            <span text-sm>{{ parseDate }}</span>
+            <!-- <span text-sm>{{ maximum }}人</span> -->
+        </n-space>
+        
     </template>
     {{descript}}
-    <template #footer><span text-sm>{{ address }}</span></template>
-    <template  #action>
+    <template #footer>
+        <div flex items-center>
+            <n-icon mr-1 circle size="18">
+                <icon-mdi-google-maps />
+            </n-icon>
+            <span text-sm>{{ address }}</span>
+        </div>
+    </template>
+    <!-- <template  #action>
       <n-space justify="end">
+        
         <n-button size="small">
           <template #icon>
             <n-icon><icon-mdi-currency-jpy /></n-icon>
@@ -51,7 +79,7 @@ defineProps({
           {{ fee }}
         </n-button>
       </n-space>
-    </template>
+    </template> -->
   </n-thing>
 </n-card>
 </template>

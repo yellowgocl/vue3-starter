@@ -19,7 +19,7 @@ onMounted(async () => {
 })
 </script>
 <template>
-    <common-page :showHeader="true" title="Event list">
+    <common-page :showHeader="true" :title="$t('event.list.title')">
       <n-skeleton v-if="isLoading" text :repeat="32" />
       <template v-else>
         <n-list hoverable clickable :show-divider="false">

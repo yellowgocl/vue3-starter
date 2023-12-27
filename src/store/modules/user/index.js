@@ -12,6 +12,9 @@ export const useUserStore = defineStore('user', {
     }
   },
   getters: {
+    isLogged() {
+      return !!this.userInfo?.id
+    },
     id() {
       return this.userInfo?.id
     },

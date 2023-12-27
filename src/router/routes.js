@@ -1,6 +1,7 @@
 import Layout from '@/components/layout/index.vue'
 export default [
     {
+        name: 'Home',
         path: '/',
         component: Layout,
         redirect: '/landing',

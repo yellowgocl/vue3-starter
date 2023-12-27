@@ -1,5 +1,5 @@
 <template>
-  <AppPage :show-footer="showFooter">
+  <AppPage :show-footer="showFooter" :class="wrapperClass">
     <header v-if="showHeader" px-1 mb-4 min-h-12 flex items-center justify-between >
       <slot v-if="$slots.header" name="header"></slot>
       <template v-else>
@@ -12,7 +12,12 @@
 </template>
 
 <script setup>
-defineProps({
+
+const props = defineProps({
+  slim: {
+    type: Boolean,
+    default: false
+  },
   showFooter: {
     type: Boolean,
     default: false,
@@ -27,4 +32,5 @@ defineProps({
   },
 })
 const route = useRoute()
+const wrapperClass = computed(() => (props.slim ? '' : 'pa-4 pt-0'))
 </script>

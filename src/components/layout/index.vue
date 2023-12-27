@@ -1,18 +1,7 @@
 <template>
     <n-layout wh-full >
       <AppHeader></AppHeader>
-      <article px-4 pt-0 flex-col flex-1>
-        <!-- <header
-          border-b="1 solid #eee"
-          class="flex items-center bg-white px-15"
-          dark="bg-dark border-0"
-          :style="`height: ${header.height}px`"
-        >
-          <AppHeader />
-        </header>
-        <section v-if="tags.visible" hidden border-b bc-eee sm:block dark:border-0>
-          <AppTags :style="{ height: `${tags.height}px` }" />
-        </section> -->
+      <article flex-col flex-1>
         <section flex-1 >
           <MainContent />
         </section>

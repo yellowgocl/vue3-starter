@@ -16,7 +16,8 @@ import messages from '@intlify/unplugin-vue-i18n/messages'
 const i18n = createI18n({
   legacy: false,
   locale: 'zh-CN',
-  messages
+  messages,
+  allowComposition: true
 })
 
 async function setupApp() {

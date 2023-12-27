@@ -8,9 +8,10 @@ const createEvent = (_, index) => {
         date: faker.date.future(),
         name: `赛事-${index}`, //faker.commerce.productName(),
         image: faker.image.urlLoremFlickr({ category: 'nature' }),
-        descript: faker.commerce.productDescription(),
         address: faker.location.streetAddress(true),
+        descript: faker.commerce.productDescription(),
         location: [faker.location.latitude(), faker.location.longitude()],
+        maximum: 32
     };
 };
 export default async (req) => {  
