@@ -73,6 +73,6 @@ const rules = {
             </n-layout>
             
         </n-space>
-        <n-button round type="primary" fixed bottom-12 right-22 left-22>确认修改</n-button>
+        <n-button round type="primary" size="large" fixed bottom-12 right-22 left-22>{{$t('user.edit.confirm')}}</n-button>
     </common-page>
 </template>

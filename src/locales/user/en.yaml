@@ -1,0 +1,5 @@
+user:
+  profile:
+    logout: "Logout"
+  edit:
+    confirm: 'Accept change'
