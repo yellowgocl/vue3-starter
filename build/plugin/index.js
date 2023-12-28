@@ -1,15 +1,17 @@
 import vue from '@vitejs/plugin-vue'
 
 /**
- * * unocss插件，原子css
+ * unocss插件，原子css
  * https://github.com/antfu/unocss
  */
 import Unocss from 'unocss/vite'
 
 // rollup打包分析插件
 import visualizer from 'rollup-plugin-visualizer'
+
 // 压缩
 import viteCompression from 'vite-plugin-compression'
+
 // vite-vuedevtool
 import VueDevTools from 'vite-plugin-vue-devtools'
 
@@ -18,9 +20,8 @@ import unplugin from './unplugin'
 export function createVitePlugins(viteEnv, isBuild) {
   const plugins = [VueDevTools(), vue(), ...unplugin, Unocss()]
 
-  if (viteEnv.VITE_USE_COMPRESS) {
+  if (viteEnv.VITE_USE_COMPRESS)
     plugins.push(viteCompression({ algorithm: viteEnv.VITE_COMPRESS_TYPE || 'gzip' }))
-  }
 
   if (isBuild) {
     plugins.push(
@@ -28,7 +29,7 @@ export function createVitePlugins(viteEnv, isBuild) {
         open: true,
         gzipSize: true,
         brotliSize: true,
-      })
+      }),
     )
   }
 

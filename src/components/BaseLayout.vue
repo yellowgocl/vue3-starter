@@ -1,30 +1,31 @@
 <script setup>
-import { useSlots } from 'vue';
-import { NGradientText, NSpace, NLayout, NLayoutContent, NLayoutHeader, NLayoutFooter } from 'naive-ui'
+import { useSlots } from 'vue'
+import { NGradientText, NLayout, NLayoutContent, NLayoutFooter, NLayoutHeader, NSpace } from 'naive-ui'
 
 const hasHeaderSlot = !!useSlots().header
 const hasFooterSlot = !!useSlots().footer
 </script>
+
 <template>
-    <n-space vertical size="large">
-        <n-layout>
-            <n-layout-header v-if="hasHeaderSlot">
-                <slot name="header">
-                    <n-gradient-text type="info">
-                        Remote RC Club
-                    </n-gradient-text>
-                </slot>
-            </n-layout-header>
-            <n-layout-content>
-                <slot></slot>
-            </n-layout-content>
-            <n-layout-footer v-if="hasFooterSlot">
-                <slot name="footer">
-                </slot>
-            </n-layout-footer>
-        </n-layout>
-    </n-space>
+  <NSpace vertical size="large">
+    <NLayout>
+      <NLayoutHeader v-if="hasHeaderSlot">
+        <slot name="header">
+          <NGradientText type="info">
+            Remote RC Club
+          </NGradientText>
+        </slot>
+      </NLayoutHeader>
+      <NLayoutContent>
+        <slot />
+      </NLayoutContent>
+      <NLayoutFooter v-if="hasFooterSlot">
+        <slot name="footer" />
+      </NLayoutFooter>
+    </NLayout>
+  </NSpace>
 </template>
+
 <style>
 .n-layout-header,
 .n-layout-footer {

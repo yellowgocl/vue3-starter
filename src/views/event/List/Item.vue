@@ -1,25 +1,26 @@
 <script setup>
 import moment from 'moment'
+
 const props = defineProps({
   image: {
     type: String,
-    required: true
+    required: true,
   },
   name: {
     type: String,
-    required: true
+    required: true,
   },
   fee: {
     type: String,
-    required: true
+    required: true,
   },
   address: {
     type: String,
-    required: true
+    required: true,
   },
   descript: {
     type: String,
-    required: true
+    required: true,
   },
   location: {
     type: Array,
@@ -29,49 +30,53 @@ const props = defineProps({
   },
   maximum: {
     type: Number,
-  }
+  },
 })
 const parseDate = computed(() => moment(props.date).format('DD/MM/YYYY'))
 </script>
+
 <template>
-    <n-card embedded :bordered="false">
-<n-thing>
-    <template #avatar>
-      <n-avatar
-        :src="image"
-        lazy>
-      </n-avatar>
-    </template>
-    <template #header>{{name}}</template>
-    <template #header-extra>
+  <n-card embedded :bordered="false">
+    <n-thing>
+      <template #avatar>
+        <n-avatar
+          :src="image"
+          lazy
+        />
+      </template>
+      <template #header>
+        {{ name }}
+      </template>
+      <template #header-extra>
         <n-tag round :bordered="false">
-        ￥{{ fee }}
+          ￥{{ fee }}
         <!-- <template #avatar>
             <n-avatar color="darkGreen">
                 <n-icon><icon-mdi-currency-jpy /></n-icon>
             </n-avatar>
         </template> -->
-    </n-tag>
-    </template>
-    <template #description>
+        </n-tag>
+      </template>
+      <template #description>
         <n-space justify="space-between">
-            <span text-sm>{{ parseDate }}</span>
-            <!-- <span text-sm>{{ maximum }}人</span> -->
+          <span text-sm>{{ parseDate }}</span>
+          <!-- <span text-sm>{{ maximum }}人</span> -->
         </n-space>
-        
-    </template>
-    <article px-2 py-0>{{descript}}</article>
-    <template #footer>
-        <div flex items-center w-full bg-gray-100 dark:bg-gray-800 rounded-sm pa-2>
-            <n-icon  mr-1 circle color="darkGreen" size="18">
-                <icon-mdi-google-maps />
-            </n-icon>
-            <span text-sm>{{ address }}</span>
+      </template>
+      <article px-2 py-0>
+        {{ descript }}
+      </article>
+      <template #footer>
+        <div w-full flex items-center rounded-sm bg-gray-100 pa-2 dark:bg-gray-800>
+          <n-icon circle mr-1 color="darkGreen" size="18">
+            <icon-mdi-google-maps />
+          </n-icon>
+          <span text-sm>{{ address }}</span>
         </div>
-    </template>
+      </template>
     <!-- <template  #action>
       <n-space justify="end">
-        
+
         <n-button size="small">
           <template #icon>
             <n-icon><icon-mdi-currency-jpy /></n-icon>
@@ -80,6 +85,6 @@ const parseDate = computed(() => moment(props.date).format('DD/MM/YYYY'))
         </n-button>
       </n-space>
     </template> -->
-  </n-thing>
-</n-card>
+    </n-thing>
+  </n-card>
 </template>

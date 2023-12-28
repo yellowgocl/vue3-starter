@@ -1,4 +1,5 @@
 import { auth, common } from '@/utils'
+
 const { getToken, refreshAccessToken } = auth
 const { isNullOrWhitespace } = common
 
@@ -9,12 +10,14 @@ export function createPermissionGuard(router) {
 
     /** 没有token的情况 */
     if (isNullOrWhitespace(token)) {
-      if (WHITE_LIST.includes(to.path)) return true
+      if (WHITE_LIST.includes(to.path))
+        return true
       return { path: 'login', query: { ...to.query, redirect: to.path } }
     }
 
     /** 有token的情况 */
-    if (to.path === '/login') return { path: '/' }
+    if (to.path === '/login')
+      return { path: '/' }
 
     // refreshAccessToken()
     return true

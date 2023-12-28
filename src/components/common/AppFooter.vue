@@ -1,5 +1,5 @@
 <template>
-  <footer f-c-c flex-col text-sm text-white pb-4>
+  <footer f-c-c flex-col pb-4 text-sm text-white>
     <p>
       Copyright © 2023-present
       <a

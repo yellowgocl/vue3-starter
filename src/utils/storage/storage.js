@@ -16,7 +16,7 @@ class Storage {
       time: Date.now(),
       expire: !isNil(expire) ? Date.now() + expire * 1000 : null,
     })
-    
+
     this.storage.setItem(this.getKey(key), stringData)
   }
 
@@ -27,16 +27,18 @@ class Storage {
 
   getItem(key, def = null) {
     const val = this.storage.getItem(this.getKey(key))
-    if (!val) return def
+    if (!val)
+      return def
     try {
       const data = JSON.parse(val)
       const { value, time, expire } = data
-      if (isNil(expire) || expire > Date.now()) {
+      if (isNil(expire) || expire > Date.now())
         return { value, time }
-      }
+
       this.remove(key)
       return def
-    } catch (error) {
+    }
+    catch (error) {
       this.remove(key)
       return def
     }

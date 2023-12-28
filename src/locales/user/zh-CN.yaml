@@ -1,5 +1,5 @@
 user:
-    profile:
-        logout: "登出账户"
-    edit:
-        confirm: '确认修改'
+  profile:
+    logout: 登出账户
+  edit:
+    confirm: 确认修改

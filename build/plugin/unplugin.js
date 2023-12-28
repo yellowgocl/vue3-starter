@@ -1,4 +1,4 @@
-import { resolve } from 'path'
+import { resolve } from 'node:path'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { NaiveUiResolver } from 'unplugin-vue-components/resolvers'
@@ -7,7 +7,7 @@ import IconsResolver from 'unplugin-icons/resolver'
 import VueI18nPlugin from '@intlify/unplugin-vue-i18n/vite'
 
 /**
- * * unplugin-icons插件，自动引入iconify图标
+ * unplugin-icons插件，自动引入iconify图标
  * usage: https://github.com/antfu/unplugin-icons
  * 图标库: https://icones.js.org/
  */
@@ -47,6 +47,6 @@ export default [
   }),
   VueI18nPlugin({
     include: [customI18nPath],
-    jitCompilation: true
+    jitCompilation: true,
   }),
 ]

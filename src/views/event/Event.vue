@@ -1,8 +1,9 @@
 <script setup>
-import { BaseLayout } from '@/components';
+import { BaseLayout } from '@/components'
 </script>
+
 <template>
-    <base-layout>
-        <router-view></router-view>
-    </base-layout>
+  <BaseLayout>
+    <router-view />
+  </BaseLayout>
 </template>

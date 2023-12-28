@@ -1,5 +1,5 @@
 user:
   profile:
-    logout: "Logout"
+    logout: Logout
   edit:
-    confirm: 'Accept change'
+    confirm: Accept change

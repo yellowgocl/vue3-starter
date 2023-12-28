@@ -1,14 +1,13 @@
 import { inject } from 'vue'
 import { useFetch } from '@/hooks'
 
-const useService = (key) => {
-    const services = inject('api')
-    const current = services[key]
-    if (!current) {
-        throw new Error(`${key} was not found in api list, is defined in {projectRoot}/src/services/config.js ?`)
-    }
+function useService(key) {
+  const services = inject('api')
+  const current = services[key]
+  if (!current)
+    throw new Error(`${key} was not found in api list, is defined in {projectRoot}/src/services/config.js ?`)
 
-    return useFetch(current)
+  return useFetch(current)
 }
 
-export default useService;
+export default useService

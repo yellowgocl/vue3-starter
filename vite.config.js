@@ -1,9 +1,13 @@
 import { defineConfig, loadEnv } from 'vite'
-import vue from '@vitejs/plugin-vue'
 import { createVitePlugins } from './build/plugin'
-import { 
-  PROJECT_ROOT, PROJECT_SRC, PROJECT_VIEWS, PROJECT_SERVICES, 
-  OUTPUT_DIR, PROXY_CONFIG } from './build/constants'
+import {
+  OUTPUT_DIR,
+  PROJECT_ROOT,
+  PROJECT_SERVICES,
+  PROJECT_SRC,
+  PROJECT_VIEWS,
+  PROXY_CONFIG,
+} from './build/constants'
 import { convertEnv } from './build/utils'
 
 // https://vitejs.dev/config/
@@ -19,7 +23,7 @@ export default defineConfig(({ command, mode }) => {
         '@': PROJECT_SRC,
         '@views': PROJECT_VIEWS,
         '@services': PROJECT_SERVICES,
-      }
+      },
     },
     server: {
       host: '0.0.0.0',

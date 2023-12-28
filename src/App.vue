@@ -1,4 +1,3 @@
-
 <script setup>
 import AppProvider from '@/components/common/AppProvider.vue'
 </script>
@@ -6,7 +5,7 @@ import AppProvider from '@/components/common/AppProvider.vue'
 <template>
   <Suspense>
     <template #fallback>
-        Loading...
+      Loading...
     </template>
     <AppProvider>
       <router-view v-slot="{ Component }">

@@ -7,13 +7,13 @@
     "height": 50
   },
   "naiveThemeOverrides": {
-    "common": { 
-      "dividerColor": "#606060" 
+    "common": {
+      "dividerColor": "#606060"
     }
   },
   "naiveThemeOverridesLight": {
-    "common": { 
-      "dividerColor": "#606060" 
+    "common": {
+      "dividerColor": "#606060"
     }
   }
 }

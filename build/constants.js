@@ -1,4 +1,4 @@
-import path from 'path'
+import path from 'node:path'
 
 export const PROJECT_ROOT = path.resolve(process.cwd())
 export const PROJECT_SRC = path.resolve(PROJECT_ROOT, 'src')
@@ -11,6 +11,6 @@ export const PROXY_CONFIG = {
   '/api': {
     target: 'http://localhost:3100',
     changeOrigin: true,
-    rewrite: (path) => path.replace(new RegExp('^/api'), ''),
+    rewrite: path => path.replace(new RegExp('^/api'), ''),
   },
 }

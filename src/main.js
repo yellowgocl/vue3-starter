@@ -4,20 +4,20 @@ import 'uno.css'
 import '@/styles/global.scss'
 import 'virtual:svg-icons-register'
 import './style.css'
+import { createI18n } from 'vue-i18n'
+import messages from '@intlify/unplugin-vue-i18n/messages'
 import App from './App.vue'
+import { common as commonUtil } from './utils'
 import setupRouter from '@/router'
 import { setupStore } from '@/store'
 import setupWorkder from '@/services/mocks'
-import { common as commonUtil } from './utils'
-const { setupNaiveDiscreteApi, setupGlobalProvider } = commonUtil
 
-import { createI18n } from 'vue-i18n'
-import messages from '@intlify/unplugin-vue-i18n/messages'
+const { setupNaiveDiscreteApi, setupGlobalProvider } = commonUtil
 const i18n = createI18n({
   legacy: false,
   locale: 'zh-CN',
   messages,
-  allowComposition: true
+  allowComposition: true,
 })
 
 async function setupApp() {

@@ -1,14 +1,14 @@
 {
   "name": "blackbeetle--wx-site",
-  "private": true,
-  "version": "0.0.0",
   "type": "module",
+  "version": "0.0.0",
+  "private": true,
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "eslint",
-    "lint:fix": "eslint --fix",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
     "lint:staged": "lint-staged",
     "prepare": "husky install"
   },
@@ -52,13 +52,7 @@
   },
   "lint-staged": {
     "*.{js,vue}": [
-      "eslint --ext .js,.vue ."
-    ]
-  },
-  "eslintConfig": {
-    "extends": [
-      "@antfu",
-      "@unocss"
+      "eslint ."
     ]
   },
   "msw": {

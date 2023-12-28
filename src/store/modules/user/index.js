@@ -2,8 +2,9 @@ import { defineStore } from 'pinia'
 import { resetRouter } from '@/router'
 import { usePermissionStore } from '@/store'
 import { auth } from '@/utils'
-const { toLogin, removeToken } = auth
 import { api } from '@/services'
+
+const { toLogin, removeToken } = auth
 
 export const useUserStore = defineStore('user', {
   state() {
@@ -40,7 +41,8 @@ export const useUserStore = defineStore('user', {
         const res = await api['user/get']()
         this.userInfo = { ...res?.data }
         return Promise.resolve(res.data)
-      } catch (error) {
+      }
+      catch (error) {
         console.error('get user error:', error)
         return Promise.reject(error)
       }

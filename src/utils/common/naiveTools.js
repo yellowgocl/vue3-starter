@@ -8,8 +8,8 @@ export function setupMessage(NMessage) {
   class Message {
     /**
      * 规则：
-     * * loading message只显示一个，新的message会替换正在显示的loading message
-     * * loading message不会自动清除，除非被替换成非loading message，非loading message默认2秒后自动清除
+     * loading message只显示一个，新的message会替换正在显示的loading message
+     * loading message不会自动清除，除非被替换成非loading message，非loading message默认2秒后自动清除
      */
 
     removeMessage(message = loadingMessage, duration = 2000) {
@@ -31,12 +31,12 @@ export function setupMessage(NMessage) {
           // 非loading message需设置自动清除
           this.removeMessage(loadingMessage, option.duration)
         }
-      } else {
+      }
+      else {
         // 不存在正在显示的loading则新建一个message,如果新建的message是loading message则将message赋值存储下来
-        let message = NMessage[type](content, option)
-        if (type === 'loading') {
+        const message = NMessage[type](content, option)
+        if (type === 'loading')
           loadingMessage = message
-        }
       }
     }
 
@@ -89,7 +89,7 @@ export function setupNaiveDiscreteApi() {
   }))
   const { message, dialog, notification, loadingBar } = NaiveUI.createDiscreteApi(
     ['message', 'dialog', 'notification', 'loadingBar'],
-    { configProviderProps }
+    { configProviderProps },
   )
 
   window.$loadingBar = loadingBar

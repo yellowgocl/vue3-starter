@@ -1,4 +1,4 @@
-import { defineConfig, presetAttributify, presetUno, presetTypography } from 'unocss'
+import { defineConfig, presetAttributify, presetTypography, presetUno } from 'unocss'
 import presetRemToPx from '@unocss/preset-rem-to-px'
 
 export default defineConfig({
@@ -8,10 +8,10 @@ export default defineConfig({
     },
   },
   presets: [
-    presetUno(), 
-    presetAttributify(), 
+    presetUno(),
+    presetAttributify(),
     presetRemToPx({ baseFontSize: 16 }),
-    presetTypography()
+    presetTypography(),
   ],
   shortcuts: [
     ['wh-full', 'w-full h-full'],
@@ -34,16 +34,16 @@ export default defineConfig({
   ],
   theme: {
     breakpoints: {
-      'xs': '320px',
-      'sm': '480px',
-      'md': '640px',
-      'lg': '960px',
+      xs: '320px',
+      sm: '480px',
+      md: '640px',
+      lg: '960px',
     },
     fontSize: {
-      xs: '0.5rem',
-      sm: '0.75rem',
-      base: '1rem',
-      xl: '1.25rem',
+      'xs': '0.5rem',
+      'sm': '0.75rem',
+      'base': '1rem',
+      'xl': '1.25rem',
       '2xl': '1.563rem',
       '3xl': '1.953rem',
       '4xl': '2.441rem',
@@ -53,7 +53,7 @@ export default defineConfig({
       'xl-title': '1.563rem',
     },
     colors: {
-      divider_Light: "0x232323",
+      divider_Light: '0x232323',
       primary: 'var(--primary-color)',
       primary_hover: 'var(--primary-color-hover)',
       primary_pressed: 'var(--primary-color-pressed)',
