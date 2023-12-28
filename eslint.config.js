@@ -1,6 +1,8 @@
 import antfu from '@antfu/eslint-config'
 
 export default antfu({
+  vue: true,
+  jsx: true,
   unocss: true,
   globals: {
     $loadingBar: true,
