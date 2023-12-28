@@ -45,12 +45,12 @@ const parseDate = computed(() => moment(props.date).format('DD/MM/YYYY'))
     <template #header>{{name}}</template>
     <template #header-extra>
         <n-tag round :bordered="false">
-        {{ fee }}
-        <template #avatar>
+        ￥{{ fee }}
+        <!-- <template #avatar>
             <n-avatar color="darkGreen">
                 <n-icon><icon-mdi-currency-jpy /></n-icon>
             </n-avatar>
-        </template>
+        </template> -->
     </n-tag>
     </template>
     <template #description>
@@ -60,10 +60,10 @@ const parseDate = computed(() => moment(props.date).format('DD/MM/YYYY'))
         </n-space>
         
     </template>
-    {{descript}}
+    <article px-2 py-0>{{descript}}</article>
     <template #footer>
-        <div flex items-center>
-            <n-icon mr-1 circle size="18">
+        <div flex items-center w-full bg-gray-100 dark:bg-gray-800 rounded-sm pa-2>
+            <n-icon  mr-1 circle color="darkGreen" size="18">
                 <icon-mdi-google-maps />
             </n-icon>
             <span text-sm>{{ address }}</span>
