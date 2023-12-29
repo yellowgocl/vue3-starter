@@ -4,7 +4,7 @@ import { useRouter } from 'vue-router'
 import ListItem from './Item.vue'
 import { useService } from '@/hooks'
 
-const [getEventList, getEventListState, getEventListActions] = useService('event/list')
+const [getEventList, getEventListState] = useService('event/list')
 
 const isLoading = computed(() => getEventListState.value.isPending)
 

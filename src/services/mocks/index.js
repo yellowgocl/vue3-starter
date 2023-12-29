@@ -12,7 +12,7 @@ import config from '../config'
 
 const mockModules = import.meta.glob('./dummy/**/*.?(js|json)', { eager: true })
 
-const handlers = reduce(config, (r, v, k) => {
+const handlers = reduce(config, (r, v, _k) => {
   const method = v?.method
   const url = v?.url
 

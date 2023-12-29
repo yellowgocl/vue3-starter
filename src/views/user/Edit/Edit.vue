@@ -2,7 +2,7 @@
 import { useUserStore } from '@/store'
 
 const userStore = useUserStore()
-const { avatar, name, email, role, phone } = userStore
+const { avatar, name, phone } = userStore
 
 const formRef = ref(null)
 const model = ref({
@@ -13,7 +13,7 @@ const rules = {
   phone: [
     {
       required: true,
-      validator(rule, value) {
+      validator(_, value) {
         if (!value)
           return new Error('Age is required')
 

@@ -15,7 +15,7 @@ const title = '活动平台'// import.meta.env.VITE_TITLE
 const router = useRouter()
 const { query } = useRoute()
 const api = inject('api')
-const [login, loginState, loginActions] = useFetch(api['auth/login'])
+const [login] = useFetch(api['auth/login'])
 
 const loginInfo = ref({
   name: '',

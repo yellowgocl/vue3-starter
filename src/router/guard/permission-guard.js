@@ -1,6 +1,6 @@
 import { auth, common } from '@/utils'
 
-const { getToken, refreshAccessToken } = auth
+const { getToken } = auth
 const { isNullOrWhitespace } = common
 
 const WHITE_LIST = ['/login', '/404']

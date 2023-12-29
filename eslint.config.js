@@ -70,6 +70,7 @@ export default antfu(
   {
     ignores: [
       '**/public',
+      'src/services/mocks',
       './dist',
       './package.json',
     ],

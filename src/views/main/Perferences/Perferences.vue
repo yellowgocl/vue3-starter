@@ -2,10 +2,8 @@
 import { useDark } from '@vueuse/core'
 import ThemeSwitch from './components/ThemeSwitch.vue'
 import LanguageSelect from './components/LanguageSelect.vue'
-import { useAppStore } from '@/store'
 
 const isDark = useDark()
-const { toggleDark } = useAppStore()
 </script>
 
 <template>
