@@ -91,7 +91,7 @@ const menuOptions = [
         <div class="text-sm !pa-3 !pt-0 md:text-base !md:pa-6 !sm:pa-4 !md:pt-0 !sm:pt-0">
           <n-tooltip v-for="item in role" :key="`role-${item}`" placement="bottom" trigger="hover">
             <template #trigger>
-              <n-button class="mr-1 md:mr-3" :type="roleColorMap[item]" ghost size="tiny" round>
+              <n-button class="mr-1 md:mr-3" :type="roleColorMap[item]" size="tiny" round ghost>
                 {{ $t(`role.${item}`) }}
               </n-button>
             </template>

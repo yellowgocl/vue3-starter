@@ -8,7 +8,7 @@ const { isNullOrWhitespace } = commonUtil
 const { getToken } = authUtil
 const isHash = import.meta.env.VITE_USE_HASH === 'true'
 const basicRoutes = [...common]
-export const router = new createRouter({
+export const router = createRouter({
   history: isHash ? createWebHashHistory('/') : createWebHistory('/'),
   routes: basicRoutes,
   scrollBehavior: () => ({ left: 0, top: 0 }),

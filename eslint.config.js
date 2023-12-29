@@ -4,6 +4,12 @@ export default antfu({
   vue: true,
   jsx: true,
   unocss: true,
+  ignores: [
+    'public',
+    'node_modules',
+    'dist',
+    'package.json',
+  ],
   globals: {
     $loadingBar: true,
     $message: true,

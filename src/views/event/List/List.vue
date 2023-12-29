@@ -23,7 +23,7 @@ onMounted(async () => {
   <common-page :show-header="true" :title="$t('event.list.title')">
     <n-skeleton v-if="isLoading" text :repeat="32" />
     <template v-else>
-      <n-list hoverable clickable :show-divider="false">
+      <n-list clickable hoverable :show-divider="false">
         <n-list-item v-for="(item) in data" :key="item.id" class="mb-4 !pa-0" @click="goto(item.id)">
           <ListItem v-bind="item" />
         </n-list-item>

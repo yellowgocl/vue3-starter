@@ -13,7 +13,7 @@ function createEvent(_, index) {
     maximum: 32,
   }
 }
-export default async (req) => {
+export default async (_) => {
   // const { request } = req
   // const { name } = await request.json()
   return new Promise((resolve) => {

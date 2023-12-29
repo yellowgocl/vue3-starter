@@ -18,13 +18,8 @@ function parseApi(item) {
       parsedDataAndParams = { params: { ...outerParams, ...data } }
 
     const parsedConfig = { ...fetchConfig, ...outerConfig, method, ...parsedDataAndParams }
-    try {
-      const { data } = await axios.request(parsedConfig) || {}
-      return data
-    }
-    catch (error) {
-      throw error
-    }
+    const { data: result } = await axios.request(parsedConfig) || {}
+    return result
   }
 }
 
