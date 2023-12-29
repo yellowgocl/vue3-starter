@@ -29,7 +29,7 @@ function useRetry(asyncFunc, options = {}) {
   const wrapper = async (...params) => {
     try {
       if (isEnd.value)
-        throw { message: 'reached maximum times of retries' }
+        throw new Error('reached maximum times of retries')
 
       return await asyncWrapper(...params)
     }

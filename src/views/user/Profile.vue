@@ -7,14 +7,13 @@ import { useUserStore } from '@/store'
 
 const userStore = useUserStore()
 const { avatar, name, email, role } = userStore
-
 const roleColorMap = {
   admin: 'warning',
   referee: 'success',
   player: 'info',
 }
 
-function renderLabel(label, route, extenal = false) {
+function renderLabel(label, route) {
   const to = isString(route) ? { path: route } : { ...(isObject(route) || {}) }
   return () => h(
     RouterLink,
