@@ -9,7 +9,7 @@ export default {
     {
       name: 'EventDetail',
       path: ':id',
-      component: () => import('@/views/event/Detail.vue'),
+      component: () => import('@/views/event/Detail'),
       children: [{
         name: 'EventNotFound',
         path: '404',

@@ -2,10 +2,10 @@
 import { useI18n } from 'vue-i18n'
 
 const { t, availableLocales, locale } = useI18n()
-const options = availableLocales.map(value => ({
+const options = computed(() => (availableLocales.map(value => ({
   label: t(`locale.${value}`),
   value,
-}))
+}))))
 </script>
 
 <template>

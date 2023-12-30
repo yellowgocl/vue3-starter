@@ -15,7 +15,6 @@ const mockModules = import.meta.glob('./dummy/**/*.?(js|json)', { eager: true })
 const handlers = reduce(config, (r, v, _k) => {
   const method = v?.method
   const url = v?.url
-
   const result = rest?.[method](
     url,
     async (req) => {

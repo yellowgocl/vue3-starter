@@ -7,7 +7,7 @@ export default [
     children: [
       {
         path: ':id',
-        component: () => import('@/views/event/Detail.vue'),
+        component: () => import('@/views/event/Detail'),
         children: [{
           path: '404',
           component: () => import('@/views/event/404.vue'),

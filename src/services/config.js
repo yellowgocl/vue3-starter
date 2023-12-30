@@ -37,6 +37,11 @@ const config = {
     method: 'get',
     mock: './dummy/event/list',
   },
+  'event/detail': {
+    url: '/api/event/:id',
+    method: 'get',
+    mock: './dummy/event/detail',
+  },
 }
 
 export default config

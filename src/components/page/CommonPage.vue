@@ -10,7 +10,7 @@ const props = defineProps({
   },
   showHeader: {
     type: Boolean,
-    default: false,
+    default: props => !!props?.title,
   },
   title: {
     type: String,
@@ -19,11 +19,12 @@ const props = defineProps({
 })
 const route = useRoute()
 const wrapperClass = computed(() => (props.slim ? '' : 'pa-4 pt-0'))
+const isShowHeader = computed(() => (props?.title || props?.showHeader))
 </script>
 
 <template>
   <AppPage :show-footer="showFooter" :class="wrapperClass">
-    <header v-if="showHeader" mb-4 min-h-12 flex items-center justify-between px-1>
+    <header v-if="isShowHeader" mb-4 min-h-12 flex items-center justify-between px-1>
       <slot v-if="$slots.header" name="header" />
       <template v-else>
         <h2 text-5 text-hex-333 font-normal dark:text-hex-ccc>

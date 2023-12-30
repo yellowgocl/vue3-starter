@@ -2,7 +2,7 @@ import { fakerZH_CN as faker } from '@faker-js/faker'
 
 function createEvent(_, index) {
   return {
-    id: faker.string.uuid(),
+    id: `id-${index}`,
     fee: faker.commerce.price({ min: 100, max: 200 }),
     date: faker.date.future(),
     name: `赛事-${index}`, // faker.commerce.productName(),
@@ -13,13 +13,14 @@ function createEvent(_, index) {
     maximum: 32,
   }
 }
+export const EVENT_LIST = faker.helpers.multiple(createEvent, { count: 5 })
 export default async (_) => {
   // const { request } = req
   // const { name } = await request.json()
   return new Promise((resolve) => {
     setTimeout(() => resolve({
       code: 1,
-      data: faker.helpers.multiple(createEvent, { count: 5 }),
+      data: EVENT_LIST,
     }), 2000)
   })
 }

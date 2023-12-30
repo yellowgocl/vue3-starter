@@ -129,8 +129,5 @@ const menuOptions = [
       </div>
     </n-card>
     <n-menu class="mt-4" :root-indent="0" :indent="16" :options="menuOptions" />
-    <n-button type="primary" size="large" round mx-12 my-12>
-      {{ $t('user.profile.logout') }}
-    </n-button>
   </common-page>
 </template>

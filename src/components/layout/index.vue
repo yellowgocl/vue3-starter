@@ -1,6 +1,6 @@
 <script setup>
 import MainContent from './/MainContent.vue'
-import AppHeader from '@/components/common/AppHeader.vue'
+import AppHeader from '@/components/common/AppHeader'
 </script>
 
 <template>

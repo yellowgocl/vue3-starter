@@ -73,7 +73,7 @@ const rules = {
         </n-layout-content>
       </n-layout>
     </n-space>
-    <n-button type="primary" size="large" round fixed bottom-12 left-22 right-22>
+    <n-button type="primary" size="large" round mx-12>
       {{ $t('user.edit.confirm') }}
     </n-button>
   </common-page>

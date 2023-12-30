@@ -11,13 +11,15 @@ function parseApi(item) {
   const method = lowerCase(fetchConfig?.method || 'get')
 
   return async (data, outerConfig) => {
+    const parsedUrl = outerConfig?.urlParams ? `${fetchConfig?.url.split(':')?.[0]}${outerConfig?.urlParams}` : fetchConfig?.url
+
     const outerData = parseFunctionValue(fetchConfig?.data)
     const outerParams = { ...(parseFunctionValue(fetchConfig?.params)), ...(parseFunctionValue(outerConfig?.params)) }
     let parsedDataAndParams = { data: { ...outerData, ...data }, params: outerParams }
     if (method === 'get')
       parsedDataAndParams = { params: { ...outerParams, ...data } }
 
-    const parsedConfig = { ...fetchConfig, ...outerConfig, method, ...parsedDataAndParams }
+    const parsedConfig = { ...fetchConfig, url: parsedUrl, ...outerConfig, method, ...parsedDataAndParams }
     const { data: result } = await axios.request(parsedConfig) || {}
     return result
   }
