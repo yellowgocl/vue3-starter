@@ -13,12 +13,19 @@ onMounted(async () => {
 </script>
 
 <template>
-  <common-page :title="data?.name">
-    <router-view v-if="code === 400" />
+  <n-space v-if="getEventState?.isPending" vertical m-6>
+    <n-skeleton height="40px" width="33%" />
+    <n-skeleton height="180px" :sharp="false" />
+    <n-skeleton height="30px" :sharp="false" />
+    <n-skeleton height="30px" :sharp="false" />
+    <n-skeleton height="30px" width="33%" />
+    <n-skeleton text :repeat="4" />
+    <n-skeleton height="40px" round />
+  </n-space>
+  <common-page v-else :title="data?.name">
+    <router-view v-if="result?.code === 404" />
     <n-space v-else vertical size="large">
-      <div relative>
-        <img :src="data?.image" w-full rounded-2 alt="event_banner">
-      </div>
+      <n-image width="100%" class="min-h-[200px]" :src="data?.image" rounded-2 alt="event_banner" />
       <div w-full flex items-center rounded-sm bg-gray-100 pa-2 dark:bg-gray-800>
         <n-icon circle mr-1 color="darkGreen" size="18">
           <icon-mdi-google-maps />
@@ -36,8 +43,8 @@ onMounted(async () => {
         <span>{{ data?.descript }}</span>
       </n-space>
       <div px-6>
-        <n-button mt-12 w-full size="large" type="primary">
-          马上报名
+        <n-button round mt-12 w-full size="large" type="primary">
+          {{ $t('event.detail.signUp') }}
         </n-button>
       </div>
     </n-space>

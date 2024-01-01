@@ -1,3 +1,5 @@
 event:
   list:
     title: Event list
+  detail:
+    signUp: Sign up now

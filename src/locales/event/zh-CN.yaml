@@ -1,3 +1,5 @@
 event:
   list:
     title: 赛事列表
+  detail:
+    signUp: 马上报名
