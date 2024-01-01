@@ -1,4 +1,4 @@
-import { computed, ref } from 'vue'
+import { computed, nextTick, ref } from 'vue'
 import { isFunction } from 'lodash'
 
 function usePromise(promiseWrapper, options = {}) {
@@ -18,17 +18,20 @@ function usePromise(promiseWrapper, options = {}) {
     isPending.value = true
     isFulfilled.value = isRejected.value = !isPending.value
     return new Promise((resolve, reject) => {
-      const onResolve = (v) => {
+      const onResolve = async (v) => {
         resolve(v)
         const update = () => {
+          result.value = v
           isFulfilled.value = true
           isPending.value = isRejected.value = !isFulfilled.value
         }
-        immediately ? update() : setTimeout(update)
+        immediately && await nextTick()
+        update()
       }
       const onReject = (e) => {
         reject(e)
         const update = () => {
+          result.value = e
           isRejected.value = true
           isPending.value = isFulfilled.value = !isRejected.value
         }

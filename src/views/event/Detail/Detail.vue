@@ -1,23 +1,45 @@
 <script setup>
 import { useService } from '@/hooks'
 
-const [getEvent] = useService('event/detail')
+const [getEvent, getEventState] = useService('event/detail')
+const result = computed(() => getEventState.value.result)
 const route = useRoute()
 const { params } = route || {}
-const data = ref([])
+const data = computed(() => result?.value?.data)
 
 onMounted(async () => {
-  const { data: event } = await getEvent(null, { urlParams: params?.id })
-  data.value = event
+  await getEvent(null, { urlParams: params?.id })
 })
 </script>
 
 <template>
   <common-page :title="data?.name">
-    <div>
-      {{ JSON.stringify($route.params) }}
-      event detail {{ data }}
-      <router-view />
-    </div>
+    <router-view v-if="code === 400" />
+    <n-space v-else vertical size="large">
+      <div relative>
+        <img :src="data?.image" w-full rounded-2 alt="event_banner">
+      </div>
+      <div w-full flex items-center rounded-sm bg-gray-100 pa-2 dark:bg-gray-800>
+        <n-icon circle mr-1 color="darkGreen" size="18">
+          <icon-mdi-google-maps />
+        </n-icon>
+        <span text-sm>{{ data?.address }}</span>
+      </div>
+      <n-space vertical px-2>
+        <n-space justify="space-between">
+          <span text-md>报名人数上限 - {{ data?.maximum }} 人</span>
+          <n-tag round :bordered="false">
+            ￥{{ data?.fee }}
+          </n-tag>
+        </n-space>
+        <span text-lg>简介</span>
+        <span>{{ data?.descript }}</span>
+      </n-space>
+      <div px-6>
+        <n-button mt-12 w-full size="large" type="primary">
+          马上报名
+        </n-button>
+      </div>
+    </n-space>
   </common-page>
 </template>
