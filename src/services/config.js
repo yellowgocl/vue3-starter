@@ -42,6 +42,11 @@ const config = {
     method: 'get',
     mock: './dummy/event/detail',
   },
+  'event/join': {
+    url: '/api/join/:id',
+    method: 'post',
+    mock: './dummy/event/join',
+  },
 }
 
 export default config

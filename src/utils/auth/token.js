@@ -5,6 +5,10 @@ const { lStorage } = storageUtil
 const TOKEN_CODE = 'access_token'
 const DURATION = 6 * 60 * 60
 
+/**
+ *
+ * @returns {string} return access token if exist.
+ */
 export function getToken() {
   return lStorage.get(TOKEN_CODE)
 }

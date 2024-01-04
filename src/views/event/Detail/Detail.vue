@@ -1,7 +1,9 @@
 <script setup>
+import EventDetailSkeleton from './Skeleton.vue'
 import { useService } from '@/hooks'
 
 const [getEvent, getEventState] = useService('event/detail')
+const [joinEvent, joinEventState] = useService('event/join')
 const result = computed(() => getEventState.value.result)
 const route = useRoute()
 const { params } = route || {}
@@ -10,18 +12,14 @@ const data = computed(() => result?.value?.data)
 onMounted(async () => {
   await getEvent(null, { urlParams: params?.id })
 })
+
+async function onClick() {
+  await joinEvent(null, { urlParams: params?.id })
+}
 </script>
 
 <template>
-  <n-space v-if="getEventState?.isPending" vertical m-6>
-    <n-skeleton height="40px" width="33%" />
-    <n-skeleton height="180px" :sharp="false" />
-    <n-skeleton height="30px" :sharp="false" />
-    <n-skeleton height="30px" :sharp="false" />
-    <n-skeleton height="30px" width="33%" />
-    <n-skeleton text :repeat="4" />
-    <n-skeleton height="40px" round />
-  </n-space>
+  <EventDetailSkeleton v-if="getEventState?.isPending" />
   <common-page v-else :title="data?.name">
     <router-view v-if="result?.code === 404" />
     <n-space v-else vertical size="large">
@@ -43,7 +41,7 @@ onMounted(async () => {
         <span>{{ data?.descript }}</span>
       </n-space>
       <div px-6>
-        <n-button round mt-12 w-full size="large" type="primary">
+        <n-button :loading="joinEventState.isPending" :disabled="joinEventState.isPending" round mt-12 w-full size="large" type="primary" @click="onClick">
           {{ $t('event.detail.signUp') }}
         </n-button>
       </div>
