@@ -61,6 +61,11 @@
       "eslint ."
     ]
   },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-customizable"
+    }
+  },
   "msw": {
     "workerDirectory": "public"
   }
