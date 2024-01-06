@@ -1,9 +1,10 @@
-import { http as rest } from 'msw'
+import { HttpResponse, http as rest } from 'msw'
 import { setupWorker } from 'msw/browser'
 import reduce from 'lodash/reduce'
 import find from 'lodash/find'
 import isBoolean from 'lodash/isBoolean'
 import isFunction from 'lodash/isFunction'
+import isString from 'lodash/isString'
 import { minimatch } from 'minimatch'
 
 // import { handlers } from './handlers'
@@ -23,8 +24,15 @@ const handlers = reduce(config, (r, v, _k) => {
       const mockModule = isFunction(mockPath)
         ? { default: mockPath }
         : find(mockModules, (v, k) => (minimatch(k, `${mockPath}.?(js{,on})`)))
-      const mockData = isFunction(mockModule?.default) ? await mockModule?.default(req) : mockModule?.default
-      return new Response(JSON.stringify(mockData ?? { statusCode: 404, data: null }))
+        try{
+          const mockData = isFunction(mockModule?.default) ? await mockModule?.default(req) : mockModule?.default
+          const ifNeedParse = !(mockData instanceof Response)
+          return (ifNeedParse 
+            ? new Response(JSON.stringify(mockData ?? { statusCode: 404, data: null }))
+            : mockData)
+        } catch(e) {
+          return HttpResponse.error(e)
+        }
     },
   )
   r.push(result)

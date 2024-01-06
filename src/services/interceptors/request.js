@@ -20,7 +20,6 @@ export async function useRequestAuthHeader(config) {
     return config
   }
   else { config.headers.Authorization = token }
-
   return config
 }
 
