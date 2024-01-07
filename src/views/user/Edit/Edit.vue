@@ -65,7 +65,6 @@ const rules = {
             <n-form-item path="phone" label="Phone number">
               <n-input
                 v-model:value="model.phone"
-                @input="handlePasswordInput"
                 @keydown.enter.prevent
               />
             </n-form-item>

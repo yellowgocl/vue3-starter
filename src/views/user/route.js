@@ -7,7 +7,7 @@ export default {
   redirect: '/user/profile',
   meta: {
     requireAuth: true,
-    role: ['admin'],
+    role: ['admin', 'player'],
   },
   children: [
     {
@@ -17,7 +17,7 @@ export default {
       meta: {
         title: '个人资料',
         requireAuth: true,
-        role: ['admin'],
+        role: ['admin', 'player'],
       },
     },
     {
@@ -30,7 +30,20 @@ export default {
         },
         title: '编辑个人资料',
         requireAuth: true,
-        role: ['admin'],
+        role: ['admin', 'player'],
+      },
+    },
+    {
+      name: 'UserSupplement',
+      path: 'supplement',
+      component: () => import('./Supplement'),
+      meta: {
+        pageHeader: {
+          actions: { hidden: true },
+        },
+        title: '补充个人资料',
+        requireAuth: true,
+        role: ['admin', 'player'],
       },
     },
   ],

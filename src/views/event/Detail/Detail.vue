@@ -2,7 +2,7 @@
 import EventDetailSkeleton from './Skeleton.vue'
 import { useService } from '@/hooks'
 
-const [getEvent, getEventState] = useService('event/detail')
+const [getEvent, getEventState, getEventActions] = useService('event/detail')
 const [joinEvent, joinEventState] = useService('event/join')
 const result = computed(() => getEventState.value.result)
 const route = useRoute()
@@ -10,7 +10,15 @@ const { params } = route || {}
 const data = computed(() => result?.value?.data)
 
 onMounted(async () => {
-  await getEvent(null, { urlParams: params?.id })
+  try {
+    await getEvent(null, { urlParams: params?.id })
+  }
+  catch (e) {
+    console.error(e)
+  }
+})
+onBeforeUnmount(async () => {
+  await getEventActions?.cancel?.()
 })
 
 async function onClick() {
