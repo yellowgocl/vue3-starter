@@ -19,7 +19,7 @@ const actionsClass = computed(() => {
 
 <template>
   <div :class="actionsClass">
-    <n-space size="large" justify="end">
+    <n-space size="large" justify="end" color-white>
       <AppHeaderActionsAvatar v-if="isShowUserIcon" to="/user" />
       <AppHeaderActionsSetting v-if="isShowPerferencesIcon" to="/perferences" />
       <AppHeaderActionsLogout v-if="isInUserProfile" />
