@@ -1,12 +1,18 @@
 import { defineStore } from 'pinia'
 import basicRoutes, { asyncRoutes } from '@/router/routes'
 
+function isRequireAuth(route) {
+  const { requireAuth: configRequireAuth, role: configRole } = route?.meta || {}
+  return !!configRole?.length || configRequireAuth
+}
 function hasPermission(route, role) {
   // * 不需要权限直接返回true
-  if (!route.meta?.requireAuth)
+  const { role: configRole } = route?.meta || {}
+  const requireAuth = isRequireAuth(route)
+  if (!requireAuth)
     return true
 
-  const routeRole = route.meta?.role ? route.meta.role : []
+  const routeRole = configRole || []
 
   // * 登录用户没有角色或者路由没有设置角色判定为没有权限
   if (!role.length || !routeRole.length)

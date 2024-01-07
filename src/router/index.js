@@ -1,5 +1,5 @@
 import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router'
-import common, { EMPTY_ROUTE, NOT_FOUND_ROUTE } from './routes'
+import common, { EMPTY_ROUTE, NOT_FOUND_ROUTE, asyncRoutes } from './routes'
 import setupRouterGuard from './guard'
 import { usePermissionStore, useUserStore } from '@/store'
 import { auth as authUtil, common as commonUtil } from '@/utils'
@@ -34,15 +34,20 @@ export async function resetRouter() {
 export async function addDynamicRoutes() {
   const token = getToken()
   // token invalid
+  const permissionStore = usePermissionStore()
   if (isNullOrWhitespace(token)) {
     router.addRoute(EMPTY_ROUTE)
+    const accessRoutes = permissionStore.generateRoutes()
+    accessRoutes.forEach((route) => {
+      !router.hasRoute(route.name) && router.addRoute(route)
+    })
+    console.log('guest mode:', router.getRoutes())
     return
   }
 
   // valid
   const userStore = useUserStore()
   try {
-    const permissionStore = usePermissionStore()
     !userStore.id && (await userStore.getUserInfo())
     const accessRoutes = permissionStore.generateRoutes(userStore.role)
     accessRoutes.forEach((route) => {

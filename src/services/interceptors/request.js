@@ -12,7 +12,8 @@ const { getToken } = authUtil
  */
 export async function useRequestAuthHeader(config) {
   const token = getToken()
-  if (isNullOrWhitespace(token)) {
+  const isRequireAuth = config?.meta?.requireAuth
+  if (isNullOrWhitespace(token) && isRequireAuth) {
     const userStore = useUserStore()
     userStore.logout()
     const to = router.currentRoute.value

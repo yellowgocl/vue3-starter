@@ -35,8 +35,7 @@ export default {
       path: 'joined/:id',
       component: () => import('@/views/event/Joined'),
       meta: {
-        requireAuth: true,
-        role: ['admin', 'player'],
+
       },
     },
     {

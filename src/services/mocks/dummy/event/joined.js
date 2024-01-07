@@ -9,9 +9,9 @@ const ERROR_MAP = {
 export default (context) => {
     const { request, params } = context
     const { id } = params || {}
-    // const headers = request?.headers
-    // const token = headers.get('Authorization')
-    const flag = JOINED_MAP.includes(id)
+    const headers = request?.headers
+    const token = headers.get('Authorization')
+    const flag = token && JOINED_MAP.includes(id)
     const code = flag ? 1 : 404
     return HttpResponse.json({
         code,

@@ -8,19 +8,31 @@ const config = {
     url: '/api/user',
     method: 'get',
     mock: './dummy/user/get',
+    meta: {
+      requireAuth: true,
+    },
   },
   'user/update': {
     url: '/api/user',
     method: 'post',
     mock: './dummy/user/post',
+    meta: {
+      requireAuth: true,
+    },
   },
   'user/delete': {
     url: '/api/user',
     method: 'delete',
+    meta: {
+      requireAuth: true,
+    },
   },
   'user/add': {
     url: '/api/user',
     method: 'put',
+    meta: {
+      requireAuth: true,
+    },
   },
   'auth/login': {
     url: '/api/auth/login',
@@ -31,6 +43,9 @@ const config = {
     url: '/api/auth/refresh',
     method: 'post',
     mock: './dummy/auth/refresh',
+    meta: {
+      requireAuth: true,
+    },
   },
   'event/list': {
     url: '/api/event/list',
@@ -46,6 +61,9 @@ const config = {
     url: '/api/join/:id',
     method: 'post',
     mock: './dummy/event/join',
+    meta: {
+      requireAuth: true,
+    },
   },
   'event/joined': {
     url: '/api/joined/:id',
