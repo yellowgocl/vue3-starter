@@ -26,6 +26,8 @@ setupCssVar()
     :theme="appStore.isDark ? darkTheme : undefined"
     :theme-overrides="appStore.isDark ? naiveThemeOverrides : naiveThemeOverridesLight"
   >
-    <slot />
+    <n-notification-provider>
+      <slot />
+    </n-notification-provider>
   </n-config-provider>
 </template>

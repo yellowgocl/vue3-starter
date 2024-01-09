@@ -31,8 +31,12 @@ const props = defineProps({
   maximum: {
     type: Number,
   },
+  joined: {
+    type: Number,
+  },
 })
 const parseDate = computed(() => moment(props.date).format('DD/MM/YYYY'))
+const isFull = computed(() => props?.joined >= props?.maximum)
 </script>
 
 <template>
@@ -49,7 +53,8 @@ const parseDate = computed(() => moment(props.date).format('DD/MM/YYYY'))
       </template>
       <template #header-extra>
         <n-tag round :bordered="false">
-          ￥{{ fee }}
+          <span v-if="isFull" text-red-500>满员</span>
+          <span v-else>￥{{ fee }}</span>
         <!-- <template #avatar>
             <n-avatar color="darkGreen">
                 <n-icon><icon-mdi-currency-jpy /></n-icon>
@@ -58,8 +63,11 @@ const parseDate = computed(() => moment(props.date).format('DD/MM/YYYY'))
         </n-tag>
       </template>
       <template #description>
-        <n-space justify="space-between">
-          <span text-sm>{{ parseDate }}</span>
+        <n-space items-center text-sm size="small">
+          报名人数:
+          <p text-emerald-600 font-bold dark:text-lime-500 :class="[isFull && 'text-red-500']">
+            {{ joined }} / <span>{{ maximum }}</span>
+          </p>
           <!-- <span text-sm>{{ maximum }}人</span> -->
         </n-space>
       </template>
@@ -67,12 +75,20 @@ const parseDate = computed(() => moment(props.date).format('DD/MM/YYYY'))
         {{ descript }}
       </article>
       <template #footer>
-        <div w-full flex items-center rounded-sm bg-gray-100 pa-2 dark:bg-gray-800>
-          <n-icon circle mr-1 color="darkGreen" size="18">
-            <icon-mdi-google-maps />
-          </n-icon>
-          <span text-sm>{{ address }}</span>
-        </div>
+        <n-space vertical size="large" w-full rounded-sm bg-gray-100 pa-4 dark:bg-gray-800>
+          <div flex items-center>
+            <n-icon circle mr-1 size="18">
+              <icon-mdi-date-range />
+            </n-icon>
+            <span text-sm>{{ parseDate }}</span>
+          </div>
+          <div flex items-center>
+            <n-icon circle mr-1 size="18">
+              <icon-mdi-google-maps />
+            </n-icon>
+            <span text-sm>{{ address }}</span>
+          </div>
+        </n-space>
       </template>
     <!-- <template  #action>
       <n-space justify="end">
