@@ -1,10 +1,12 @@
 <script setup>
+import { useI18n } from 'vue-i18n'
 import Actions from './actions'
 
+const { t, te } = useI18n()
 const router = useRouter()
 const route = useRoute()
 
-const title = computed(() => route.meta.title)
+const title = computed(() => (te(route.meta.title) ? t(route.meta.title) : route.meta.title))
 const isHome = computed(() => ['Home', 'Landing'].includes(route?.name))
 
 function handleBack() {

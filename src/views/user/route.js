@@ -41,7 +41,7 @@ export default {
         pageHeader: {
           actions: { hidden: true },
         },
-        title: '补充个人资料',
+        title: 'user.supplement.title',
         requireAuth: true,
         role: ['admin', 'player'],
       },

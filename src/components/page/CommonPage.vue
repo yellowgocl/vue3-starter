@@ -20,6 +20,7 @@ const props = defineProps({
 const route = useRoute()
 const wrapperClass = computed(() => (props.slim ? '' : 'pa-4 pt-0'))
 const isShowHeader = computed(() => (props?.title || props?.showHeader))
+const currentTitle = computed(() => (props?.title || route?.meta?.title))
 </script>
 
 <template>
@@ -28,7 +29,7 @@ const isShowHeader = computed(() => (props?.title || props?.showHeader))
       <slot v-if="$slots.header" name="header" />
       <template v-else>
         <h2 text-5 text-hex-333 font-normal dark:text-hex-ccc>
-          {{ title || route.meta?.title }}
+          {{ $te(currentTitle) ? $t(currentTitle) : currentTitle }}
         </h2>
         <slot name="action" />
       </template>

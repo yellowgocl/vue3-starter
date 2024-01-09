@@ -3,3 +3,5 @@ user:
     logout: 登出账户
   edit:
     confirm: 确认修改
+  supplement:
+    title: 补充个人资料

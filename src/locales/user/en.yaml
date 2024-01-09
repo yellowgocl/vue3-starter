@@ -3,3 +3,5 @@ user:
     logout: Logout
   edit:
     confirm: Accept change
+  supplement:
+    title: supplement information
