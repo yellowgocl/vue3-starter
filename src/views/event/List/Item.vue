@@ -1,5 +1,5 @@
 <script setup>
-import moment from 'moment'
+import { event as EventUtil } from '@/utils'
 
 const props = defineProps({
   image: {
@@ -35,8 +35,9 @@ const props = defineProps({
     type: Number,
   },
 })
-const parseDate = computed(() => moment(props.date).format('DD/MM/YYYY'))
-const isFull = computed(() => props?.joined >= props?.maximum)
+const data = computed(() => EventUtil.parseData(props))
+const parseDate = computed(() => data?.value?.matchDay)
+const isFull = computed(() => data?.value?.isFull)
 </script>
 
 <template>
@@ -65,7 +66,7 @@ const isFull = computed(() => props?.joined >= props?.maximum)
       <template #description>
         <n-space items-center text-sm size="small">
           报名人数:
-          <p text-emerald-600 font-bold dark:text-lime-500 :class="[isFull && 'text-red-500']">
+          <p text-emerald-600 font-bold dark:text-lime-500 :class="[isFull && '!text-red-500']">
             {{ joined }} / <span>{{ maximum }}</span>
           </p>
           <!-- <span text-sm>{{ maximum }}人</span> -->
