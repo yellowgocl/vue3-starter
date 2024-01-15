@@ -3,3 +3,5 @@ event:
     title: Event list
   detail:
     signUp: Sign up now
+    joinedLabel: Number of joined
+    introduction: Introduction

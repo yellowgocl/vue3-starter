@@ -70,6 +70,11 @@ const config = {
     method: 'post',
     mock: './dummy/event/joined',
   },
+  'event/who-joined': {
+    url: '/api/who-joined/:id',
+    method: 'post',
+    mock: './dummy/event/who-joined',
+  },
 }
 
 export default config
