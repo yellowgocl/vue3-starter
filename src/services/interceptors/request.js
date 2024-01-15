@@ -8,7 +8,7 @@ const { getToken } = authUtil
 /**
  *
  * @param {AxiosRequestConfig} config
- * @returns
+ * @returns {AxiosRequestConfig} axios request config
  */
 export async function useRequestAuthHeader(config) {
   const token = getToken()
