@@ -1,4 +1,5 @@
 <script setup>
+import { WhoJoinedView } from '../components'
 import { useService } from '@/hooks'
 
 const [getEvent, getEventState] = useService('event/detail')
@@ -21,6 +22,7 @@ onMounted(async () => {
           <span text-sm>{{ data?.address }}</span>
         </div>
         <div mt-6 bg-gray-100 pa-6 text-start dark:bg-gray-800>
+          <WhoJoinedView :event="data" />
           <span>举办时间: {{ data?.date }}</span>
           <div mt-4>
             已经成功报名<b>{{ data?.name }}</b>，期待当日您的精彩发挥
