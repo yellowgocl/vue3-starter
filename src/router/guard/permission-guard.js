@@ -3,7 +3,7 @@ import { auth, common } from '@/utils'
 const { getToken } = auth
 const { isNullOrWhitespace } = common
 
-const WHITE_LIST = ['/', '/perferences', '/landing', '/login', '/404', '/event', '/event/list', 'EventDetail']
+const WHITE_LIST = ['/', '/perferences', '/landing', '/login', '/404', '/event', '/event/list', 'EventDetail', 'Ranking', 'RankingList']
 export function createPermissionGuard(router) {
   router.beforeEach(async (to) => {
     const token = getToken()

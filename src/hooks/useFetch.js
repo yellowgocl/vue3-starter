@@ -14,7 +14,6 @@ function useFetch(asyncFunc, options = {}) {
   const cancel = async () => {
     controller.value?.abort?.()
   }
-
   onBeforeUnmount(() => {
     abortOnUnmount && cancel()
   })
@@ -34,15 +33,6 @@ function useFetch(asyncFunc, options = {}) {
       return await retryWrapper(data, { ...wrapperOptions, signal: abortController.signal })
     }
     return await fetch()
-    // return !abortOnPending ? await fetch() : new Promise((resolve, reject) => {
-    //     setTimeout(async () => {
-    //         try {
-    //             resolve(await fetch())
-    //         } catch (e) {
-    //             reject (e)
-    //         }
-    //     })
-    // })
   }
 
   const actions = {

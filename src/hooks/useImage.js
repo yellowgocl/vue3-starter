@@ -1,7 +1,6 @@
 import { ref } from 'vue'
 import useRetry from './useRetry'
 
-// const validReg = /\.(png|jpe?g|gif|svg|webp|tif|bmp)(\?.*)?$)/
 function useImage(options = {}) {
   const { onLoad, onError } = options
   const currentLoader = ref()
