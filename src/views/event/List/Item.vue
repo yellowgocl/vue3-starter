@@ -1,4 +1,5 @@
 <script setup>
+import { computed } from 'vue'
 import { event as EventUtil } from '@/utils'
 
 const props = defineProps({

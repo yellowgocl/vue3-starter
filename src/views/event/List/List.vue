@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useNotification } from 'naive-ui'
 import ListItem from './Item.vue'
@@ -10,6 +10,9 @@ const [getEventList, getEventListState] = useService('event/list')
 const isLoading = computed(() => getEventListState.value.isPending)
 const notification = useNotification()
 
+/**
+ * @type {import('vue').Ref<*[]>}
+ */
 const data = ref([])
 const router = useRouter()
 function goto({ id, maximum, joined }) {

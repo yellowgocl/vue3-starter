@@ -75,6 +75,21 @@ const config = {
     method: 'post',
     mock: './dummy/event/who-joined',
   },
+  'ranking/list': {
+    url: '/api/ranking/:range',
+    method: 'get',
+    mock: './dummy/ranking/list',
+  },
+  'wechat/jssdk': {
+    url: '/api/wechat/jssdk',
+    method: 'get',
+    mock: './dummy/wechat/jssdk',
+  },
+  'wechat/auth': {
+    url: '/api/wechat/auth',
+    method: 'get',
+    mock: './dummy/wechat/auth',
+  },
 }
 
 export default config

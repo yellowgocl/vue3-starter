@@ -1,6 +1,47 @@
 import { computed, nextTick, ref } from 'vue'
 import { isFunction } from 'lodash'
 
+/**
+ * @function
+ * @callback usePromiseCall
+ * @param {...*} args
+ * @returns {(undefined | Promise<*>)} resolved promise
+ */
+
+/**
+ * @function
+ * @template T
+ * @callback usePromiseWrapper
+ * @param {...*} args
+ * @returns {Promise<T>} resolved promise
+ */
+
+/**
+ * @typedef {object} usePromiseOption option for custom define usePromise hook
+ * @property {boolean} [immediately=true] flag for order is immediately update when resolve
+ */
+
+/**
+ * @template T
+ * @typedef {object} usePromiseStateObject usePromiseStateObject
+ * @property {T|null} result result
+ * @property {boolean} isPending isPending
+ * @property {boolean} isFulfilled isFulfilled
+ * @property {boolean} isRejected isRejected
+ */
+
+/**
+ * @template T
+ * @typedef {import('vue').ComputedRef<{[K in keyof usePromiseStateObject<T>]: usePromiseStateObject<T>[K]}>} usePromiseState state for hook
+ */
+
+/**
+ * usePromise hook, for wrapper promise and return compouted state
+ * @template T, S
+ * @param {usePromiseCall} promiseWrapper
+ * @param {{[K in keyof usePromiseOption]: usePromiseOption[K]}} options
+ * @returns {[usePromiseWrapper<T>, usePromiseState<S>]} an array includes state and promise wrapper
+ */
 function usePromise(promiseWrapper, options = {}) {
   if (!promiseWrapper)
     console.error('The async method could not be null')
@@ -11,6 +52,11 @@ function usePromise(promiseWrapper, options = {}) {
   const isRejected = ref(false)
   const result = ref(null)
   const state = computed(() => ({ result: result.value, isPending: isPending.value, isFulfilled: isFulfilled.value, isRejected: isRejected.value }))
+  /**
+   *
+   * @param  {...any} params
+   * @returns {*} results
+   */
   const wrapper = (...params) => {
     if (isPending.value)
       return

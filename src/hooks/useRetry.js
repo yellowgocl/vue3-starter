@@ -1,5 +1,48 @@
+/** @module hooks/useRetry */
+
+import { computed } from 'vue'
 import usePromise from './usePromise'
 import useCounter from './useCounter'
+
+/**
+ * @callback useRetryConsumedFilter
+ * @param {Error} e
+ * @returns {boolean|undefined} flag
+ */
+
+/**
+ * @typedef {object} useRetryBaseOption
+ * @property {number} [times = Number.MAX_SAFE_INTEGER] times
+ * @property {useRetryConsumedFilter} [consumedFilter] consumedFilter
+ */
+
+/**
+ * @typedef {object} RetryActions
+ * @property {import('./useCounter').ResetValueCall} reset reset the value, default initial value from pass in hook
+ */
+
+/**
+ * @typedef {import('./usePromise').usePromiseOption & useRetryBaseOption} useRetryOption
+ */
+
+/**
+ * @typedef {object} PromiseStateObject
+ * @property {number} retryTimes retry times
+ * @property {boolean} isEnd is the end of the retry count for this retry hook for wrapper promise
+ */
+
+/**
+ * @template S
+ * @typedef {import('./usePromise').usePromiseState<S> & import('vue').ComputedRef<({[K in keyof PromiseStateObject]: PromiseStateObject[K]})>} RetryState
+ */
+
+/**
+ *
+ * @template T,S
+ * @param {import('./usePromise').usePromiseCall} asyncFunc
+ * @param {{ [K in keyof useRetryOption]: useRetryOption[K] }} options
+ * @returns {[import('./usePromise').usePromiseWrapper.<T>, RetryState<S>, RetryActions]}
+ */
 
 function useRetry(asyncFunc, options = {}) {
   const { times = Number.MAX_SAFE_INTEGER, consumedFilter, ...rest } = options

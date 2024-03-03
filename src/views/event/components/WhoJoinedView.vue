@@ -1,4 +1,6 @@
 <script setup>
+import { computed, onBeforeUnmount, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
 import { useService } from '@/hooks'
 import { event as EventUtil } from '@/utils'
 
@@ -9,6 +11,7 @@ defineProps({
 })
 
 const [getWhoJoined, getWhoJoinedState, getWhoJoinedActions] = useService('event/who-joined')
+
 const route = useRoute()
 const { params } = route || {}
 const whoJoinedList = computed(() => getWhoJoinedState?.value?.result?.data)
